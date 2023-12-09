@@ -96,7 +96,11 @@ object Build {
       = file("packages")
 
       lazy val suggestedScalaVersionV: String
-      = "3.3.1"
+      = (
+        // "3.3.2" /* led to "artifact not found" errors */
+        // "3.3.1"
+        "3.3.2-RC1"
+      )
 
       ThisBuild / Keys.scalaVersion := suggestedScalaVersionV
 
@@ -119,7 +123,7 @@ object Build {
           scalacOptions += "-Ysafe-init" ,
           // scalacOptions += "-Xcheck-macros" ,
 
-          // scalacOptions += "-explain" ,
+          scalacOptions += "-explain" ,
           scalacOptions += "-feature" ,
           scalacOptions += "-deprecation" ,
           scalacOptions += "-unchecked" ,
@@ -146,7 +150,11 @@ object Build {
 
       /* see also [https://github.com/portable-scala/sbt-crossproject](`sbt-crossproject`) */
       val suggestedTargetPlatforms: Seq[sbtcrossproject.Platform ]
-      = Seq(JVMPlatform, JSPlatform )
+      = (
+        Seq(JVMPlatform )
+        /* spuriously cannot be safely disabled as that'd result in spurious "key not found" exceptions while importing */
+        :+ JSPlatform
+      )
 
       implicit class XCrossProjectSuggestedSourceArtefactSettingsOps(receiver: CrossProject ) {
 
