@@ -1,0 +1,92 @@
+package lscc.spclTests.ofLexing
+
+
+
+
+
+
+
+
+
+
+
+
+class Lx1
+extends
+org.scalatest.funsuite.AnyFunSuite
+{
+  ;
+
+  implicit
+  object impl1
+  {
+    ;
+
+    extension (r: lscc.spclParsing.spclUtil.Lrp._Any )
+      //
+      def atBgnPars()
+      = lscc.spclParsing.GrmPtr.atBeginningOfFile(r )
+
+  }
+
+  test("b 1") {
+    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("transparent inline")
+    .atBgnPars()
+    .match { case p => {
+      assert(p.immediateUnescapedWord().toOption.map(e => e.prod._1.mFullStr ) == Some("transparent") )
+      assert(p.immediateEscapedIdent().toOption.map(e => e.prod ).isEmpty )
+    } }
+
+    assert(5 == 5 )
+  }
+
+  test("whitespace-only src-file skip-all test") {
+    val code
+    = {
+      ;
+
+      """
+      |
+      |
+      |
+      """.stripMargin
+    }
+
+    assert(code.matches("""\s+""") )
+
+    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet(code)
+    .atBgnPars()
+
+    .match { case p => {
+      assert(p.skippingNextWhitespace(lineCountLimit = 10485).immediateEndOfFile().nonEmpty )
+
+      ;
+    } }
+
+    assert(5 == 5 )
+  }
+
+  test("b 3") {
+    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("transparent inline")
+    .atBgnPars()
+    .match { case p => {
+      val p1 = p.immediateCurlyBracketOpen()
+      
+      //
+    } }
+
+    assert(5 == 5 )
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
