@@ -25,6 +25,12 @@ lazy val lscAlgLibProject
   (crossProject(suggestedTargetPlatforms.+:(JVMPlatform ) : _* ).withSuggestedSettings() in (packagesParentDir / "lscalg" ) )
   .asLeafProjectWithNecessarySettings()
 
+lazy val lscAnsioProject
+=
+  (crossProject(suggestedTargetPlatforms.+:(JVMPlatform ) : _* ).withSuggestedSettings() in (packagesParentDir / "lscoreansio" ) )
+  .asLeafProjectWithNecessarySettings()
+  .dependsOn(lscAlgLibProject )
+
 lazy val main1
 =
   (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "main1" ) )
@@ -32,6 +38,7 @@ lazy val main1
   .withDbp(mainClassNames = Some("runSMain") )
   // .dependsOn(avFwHeadlessUtilityLibProject ) /* this pattern is prone to making dependency cycles, and SBT f*c*ed the resol up ☹ */
   .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAnsioProject )
   .withJavaUtilLocaleCQuiroz()
 
 
