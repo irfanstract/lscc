@@ -50,6 +50,47 @@ lazy val lscAnsioProject
   )
 }
 
+/** 
+ * solely about the text-to-ast sub-proc,
+ * and
+ * excludes subsequent analytique (aka "type-checking")
+ * 
+ */
+lazy val kscLangGrammarProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "kscLang_grammar" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscToolchainingProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_toolchaining" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscCentralCompilerProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_centralcompiler" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(lscAnsioProject )
+  .dependsOn(kscToolchainingProject )
+}
+
 lazy val kscProject
 = {
   ;
@@ -59,6 +100,9 @@ lazy val kscProject
 
   .dependsOn(lscAlgLibProject )
   .dependsOn(lscAnsioProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(kscCentralCompilerProject )
+  .dependsOn(kscToolchainingProject )
 }
 
 lazy val main1
