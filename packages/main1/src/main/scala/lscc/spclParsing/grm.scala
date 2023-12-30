@@ -153,60 +153,14 @@ object GrmPtrInternal {
 
       given iemiOpsR
       : GrmPtrStrMatchOpTraits1.ForImmediatePatterOccurence.ForReceiverAndRAndL[_Any, IMOR, util.matching.Regex ]
-      with {
-        ;
-
-        extension (p: _Any ) {
-          //
-
-          def immediateMatchOf
-            //
-            (r: util.matching.Regex )
-          : IMOR[r.type]
-          = {
-            ({
-              ;
-
-              import  GrmSpclFileReadPtr1.{immediateMatchIgnoringLinebreakOf as immediateMatchOf0 }
-
-              p.immediateMatchOf0(r)
-
-              .match { case s => s }
-            })
-
-            .match { case result => {
-              &&%%%[IMOR[r.type] ]
-              .apply(result)
-            } }
-          }
-
-        }
-
+      = {
+        GrmSpclFileReadPtr1.extraImmediatePatternMatchImplicits.iemiOpsR
       }
 
       given iemiOpsL
       : GrmPtrStrMatchOpTraits1.ForImmediateLiteral.ForReceiverAndRAndL[_Any, IMOL, String ]
-      with {
-        ;
-
-        extension (p: _Any ) {
-          //
-
-          def immediateLiterally
-            //
-            (s: String)
-          : IMOL[s.type]
-          = {
-            p.immediateMatchOf(s match { case chr => util.matching.Regex.quote(chr).r } )
-
-            .match { case r => {
-              &&%%%[IMOL[s.type] ]
-              .apply(r)
-            } }
-          }
-
-        }
-
+      = {
+        GrmSpclFileReadPtr1.extraImmediatePatternMatchImplicits.iemiOpsL
       }
 
       private
@@ -280,7 +234,12 @@ object GrmPtrInternal {
 
       given given_BnrpMatchingLoopOp1
       : BnrpMatchingLoopOp.ForReceiver[_Any, SpclAfterDigestTupleOption.PositiveInstance ]
-      = GrmSpclFileReadPtr1.given_BnrpMatchingLoopOp
+      = {
+        implicitly[SpclAfterDigestTupleOption.PositiveInstance =:= GrmSpclFileReadPtr1.SpclAfterDigestTupleOption.PositiveInstance ]
+        .flip
+        .liftCo[[t] =>> BnrpMatchingLoopOp.ForReceiver[_Any, t ] ]
+        .apply(GrmSpclFileReadPtr1.given_BnrpMatchingLoopOp )
+      }
 
       ;
       ;

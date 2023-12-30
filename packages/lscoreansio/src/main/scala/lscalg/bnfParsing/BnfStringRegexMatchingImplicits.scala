@@ -22,6 +22,20 @@ object bnrpStringRegexMatchingImplicits
 
   ;
 
+  extension (d: String)
+    def tryCheckAndSplitAndExtractAfterPrefix
+      (r: util.matching.Regex )
+    = {
+      import language.unsafeNulls
+
+      for {
+        (matchedString , plRemainder ) <- d.tryCheckAndSplitAfterPrefix(r)
+        `r`(m*) = matchedString : @unchecked
+      }
+      yield ((matchedString, m ) , plRemainder )
+    }
+  //
+
   extension (s: String)
     def tryCheckAndSplitAfterPrefix
       (r: util.matching.Regex )
