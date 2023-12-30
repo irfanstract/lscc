@@ -1,4 +1,6 @@
-package lscc.spclParsing
+package lscc
+
+package spclParsing
 
 
 
@@ -16,44 +18,6 @@ import lscalg.cli.repl.UReadlineConsole
 
 
 
-// object GrmPtr {
-//   ;
-
-//   ;
-
-//   transparent inline
-//   def atBeginningOfFile
-//     //
-//     (src: GrmSpclFileReadPtr1.ElbdFileInfo )
-//   = {
-//     src
-//     .match { case file => GrmSpclFileReadPtr1.atBeginningOfSrcFile(file ) }
-//     .match { case r => atPosition(r) }
-//   }
-
-//   ;
-
-//   export GrmPtrInternal.cc1.{
-//     *,
-//     // given,
-//   }
-
-//   // TODO
-//   object givens {
-//     ;
-
-//     export GrmPtrInternal.cc1.{
-//       // *,
-//       given,
-//     }
-//   }
-
-//   ;
-
-//   ;
-
-//   ;
-// }
 final
 lazy val GrmPtr
 : GrmPtrInternal.cc1.type
@@ -127,6 +91,11 @@ object GrmPtrInternal {
       ) =>
       ;
 
+      transparent inline
+      def thisLDefSpclEtcs
+      : this.type
+      = this
+
       import ImplGrmPtr.{*, given }
 
       ;
@@ -143,6 +112,24 @@ object GrmPtrInternal {
 
       ;
 
+      given for_BC1
+      : (lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp) with {
+        //
+
+        @deprecated
+        type T
+        >: _Any
+        <: _Any
+
+        val SpclAfterDigestTupleOption
+        : thisLDefSpclEtcs.SpclAfterDigestTupleOption.type
+        = valueOf
+
+        // type SpclMatchContent
+        // >: BC.SpclAfterDigestTupleOption._Impl1.Some
+        // <: BC.SpclAfterDigestTupleOption._Impl1.Some
+      }
+
       given edgrl1
       : lscalg.cli.repl.DefinesGetRemainingLines[_Any, lscalg.bnfParsing.BnfCompatibleFileReadPtr1.ContentLines ]
       = lscalg.bnfParsing.BnfCompatibleFileReadPtr1.edgrl
@@ -151,62 +138,18 @@ object GrmPtrInternal {
       : lscalg.bnfParsing.BnrpDoComposeAdvancement[_Any, ([T] =>> (T => T) )[lscalg.bnfParsing.BnfCompatibleFileReadPtr1.ContentLines ] ]
       = lscalg.bnfParsing.BnfCompatibleFileReadPtr1.eca
 
+      protected[GrmPtrInternal ] /* work-around to the (spurious) "abiguous given" phenomenon */
       given iemiOpsR
       : GrmPtrStrMatchOpTraits1.ForImmediatePatterOccurence.ForReceiverAndRAndL[_Any, IMOR, util.matching.Regex ]
-      with {
-        ;
-
-        extension (p: _Any ) {
-          //
-
-          def immediateMatchOf
-            //
-            (r: util.matching.Regex )
-          : IMOR[r.type]
-          = {
-            ({
-              ;
-
-              import  GrmSpclFileReadPtr1.{immediateMatchIgnoringLinebreakOf as immediateMatchOf0 }
-
-              p.immediateMatchOf0(r)
-
-              .match { case s => s }
-            })
-
-            .match { case result => {
-              &&%%%[IMOR[r.type] ]
-              .apply(result)
-            } }
-          }
-
-        }
-
+      = {
+        GrmSpclFileReadPtr1.extraImmediatePatternMatchImplicits.iemiOpsR
       }
 
+      protected[GrmPtrInternal ] /* work-around to the (spurious) "abiguous given" phenomenon */
       given iemiOpsL
       : GrmPtrStrMatchOpTraits1.ForImmediateLiteral.ForReceiverAndRAndL[_Any, IMOL, String ]
-      with {
-        ;
-
-        extension (p: _Any ) {
-          //
-
-          def immediateLiterally
-            //
-            (s: String)
-          : IMOL[s.type]
-          = {
-            p.immediateMatchOf(s match { case chr => util.matching.Regex.quote(chr).r } )
-
-            .match { case r => {
-              &&%%%[IMOL[s.type] ]
-              .apply(r)
-            } }
-          }
-
-        }
-
+      = {
+        GrmSpclFileReadPtr1.extraImmediatePatternMatchImplicits.iemiOpsL
       }
 
       private
@@ -231,9 +174,7 @@ object GrmPtrInternal {
 
       ;
 
-      given grmWhitespaces1.type
-      = grmWhitespaces1
-
+      implicit
       final
       lazy val grmWhitespaces1
       : grmWhitespaces1Impl[_Any , SpclAfterDigestTupleOption.type ]
@@ -247,11 +188,15 @@ object GrmPtrInternal {
         grmWhitespaces1Impl[_Any , SpclAfterDigestTupleOption.type ]
       }
 
-      given esnw
+      implicit
+      final
+      lazy val grmWsk
       : grmWhitespaceSkippingOpImpl1[_Any, SpclAfterDigestTupleOption.type ]
-      = {
-        grmWhitespaceSkippingOpImpl1[_Any, SpclAfterDigestTupleOption.type ]
-      }
+      = grmWhitespaceSkippingOpImpl1[_Any, SpclAfterDigestTupleOption.type ]
+
+      given esnw
+      : spclParsedConstructs.forNumericLiteralAndWordsAndIdentsForBnfParseOptionCtorAndPtrType[SpclAfterDigestTupleOption.type , _Any ]
+      = spclParsedConstructs.forNumericLiteralAndWordsAndIdentsForBnfParseOptionCtorAndPtrType[SpclAfterDigestTupleOption.type , _Any ]
 
       given grmDelimiters1.type
       = grmDelimiters1
@@ -280,7 +225,12 @@ object GrmPtrInternal {
 
       given given_BnrpMatchingLoopOp1
       : BnrpMatchingLoopOp.ForReceiver[_Any, SpclAfterDigestTupleOption.PositiveInstance ]
-      = GrmSpclFileReadPtr1.given_BnrpMatchingLoopOp
+      = {
+        implicitly[SpclAfterDigestTupleOption.PositiveInstance =:= GrmSpclFileReadPtr1.SpclAfterDigestTupleOption.PositiveInstance ]
+        .flip
+        .liftCo[[t] =>> BnrpMatchingLoopOp.ForReceiver[_Any, t ] ]
+        .apply(GrmSpclFileReadPtr1.given_BnrpMatchingLoopOp )
+      }
 
       ;
       ;

@@ -20,20 +20,11 @@ org.scalatest.funsuite.AnyFunSuite
 {
   ;
 
-  import lscc.spclParsing.GrmPtr as SpclGrmPtr
+  import lscalg.bnfParsing.spclCommonLookaheadCaps1 as spclCommonLookaheadCaps1
 
-  implicit
-  object impl1
-  {
-    ;
+  import lscc.spclParsedConstructs1 as spclParsedConstructs1
 
-    extension (r: lscc.spclParsing.spclUtil.Lrp._Any )
-      //
-      def atBgnPars()
-      : SpclGrmPtr._Any
-      = SpclGrmPtr.atBeginningOfFile(r )
-
-  }
+  import spcgSpclParsingDefs.{*, given }
 
   test("relevant type-inference test") {
     ;
@@ -44,18 +35,12 @@ org.scalatest.funsuite.AnyFunSuite
     .match { case p => {
       ;
 
-      SpclGrmPtr.grmNumericLiteranAndWordsAndIdents.immediateUnescapedWord(p ) ( )
+      // SpclGrmPtr.grmNumericLiteranAndWordsAndIdents.immediateUnescapedWord(p ) ( )
+      // spclParsedConstructs1.ForImmediateUnescapedWord().applyOET(p)
+      p
+      .immediateSubjectInstance(spclParsedConstructs1.ForImmediateUnescapedWord() )
 
-      ((e: Any) => Some[e.type](e) )(SpclGrmPtr.implCc1.grmNumericLiteranAndWordsAndIdents)
-      .match { case s => s }
-
-      SpclGrmPtr.implCc1.grmNumericLiteranAndWordsAndIdents.immediateUnescapedWord(p ) ( )
-      .match { case res0 => res0 }
-
-      Seq(SpclGrmPtr.implCc1.grmNumericLiteranAndWordsAndIdents0)
-      .match { case s => s }
-
-      SpclGrmPtr.implCc1.grmNumericLiteranAndWordsAndIdents0.immediateUnescapedWord(p ) ( )
+      p.immediateSubjectInstance(spclParsedConstructs1.ForImmediateUnescapedWord() )
       .match { case res0 => res0 }
 
       summon[([T] =>> (T =:= T ) )[SpclGrmPtr.SpclAfterDigestTupleOption.PositiveInstance ] ]
@@ -80,7 +65,8 @@ org.scalatest.funsuite.AnyFunSuite
       assert((
         ({
           p
-          .immediateUnescapedWord().toOption
+          .immediateSubjectInstance(spclParsedConstructs1.ForImmediateUnescapedWord() )
+          .toOption
         })
         .map(e => e.prod._1.mFullStr )
         ==
@@ -90,7 +76,8 @@ org.scalatest.funsuite.AnyFunSuite
       assert({
         ({
           p
-          .immediateEscapedIdent().toOption
+          .immediateSubjectInstance(spclParsedConstructs1.ForImmediateEscapedIdent() )
+          .toOption
         })
         .map(e => e.prod )
         .isEmpty
@@ -153,7 +140,8 @@ org.scalatest.funsuite.AnyFunSuite
           .tryForImmediateLoop1
             ({
               SpclSubject.fromLiftedPartialFunction((pt: SpclGrmPtr._Any ) => {
-                pt.immediateLiterally("()")
+                pt
+                .immediateSubjectInstance(spclCommonLookaheadCaps1.ForImmediateStrLiteralOccurence("()") )
                 .toOption
               } )
             }, Range(1, 350000) , SpclEagerness.+ )
@@ -181,7 +169,8 @@ org.scalatest.funsuite.AnyFunSuite
           .tryForImmediateLoop1
             ({
               SpclSubject.fromLiftedPartialFunction((pt: SpclGrmPtr._Any ) => {
-                pt.immediateLiterally("()")
+                pt
+                .immediateSubjectInstance(spclCommonLookaheadCaps1.ForImmediateStrLiteralOccurence("()") )
                 .toOption
               } )
             }, Range(1, 2) , SpclEagerness.+ )
@@ -212,7 +201,7 @@ org.scalatest.funsuite.AnyFunSuite
         }
 
         pos2
-        .immediateLiterally("()")
+        .immediateSubjectInstance(spclCommonLookaheadCaps1.ForImmediateStrLiteralOccurence("()") )
         .match { case r3 => {
           ;
 
