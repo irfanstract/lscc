@@ -13,6 +13,9 @@ package lscalg.bnfParsing
 
 
 object BnfCompatibleFileReadPtr1
+extends
+AnyRef
+with BnfCompatibleFileReadPtrExtras1
 { GrmPtr =>
   ;
 
@@ -44,17 +47,28 @@ object BnfCompatibleFileReadPtr1
 
   given edgrl
   : lscalg.cli.repl.DefinesGetRemainingLines[_Any, ContentLines ]
-  with {
-    //
+  = {
+    lscalg.cli.repl.DefinesGetRemainingLinesConv.basicInstance((s: _Any ) => {
+      ;
+      s.remainingLinesImpl
+      .match { case l => l : ContentLines }
+    } )
+  }
 
-    extension (s: _Any )
-      transparent inline
-      def remainingLines
-      = {
+  object extraEdgrlImplicits {
+    ;
+
+    given edgrlx
+    : lscalg.cli.repl.DefinesGetRemainingLines[_Any, LazyList[String] ]
+    = {
+      ;
+      lscalg.cli.repl.DefinesGetRemainingLinesConv.basicInstance((s: _Any) => {
+        ;
         s.remainingLinesImpl
-        // .map({ case ln => ln.contents })
         .match { case l => l : ContentLines }
-      }
+        .match { case l => l.map(ln => ln.contents ) }
+      } : LazyList[String] )
+    }
 
   }
 
@@ -83,45 +97,25 @@ object BnfCompatibleFileReadPtr1
 
   given edsi
   : lscalg.cli.repl.DefinesGetSrcFileInfo[_Any, ElbdFileInfo ]
-  with {
-    //
-
-    extension (s: _Any )
-
-      transparent inline
-      def srcFileInfo
-      : ElbdFileInfo
-      = s.srcFileInfoImpl
-
+  = {
+    lscalg.cli.repl.DefinesGetSrcFileInfo((s: _Any) => (
+      s.srcFileInfoImpl
+    ) : ElbdFileInfo )
   }
 
   given eca
   : BnrpDoComposeAdvancement[_Any, ContentLines => ContentLines ]
-  with {
-    ;
+  = {
+    BnrpDoComposeAdvancement((pt0: _Any) => (f: ContentLines => ContentLines) => {
+      ;
 
-    extension (pt0: _Any ) {
-      //
-
-      /** 
-       * after advancing the pos
-       * 
-       */
-      // transparent inline
-      def composeAdvancement
-        //
-        (f: ContentLines => ContentLines )
-      = {
-        ;
-        locally[_Any] {
-          pt0.remainingLines
-          .match { case ls0 => f(ls0) }
-          .match { case newLs => remainingLinesLens.apply(newLs )(pt0) }
-          .match { case pt2 => pt2 }
-        }
+      locally[_Any] {
+        pt0.remainingLines
+        .match { case ls0 => f(ls0) }
+        .match { case newLs => remainingLinesLens.apply(newLs )(pt0) }
+        .match { case pt2 => pt2 }
       }
-    }
-
+    } : _Any )
   }
 
   ;
@@ -159,48 +153,49 @@ object BnfCompatibleFileReadPtr1
   export bnrpImmediateRegexMatchOps1.{immediateMatchInLineOf }
   export bnrpImmediateRegexMatchOps1.{immediateMatchIgnoringLinebreakOf }
 
-  ;
-
-  given given_BnrpMatchingLoopOp
-  : BnrpMatchingLoopOp.ForReceiver[_Any, SpclAfterDigestTupleOption.PositiveInstance ]
-  with {
+  object extraImmediatePatternMatchImplicits {
     ;
 
-    import BnrpMatchingLoopOp.SpclBacktrackworthiness
-    import BnrpMatchingLoopOp.SpclEagerness
-    import BnrpMatchingLoopOp.SpclSubject
-    import BnrpMatchingLoopOp.SpclCountRange
-    import BnrpMatchingLoopOp.implementativeImplicits.{*, given }
+    export bnrpImmediateRegexMatchOps1.{immediateMatchIgnoringLinebreakOf as immediateMatchOf0 }
 
-    type ReceiT
-    >: _Any
-    <: _Any
-    type R
-    >: SpclAfterDigestTupleOption.PositiveInstance
-    <: SpclAfterDigestTupleOption.PositiveInstance
+    given iemiOpsR
+    : spclCommonLookaheadCaps.ForImmediatePatterOccurence.ForReceiverAndRAndL[_Any, [t] =>> SpclAfterDigestTupleOption._Any , util.matching.Regex ]
+    = {
+      spclCommonLookaheadCaps.ForImmediatePatterOccurence.forReceiverAndMatchSmmryBaseTypeAndQueryType
+        [_Any, SpclAfterDigestTupleOption._Any, util.matching.Regex ] ((p) => (query) => {
+          ;
 
-    extension (pt0: _Any)
-      def tryForImmediateLoop
-      : (
-        (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-        (SpclSubject.ForReceiverAndROpt[ReceiT, R ] , SpclCountRange ) =>
-          BnfCompatibleRetrialIterator[Seq[R] ]
-      )
-      = {
-        ;
+          p.immediateMatchOf0(query )
+        } )
+    }
 
-        (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-        (subject: SpclSubject.ForReceiverAndROpt[ReceiT, R ] , r: SpclCountRange ) =>
-          rImpl
-            (backtrackWorthiness = backtrackWorthiness , eagerness = eagerness  )
-            (subject, backConv = e => e.nextPos )
-            (pt0, countBnds = r )
-      }
+    given iemiOpsL
+    : spclCommonLookaheadCaps.ForImmediateLiteral.ForReceiverAndRAndL[_Any, [t] =>> SpclAfterDigestTupleOption._Any , String ]
+    = {
+      ;
+      import IRegExp.tagImplicits.r
+
+      spclCommonLookaheadCaps.ForImmediateLiteral.forReceiverAndMatchSmmryBaseTypeAndQueryType
+        [_Any, SpclAfterDigestTupleOption._Any, String ] ((p) => (queryString) => {
+          ;
+          val query
+          = util.matching.Regex.quote(queryString ).r
+
+          p.immediateMatchOf0(query )
+        } )
+    }
+
   }
 
   ;
 
-  export bnrpImmediateRegexMatchOps1.{commonSubjects }
+  given given_BnrpMatchingLoopOp
+  : BnrpMatchingLoopOp.ForReceiver[_Any, SpclAfterDigestTupleOption.PositiveInstance ]
+  = given_BnrpMatchingLoopOp1
+
+  ;
+
+  ;
 
 }
 
@@ -318,28 +313,7 @@ object bnrpImmediateRegexMatchOps1
     //
   }
 
-  object commonSubjects {
-    ;
-
-    final lazy val WHITESPACE_SOME
-    = BnrpMatchingLoopOp.SpclSubject.fromLiftedPartialFunction((_: _M._Any).immediateMatchInLineOf("""\s+""".r ).toOption )
-
-    final lazy val IDENTIFIERWORD_SOME
-    = BnrpMatchingLoopOp.SpclSubject.fromLiftedPartialFunction((_: _M._Any).immediateMatchInLineOf("""(?![0-9])\w+""".r ).toOption )
-
-    ;
-  }
-
   ;
-}
-
-trait BnrpDoComposeAdvancement
-  [Receiver, -Cl <: Function1[?, ?] ]
-{
-  extension (s: Receiver)
-    def composeAdvancement
-      (f: Cl )
-    : Receiver
 }
 
 
