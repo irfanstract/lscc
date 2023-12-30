@@ -35,13 +35,74 @@ def runRlLscc() : Unit
   : lscc.asToolChain.SpclCompilerOpsExceptionsImpl
   = lscc.asToolChain.SpclCompilerOpsExceptionsImpl.i
 
+  object TcSLazyCompiledView {
+    ;
+
+    /** 
+     * supposed to run exactly once the given func
+     * 
+     */
+    def fromVoidFunction
+      (c:  () => Unit )
+    : TcSLazyCompiledView
+    = {
+      ;
+      lazy val returnVal
+      = c.apply()
+      new TcSLazyCompiledView {
+        def asCompiled()
+        = { returnVal ; this }
+      }
+    }
+
+    ;
+  }
+  trait TcSLazyCompiledView private[TcSLazyCompiledView] ()
+  {
+    ;
+
+    /** 
+     * ensure compilation has been run.
+     * 
+     */
+    def asCompiled()
+    : this.type
+  }
+
   object TcSFileEntry {
     ;
-    def apply
-      (d: String )
-    = new TcSFileEntry(d = d )
+
+    type _Any
+    = TcSFileEntry
+
+    def fromSrcCode
+      (srcCode: String )
+    = {
+      new TcSFileEntry
+        (srcCode = srcCode,
+        asCompiledView = {
+          TcSLazyCompiledView.fromVoidFunction(() => {
+            println(s"compiling code '$srcCode' ")
+            println(s"done compiling code '$srcCode' ")
+          })
+        } )
+    }
+
+    extension (c: _Any) {
+
+      /** 
+       * ensure compilation has been run.
+       * 
+       */
+      transparent inline
+      def asCompiled()
+      = c.asCompiledView.asCompiled()
+    }
+
+    ;
   }
-  case class TcSFileEntry private (d: String )
+  case class TcSFileEntry private[TcSFileEntry]
+    (srcCode: String, asCompiledView: TcSLazyCompiledView )
 
   object TcS {
     ;
@@ -68,7 +129,7 @@ def runRlLscc() : Unit
       .toSeq.last
       .match { case file => {
         file
-        .d
+        .srcCode
         .match {
           case "" =>
           case s @ ":Q" =>
@@ -87,8 +148,14 @@ def runRlLscc() : Unit
 
       println(s"new file added: ${ txt } ")
 
+      val txtCFile
+      = TcSFileEntry.fromSrcCode(srcCode = txt )
+
+      txtCFile
+      .asCompiled()
+
       fileContLens.modify
-        (s0 => s0.toSeq :+ TcSFileEntry(d = txt ) )
+        (s0 => s0.toSeq :+ txtCFile )
         (r)
     } )
 
