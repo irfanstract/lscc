@@ -25,6 +25,13 @@ lazy val lscAlgLibProject
   (crossProject(suggestedTargetPlatforms.+:(JVMPlatform ) : _* ).withSuggestedSettings() in (packagesParentDir / "lscalg" ) )
   .asLeafProjectWithNecessarySettings()
 
+lazy val lscAlgParsingLibProject
+=
+  (crossProject(suggestedTargetPlatforms.+:(JVMPlatform ) : _* ).withSuggestedSettings() in (packagesParentDir / "lscalg_parsing" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+
 lazy val lscAnsioProject
 = {
   ;
@@ -33,6 +40,7 @@ lazy val lscAnsioProject
   .asLeafProjectWithNecessarySettings()
 
   .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAlgParsingLibProject )
   /* to avoid further "not found symbol" complications JLine should be promoted to being cross-platform dependency */
   /* presently it will fail to link on SJS, but there's a future possibility of one */
   .settings(
@@ -50,6 +58,64 @@ lazy val lscAnsioProject
   )
 }
 
+lazy val kscSuitePredefProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_ac_predef" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAlgParsingLibProject )
+  .dependsOn(lscAnsioProject )
+}
+
+/** 
+ * solely about the text-to-ast sub-proc,
+ * and
+ * excludes subsequent analytique (aka "type-checking")
+ * 
+ */
+lazy val kscLangGrammarProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "kscLang_grammar" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAlgParsingLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscToolchainingProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_toolchaining" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscCentralCompilerProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_centralcompiler" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAlgParsingLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(lscAnsioProject )
+  .dependsOn(kscToolchainingProject )
+}
+
 lazy val kscProject
 = {
   ;
@@ -58,6 +124,11 @@ lazy val kscProject
   .asLeafProjectWithNecessarySettings()
 
   .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAlgParsingLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(kscCentralCompilerProject )
+  .dependsOn(kscToolchainingProject )
   .dependsOn(lscAnsioProject )
 }
 
