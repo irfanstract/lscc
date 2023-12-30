@@ -72,93 +72,11 @@ object BnrpMatchingLoopOp {
 
   }
 
-  object SpclSubject {
-    ;
-
-    opaque type ForReceiverAndROpt
-      [-ReceiT, +R ]
-    <: AnyRef
-    = ReceiT => Either[Unit, R ]
-
-    extension [ReceiT, R ] (impl: ForReceiverAndROpt[ReceiT, R ] ) {
-      //
-
-      def applyEi(receiver: ReceiT )
-      = impl.apply(receiver )
-
-      def applyO(receiver: ReceiT )
-      = impl.apply(receiver ).fold(_ => None, Some(_) )
-
-    }
-    //
-
-    def fromPartialFunction
-      [ReceiT, R ]
-      (impl: PartialFunction[ReceiT, R ] )
-    : ForReceiverAndROpt[ReceiT, R ]
-    = {
-      impl
-      .lift
-      .match { case fnc => fromLiftedPartialFunction(fnc) }
-    }
-
-    def fromLiftedPartialFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, Option[R] ] )
-    : ForReceiverAndROpt[ReceiT, R ]
-    = {
-      impl
-      .andThen(_.toRight(() ) )
-    }
-
-    ;
-
-    final
-    lazy val Mst
-    : BnrpMatchingLoopOp.type
-    = BnrpMatchingLoopOp
-
-    def forFixedCompoundO
-      [ReceiT, R ]
-      (children: Seq[Function1[ReceiT, Option[R] ] ] , backConv: R => ReceiT )
-      // (using Mst.ForReceiv )
-    = {
-      ;
-      fromLiftedPartialFunction((pt0: ReceiT ) => {
-        ;
-        children
-        .foldLeft[Option[(IndexedSeq[R] , ReceiT ) ] ] (Some((IndexedSeq() , pt0 ) ) ) ({
-          case (Some((ls0, pt0)), applyNext ) =>
-            ;
-
-            applyNext(pt0)
-
-            .map(result1 => {
-              val pt2 = backConv(result1)
-              ;
-              (ls0 :+ result1 , pt2 )
-            } )
-
-          case (None, _ ) =>
-            None
-        })
-      } )
-    }
-
-    ;
-
-    /** collective ! */
-    def fromLiftedPartialFunctionList
-      //
-      [ReceiT, R ]
-      (impls: Seq[Function1[ReceiT, Option[R] ] ] )
-    = {
-      impls
-      .map(o => fromLiftedPartialFunction(o) )
-    }
-
-    ;
-  }
+  // export lscalg.digestivity.Subject as SpclSubject
+  transparent inline
+  def SpclSubject
+  : lscalg.digestivity.Subject.type
+  = lscalg.digestivity.Subject
 
   opaque type SpclCountRange
   <: AnyRef & Matchable

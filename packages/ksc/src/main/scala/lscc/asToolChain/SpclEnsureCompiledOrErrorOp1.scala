@@ -42,10 +42,12 @@ given ToEnsureCompiledOrThereofError
   extension (s: S) {
     //
 
-    /** 
-     * `ensureCompiledOrThereofError` ;
-     * essentially `tryEnsureCompiled` except that
-     * only `CompileError` (including `SyntaxError` ) would be caught.
+    /**
+     * first calls `ensureCompiledOrThereofError`, and then
+     * - catch `CompileErrorException` (inclding `SyntaxErrorException` ),
+     *   translating into `None` in case of `SyntaxErrorException`, and
+     *   `Some(_)` otherwise
+     * - leave other exceptions bubble
      * 
      */
     transparent inline
@@ -57,32 +59,37 @@ given ToEnsureCompiledOrThereofError
       ;
 
       // TODO
-      s
-      .ensureCompiledOrThereofErrorOption1()
-      .map(v => {
-        println(s"compilation successful. ($v) ")
-        v
-      } )
-      .match { case tr => {
-        tr.map(Some(_))
-        .recover[Option[S ] ] ({
-          case SpclParseSyntaxErrorException(z) =>
-            z.printOneLineStackTrace()
-            new Exception(s"please fix the code").printOneLineStackTrace()
-            None
-          case SpclCompileErrorException(z) =>
-            z.printOneLineStackTrace()
-            Some(s)
-        })
+      util.Try({
+        ;
+
+        s
+        .ensureCompiledOrThereofErrorOption1()
+        .map(v => {
+          println(s"compilation successful. ($v) ")
+          v
+        } )
         .match { case tr => {
-          ;
-          tr
-          .recover(z => {
-            java.lang.Thread.sleep(500 )
-            throw z
-          } )
-          .get
+          tr.map(Some(_))
+          .recover[Option[S ] ] ({
+            case SpclParseSyntaxErrorException(z) =>
+              z.printOneLineStackTrace()
+              new Exception(s"please fix the code").printOneLineStackTrace()
+              None
+            case SpclCompileErrorException(z) =>
+              z.printOneLineStackTrace()
+              Some(s)
+          })
         } }
+        .get
+      })
+      .match { case tr => {
+        ;
+        tr
+        .recover(z => {
+          java.lang.Thread.sleep(500 )
+          throw z
+        } )
+        .get
       } }
     }
 
