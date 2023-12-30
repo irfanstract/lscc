@@ -50,6 +50,61 @@ lazy val lscAnsioProject
   )
 }
 
+lazy val kscSuitePredefProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_ac_predef" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(lscAnsioProject )
+}
+
+/** 
+ * solely about the text-to-ast sub-proc,
+ * and
+ * excludes subsequent analytique (aka "type-checking")
+ * 
+ */
+lazy val kscLangGrammarProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "kscLang_grammar" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscToolchainingProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_toolchaining" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(lscAnsioProject )
+}
+
+lazy val kscCentralCompilerProject
+= {
+  ;
+
+  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "ksc_centralcompiler" ) )
+  .asLeafProjectWithNecessarySettings()
+
+  .dependsOn(lscAlgLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(lscAnsioProject )
+  .dependsOn(kscToolchainingProject )
+}
+
 lazy val kscProject
 = {
   ;
@@ -58,6 +113,10 @@ lazy val kscProject
   .asLeafProjectWithNecessarySettings()
 
   .dependsOn(lscAlgLibProject )
+  .dependsOn(kscSuitePredefProject )
+  .dependsOn(kscLangGrammarProject )
+  .dependsOn(kscCentralCompilerProject )
+  .dependsOn(kscToolchainingProject )
   .dependsOn(lscAnsioProject )
 }
 

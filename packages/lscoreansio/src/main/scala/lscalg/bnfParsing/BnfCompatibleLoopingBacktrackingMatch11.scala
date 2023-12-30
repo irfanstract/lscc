@@ -43,12 +43,13 @@ object BnrpMatchingLoopOp {
   = ForReceiverImpl[? >: ReceiTL <: ReceiTU , ? >: RL <: RU ]
 
   // protected
-  trait ForReceiverImpl[ReceiT , R ] {
+  trait ForReceiverImpl[ReceiT , R ]
+  {
     extension (pt0: ReceiT)
       def tryForImmediateLoop
       : (
         (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-        (SpclSubject.ForReceiverAndROpt[ReceiT, R ] , SpclCountRange ) =>
+        (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange ) =>
           BnfCompatibleRetrialIterator.ForR[Seq[R] ]
       )
     //
@@ -58,7 +59,7 @@ object BnrpMatchingLoopOp {
       transparent inline
       def tryForImmediateLoop1
       : (
-        (SpclSubject.ForReceiverAndROpt[ReceiT, R ] , SpclCountRange, SpclEagerness ) =>
+        (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange, SpclEagerness ) =>
           BnfCompatibleRetrialIterator.ForR[Seq[R] ]
       )
       = { case e => {
@@ -72,93 +73,11 @@ object BnrpMatchingLoopOp {
 
   }
 
-  object SpclSubject {
-    ;
-
-    opaque type ForReceiverAndROpt
-      [-ReceiT, +R ]
-    <: AnyRef
-    = ReceiT => Either[Unit, R ]
-
-    extension [ReceiT, R ] (impl: ForReceiverAndROpt[ReceiT, R ] ) {
-      //
-
-      def applyEi(receiver: ReceiT )
-      = impl.apply(receiver )
-
-      def applyO(receiver: ReceiT )
-      = impl.apply(receiver ).fold(_ => None, Some(_) )
-
-    }
-    //
-
-    def fromPartialFunction
-      [ReceiT, R ]
-      (impl: PartialFunction[ReceiT, R ] )
-    : ForReceiverAndROpt[ReceiT, R ]
-    = {
-      impl
-      .lift
-      .match { case fnc => fromLiftedPartialFunction(fnc) }
-    }
-
-    def fromLiftedPartialFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, Option[R] ] )
-    : ForReceiverAndROpt[ReceiT, R ]
-    = {
-      impl
-      .andThen(_.toRight(() ) )
-    }
-
-    ;
-
-    final
-    lazy val Mst
-    : BnrpMatchingLoopOp.type
-    = BnrpMatchingLoopOp
-
-    def forFixedCompoundO
-      [ReceiT, R ]
-      (children: Seq[Function1[ReceiT, Option[R] ] ] , backConv: R => ReceiT )
-      // (using Mst.ForReceiv )
-    = {
-      ;
-      fromLiftedPartialFunction((pt0: ReceiT ) => {
-        ;
-        children
-        .foldLeft[Option[(IndexedSeq[R] , ReceiT ) ] ] (Some((IndexedSeq() , pt0 ) ) ) ({
-          case (Some((ls0, pt0)), applyNext ) =>
-            ;
-
-            applyNext(pt0)
-
-            .map(result1 => {
-              val pt2 = backConv(result1)
-              ;
-              (ls0 :+ result1 , pt2 )
-            } )
-
-          case (None, _ ) =>
-            None
-        })
-      } )
-    }
-
-    ;
-
-    /** collective ! */
-    def fromLiftedPartialFunctionList
-      //
-      [ReceiT, R ]
-      (impls: Seq[Function1[ReceiT, Option[R] ] ] )
-    = {
-      impls
-      .map(o => fromLiftedPartialFunction(o) )
-    }
-
-    ;
-  }
+  // export lscalg.digestivity.Subject as SpclSubject
+  transparent inline
+  def SpclSubject
+  : lscalg.digestivity.Subject.type
+  = lscalg.digestivity.Subject
 
   opaque type SpclCountRange
   <: AnyRef & Matchable
@@ -232,7 +151,7 @@ object BnrpMatchingLoopOp {
       //
       [ReceiT , R1 ]
       (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
-      (subject: SpclSubject.ForReceiverAndROpt[ReceiT, R1 ] , backConv: R1 => ReceiT )
+      (subject: SpclSubject.ForReceiverAndRValue[ReceiT, R1 ] , backConv: R1 => ReceiT )
     : (
       (p0: ReceiT, countBnds: SpclCountRange ) =>
         BnfCompatibleRetrialIterator.ForR[Seq[R1] ]
@@ -310,6 +229,84 @@ object BnrpMatchingLoopOp {
   }
 
   ;
+}
+
+object sBnrpMatchingLoopOpOptInImplicits
+{
+  ;
+
+  given given_sBnrpMatchingLoopOp_tupleTwo[ReceiT , RValue ]
+  : BnrpMatchingLoopOp.ForReceiverImpl[ReceiT, (RValue, ReceiT) ]
+  = {
+    ;
+    type R
+    >: (RValue, ReceiT)
+    <: (RValue, ReceiT)
+
+    new BnrpMatchingLoopOp.ForReceiverImpl[ReceiT, R ] {
+      ;
+
+      import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclSubject, SpclCountRange}
+
+      extension (pt0: ReceiT)
+        def tryForImmediateLoop
+        : (
+          (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
+          (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange ) =>
+            BnfCompatibleRetrialIterator.ForR[Seq[R] ]
+        )
+        = { case (backtrackWorthiness , eagerness ) => {
+          (subject, nRange) => {
+            ;
+
+            BnrpMatchingLoopOp.implementativeImplicits.rImpl[ReceiT , R ]
+              (backtrackWorthiness = backtrackWorthiness, eagerness = eagerness )
+              (subject, backConv = { case (_, newPos) => newPos } )
+              (pt0, countBnds = nRange )
+            .match { case r => r }
+          }
+        }}
+    }
+  }
+
+  given given_sBnrpSubjectLoopOp[ReceiT , RValue ]
+  : AnyRef with {
+    ;
+
+    type R[+C[+r] ]
+    >: (lscalg.parsing.Subject.ForReceiverAndRValue[ReceiT , (C[RValue] , ReceiT ) ] )
+    <: (lscalg.parsing.Subject.ForReceiverAndRValue[ReceiT , (C[RValue] , ReceiT ) ] )
+
+    import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
+
+    extension (impl0: R[[e] =>> e] ) {
+      def repeated
+        //
+        (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
+        (eu1: Unit , nRange: SpclCountRange )
+      : R[[e] =>> Seq[e] ]
+      = {
+        lscalg.parsing.Subject.fromLiftedPartialFunction[ReceiT , (Seq[RValue], ReceiT) ] (pt0 => {
+          given_sBnrpMatchingLoopOp_tupleTwo[ReceiT , RValue ]
+          .tryForImmediateLoop
+            (pt0 )
+            (backtrackWorthiness = backtrackWorthiness , eagerness = eagerness )
+            (impl0, nRange )
+          .headOption
+          .map(s => {
+            s.unzip
+            .match { case (s1, s2) => {
+              (s1, s2.prepended[ReceiT](pt0).head )
+            } }
+          } )
+          .nn
+          .nn
+        } )
+        .match { case s1 => s1 }
+      }
+    }
+  }
+
 }
 
 
