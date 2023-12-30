@@ -17,27 +17,37 @@ org.scalatest.funsuite.AnyFunSuite
 {
   ;
 
-  implicit
-  object impl1
-  {
-    ;
+  import lscalg.bnfParsing.spclCommonLookaheadCaps1 as spclCommonLookaheadCaps1
 
-    extension (r: lscc.spclParsing.spclUtil.Lrp._Any )
-      //
-      def atBgnPars()
-      = lscc.spclParsing.GrmPtr.atBeginningOfFile(r )
+  import lscc.spclParsedConstructs1 as spclParsedConstructs1
 
-  }
+  import spcgSpclParsingDefs.{*, given }
 
   test("b 1") {
     lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("transparent inline")
     .atBgnPars()
+
     .match { case p => {
-      assert(p.immediateUnescapedWord().toOption.map(e => e.prod._1.mFullStr ) == Some("transparent") )
-      assert(p.immediateEscapedIdent().toOption.map(e => e.prod ).isEmpty )
+      assert ((
+        p
+        // .immediateUnescapedWord().toOption
+        .immediateSubjectInstance(spclParsedConstructs1.ForImmediateUnescapedWord() ).toOption
+        .map(e => e.prod._1.mFullStr )
+        ==
+          Some("transparent")
+      ))
+
+      assert((
+        p
+        // .immediateEscapedIdent().toOption
+        .immediateSubjectInstance(spclParsedConstructs1.ForImmediateEscapedIdent() ).toOption
+        .map(e => e.prod )
+        .isEmpty
+      ) )
+
     } }
 
-    assert(5 == 5 )
+    println(s"done test 'b 1' " )
   }
 
   test("whitespace-only src-file skip-all test") {
@@ -63,19 +73,20 @@ org.scalatest.funsuite.AnyFunSuite
       ;
     } }
 
-    assert(5 == 5 )
+    println(s"done test 'whitespace-only src-file skip-all test' " )
   }
 
   test("b 3") {
     lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("transparent inline")
     .atBgnPars()
     .match { case p => {
-      val p1 = p.immediateCurlyBracketOpen()
+      val p1
+      = p.immediateSubjectInstance(spclCommonLookaheadCaps1.ForImmediateStrLiteralOccurence("{") )
       
       //
     } }
 
-    assert(5 == 5 )
+    println(s"done test 'b 3' " )
   }
 
 }

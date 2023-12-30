@@ -53,7 +53,7 @@ object SpclTokenisedItemOption
     def apply
       //
       (nextPos: Kp, prod: _Impl1.SpclMatched1 )
-    = _Impl.Some(nextPos = nextPos , prod = prod )
+    = _Impl.Some(nextPos = nextPos , prod = prod ) : _Impl.Some
 
     ;
 
