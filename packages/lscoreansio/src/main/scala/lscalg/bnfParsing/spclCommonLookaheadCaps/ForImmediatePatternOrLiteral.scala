@@ -15,7 +15,11 @@ package spclCommonLookaheadCaps
 
 
 
-object ForImmediatePatterOccurence {
+object ForImmediatePatterOccurence
+extends
+AnyRef
+with EipoCommon
+{
   ;
 
   type _Any
@@ -43,9 +47,40 @@ object ForImmediatePatterOccurence {
       : IMOR[r.type]
   }
 
+  // def forReceiverAndMatchSmmryBaseTypeAndQueryType
+  //   [Receiver, IMOR_U, L ]
+  //   (impl: Receiver => (s: L) => IMOR_U )
+  // = forReceiverAndMatchSmmryAndQueryType[Receiver, [_] =>> IMOR_U, L ](impl)
+
+  // @deprecated
+  // def apply
+  //   [Receiver, IMOR[+value <: L], L ]
+  //   (impl: Receiver => (s: L) => IMOR[s.type] )
+  // = forReceiverAndMatchSmmryAndQueryType[Receiver, IMOR, L ](impl)
+
+  def forReceiverAndMatchSmmryAndQueryType
+    [Receiver, IMOR[+value <: L], L ]
+    (impl: Receiver => (s: L) => IMOR[s.type] )
+  : ForReceiverAndRAndL[Receiver, IMOR, L ]
+  = {
+    new ForReceiverAndRAndL[Receiver, IMOR, L ]
+    {
+      ;
+      extension (receiver: Receiver)
+        def immediateMatchOf
+          //
+          (s: L)
+        = impl(receiver)(s)
+    }
+  }
+
 }
 
-object ForImmediateLiteral {
+object ForImmediateLiteral
+extends
+AnyRef
+with EipoCommon
+{
   ;
 
   type _Any
@@ -63,7 +98,7 @@ object ForImmediateLiteral {
   type _AnyForReceiverAndSpecAndReturnCc[-Receiver, -L, +ReturnCc[+pattern <: L] ]
   = ForReceiverAndRAndL[Receiver, ? <: ReturnCc , L ]
 
-  trait ForReceiverAndRAndL[-Receiver, +IMOL[+value <: L], -L ]
+  trait ForReceiverAndRAndL[-Receiver, +IMOL[+value <: L], -L ] @deprecated ()
   {
     ;
     extension (receiver: Receiver)
@@ -73,6 +108,48 @@ object ForImmediateLiteral {
       : IMOL[s.type]
   }
 
+  def forReceiverAndMatchSmmryAndQueryType
+    [Receiver, IMOL[+value <: L], L ]
+    (impl: Receiver => (s: L) => IMOL[s.type] )
+  : ForReceiverAndRAndL[Receiver, IMOL, L ]
+  = {
+    new ForReceiverAndRAndL[Receiver, IMOL, L ]
+    {
+      ;
+      extension (receiver: Receiver)
+        def immediateLiterally
+          //
+          (s: L)
+        = impl(receiver) (s)
+    }
+  }
+
+}
+
+trait EipoCommon private [lscalg] ()
+{
+  ;
+
+  transparent inline
+  def forReceiverAndMatchSmmryBaseTypeAndQueryType
+    [Receiver, IMOR_U, L ]
+    (impl: Receiver => (s: L) => IMOR_U )
+  = forReceiverAndMatchSmmryAndQueryType[Receiver, [_] =>> IMOR_U, L ](impl)
+
+  @deprecated
+  transparent inline
+  def apply
+    [Receiver, IMOR[+value <: L], L ]
+    (impl: Receiver => (s: L) => IMOR[s.type] )
+  = forReceiverAndMatchSmmryAndQueryType[Receiver, IMOR, L ](impl)
+
+
+  def forReceiverAndMatchSmmryAndQueryType
+    [Receiver, IMOX[+value <: L], L ]
+    (impl: Receiver => (s: L) => IMOX[s.type] )
+  : Any
+
+  ;
 }
 
 

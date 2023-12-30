@@ -29,9 +29,25 @@ trait DefinesGetRemainingLines[-A, +R]
 //
 //   ;
 // }
-object DefinesGetRemainingLinesConv
+
+/** 
+ * cannot define companion namespace obj `DefinesGetRemainingLines` as
+ * that'd lead to "Cyclic Reference" complaints.
+ * 
+ */
+object commonDefinesGetRemainingLinesConv
 {
   ;
+
+  def basicInstance
+    [A, R] (applyTo: A => R )
+  = {
+    new DefinesGetRemainingLines[A, R] {
+      ;
+      extension (s: A )
+        def remainingLines = applyTo(s)
+    }
+  } : DefinesGetRemainingLines[? >: A, ? <: R]
 
   @deprecated
   def drlItemStructurisingWrapper [A , Cc[+a] <: collection.IterableOps[a, Cc, Cc[a] ] ] (using impl : DefinesGetRemainingLines[A, Cc[String]])
@@ -82,6 +98,11 @@ object DefinesGetRemainingLinesConv
   ;
 }
 
+transparent inline
+def DefinesGetRemainingLinesConv
+: commonDefinesGetRemainingLinesConv.type
+= commonDefinesGetRemainingLinesConv
+
 trait DefinesGetSrcFileInfo[-A, +R]
 {
   ;
@@ -90,6 +111,22 @@ trait DefinesGetSrcFileInfo[-A, +R]
     def srcFileInfo
     : R
 
+}
+
+object DefinesGetSrcFileInfo {
+  ;
+
+  def apply
+    [A, R] (applyTo: A => R )
+  = {
+    new DefinesGetSrcFileInfo[A, R] {
+      ;
+      extension (s: A )
+        def srcFileInfo = applyTo(s)
+    }
+  } : DefinesGetSrcFileInfo[? >: A, ? <: R]
+
+  ;
 }
 
 
@@ -133,6 +170,10 @@ object NextIncreasingLengthDequeueRetrialItrOps1 {
           case p @ (poppedLines @ (_ +: _ ), afterCheckRemainingLines) =>
             p
         })
+
+        .match { case r => lscalg.parsing.BRetrialIterator.from(r) }
+
+        .match { case r => r }
       }
 
       def nextUpToNLinesDequeueRetrialItr1
@@ -151,6 +192,8 @@ object NextIncreasingLengthDequeueRetrialItrOps1 {
           case (poppedLines, afterCheckRemainingLines) =>
             poppedLines.length <= lineCountLimit
         })
+
+        .match { case r => r }
       }
     }
 
