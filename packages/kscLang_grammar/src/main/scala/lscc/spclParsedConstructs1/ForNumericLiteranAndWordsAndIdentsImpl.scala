@@ -31,7 +31,7 @@ package lscc.spclParsedConstructs1
 object ForNumericLiteral1 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -51,7 +51,7 @@ object ForBigDecimalLiteral1
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -73,7 +73,7 @@ object ForBigHexadecimalLiteral1
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -100,7 +100,7 @@ object ForImmediateUnescapedWord
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -118,15 +118,66 @@ object ForImmediateUnescapedWord
   ;
 }
 
+object ForUnderscoreWildcardPattern
+{
+  ;
+
+  // import lscalg.bnfParsing.{given }
+  import lscalg.bnfParsing.IRegExp
+  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+
+  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+
+  import IRegExp.tagImplicits.{r}
+
+  val SUnderscore
+  = """_+""".r
+
+  // TODO
+  // protected
+  def apply
+    //
+    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    ( )
+  = (
+    ForBhOrNmLiteral(SUnderscore )
+    .map({ case v => "__" } )
+  )
+
+  ;
+}
+
+/**
+ * escaped identifier
+ * 
+ */
+object ForImmediateEscapedIdent {
+  //
+
+  // import lscalg.bnfParsing.{given }
+  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+
+  def apply
+    //
+    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    ( )
+  = (
+    ForImmediateBacktickedIdent()
+  )
+
+}
+
 /**
  * `quoted (with)in (a pair of) backticks` 
  * 
  */
-object ForImmediateEscapedIdent
+object ForImmediateBacktickedIdent
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -139,40 +190,58 @@ object ForImmediateEscapedIdent
     (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     ( )
-  = ForBhOrNmLiteral("""\`\w+\`""".r )
+  = ({
+    ;
+    import lscalg.parsing.subjectConcatOps1.given
+
+    (
+      ForBhOrNmLiteral("""\`""".r )
+      +%:
+      ForBhOrNmLiteral(""".+?(?=\`)""".r )
+      +%:
+      ForBhOrNmLiteral("""\`""".r )
+      +%:
+      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ec.T ]
+    )
+    .mapMainValue({ case ((_, v, _)) => v })
+  })
 
   ;
 }
 
+case class Identifier [+Value] (val value: Value )
+
+object ForKwPre
+{
+  // TODO
+  export ForBhOrNmLiteral.apply
+}
+
 // TODO
+case class Keyword[+Value] private[Keyword] (val value: Value )
+object Keyword {
+  ;
+  def apply[Value] (value: Value )(using DummyImplicit )
+  : Keyword[value.type]
+  = new Keyword[value.type](value )
+  ;
+}
+
 object ForBhOrNmLiteral
 {
   ;
 
-  import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+  //
 
-  import BnfCompatibleFileReadPtr1 as BC
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    (subject: IRegExp.ForRegexp[String] )
-  = {
-    ;
-
-    lscalg.bnfParsing.spclCommonLookaheadCaps1.ForImmediateStrPatternOccurence
-      (subject , lineCountLimit = 1 )
-  }
+  export ForImmediateSingleLineMatchOf.apply
 
   ;
 }
+
+
+
+
+;
 
 
 

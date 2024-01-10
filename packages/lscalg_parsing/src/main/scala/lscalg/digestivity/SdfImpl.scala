@@ -18,6 +18,41 @@ package lscalg.digestivity
 
 
 
+trait SdfCases
+{
+  ;
+
+  @deprecated("I meant 'ForReceiverAndRValue'.")
+  type ForReceiverAndROpt
+    [-ReceiT, +R ]
+  = ForReceiverAndRValue[ReceiT, R ]
+
+  type ForReceiverAndRValue
+    [-ReceiT, +R ]
+  = ForReceiverAndRMonad[ReceiT , Either[RExceptionUpperBound, R ] ]
+
+  @deprecated
+  type ForReceiverAndRMonad
+    [-ReceiT, +R <: Either[RExceptionUpperBound, ? ] ]
+  // <: ForReceiverAndRAndRMonad[ReceiT, Any, R ]
+  <: AnyRef
+
+  // type ForReceiverAndRAndRMonad
+  //   [-ReceiT, +RValue, +R <: Either[RExceptionUpperBound, RValue ] ]
+  // <: AnyRef
+
+  type _Any
+  = ForReceiverAndRMonad[Nothing, Either[RExceptionUpperBound, ? ] ]
+
+  ;
+
+  type RExceptionUpperBound
+  >: Unit
+  <: Unit
+
+  ;
+}
+
 // trait SdfCases
 // trait SdfRepr
 trait SdfRepr
@@ -212,52 +247,6 @@ with SdfCases
     (impl: A => lscalg.parsing.BRetrialIterator[R] )
   : ForReceiverAndRValue[A, R ]
   = SdfRepr1.ByBrF(impl = impl )
-
-  given optLiftingOps1
-  : AnyRef with {
-    ;
-
-    extension [ReceiT, R ] (impl: ForReceiverAndRValue[ReceiT, R ] )
-      //
-
-      /**
-       * lifted -- `Option[R]`
-       * 
-       */
-      def liftSbjO
-        //
-      // : ForReceiverAndRMonad[ReceiT, Right[Nothing, Option[R] ] ]
-      = fromAltLiftedFunction((
-        (impl.applyEi _ )
-        andThen(ei => ei.toOption ) 
-        andThen (Right(_) )
-      ))
-
-    ;
-  }
-
-  given brtLiftingOps1
-  : AnyRef with {
-    ;
-
-    extension [ReceiT, R ] (impl: ForReceiverAndRValue[ReceiT, R ] )
-      //
-
-      /**
-       * lifted -- `BRetrialIterator[R]`
-       * 
-       */
-      // @deprecated
-      def liftSbjBr
-        // lscalg.parsing.BRetrialIterator[R]
-      // : ForReceiverAndRMonad[ReceiT, Right[Nothing, lscalg.parsing.BRetrialIterator[R] ] ]
-      = fromAltLiftedFunction((
-        (impl.applyBrt _ )
-        andThen (Right(_) )
-      )).nn
-
-    ;
-  }
 
   ;
 
