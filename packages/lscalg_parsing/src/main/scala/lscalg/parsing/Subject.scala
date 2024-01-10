@@ -88,7 +88,7 @@ object subjectConcatOps1
 
   ;
 
-  ([Pt, T] => (ea : ParseFunction.ForReceiverAndRValue[Pt, T ] ) => {
+  locally([Pt, T] => (ea : ParseFunction.ForReceiverAndRValue[Pt, T ] ) => {
     Nil :+ ea :+ ea
   } )
 
@@ -111,6 +111,7 @@ object subjectConcatOps1
        * 
        */
       @deprecated
+      infix
       transparent inline
       def andThenAlso
         [
@@ -142,6 +143,7 @@ object subjectConcatOps1
        * concatenation of two Subject(s)
        * 
        */
+      infix
       def zip
         [
           RhsVal ,

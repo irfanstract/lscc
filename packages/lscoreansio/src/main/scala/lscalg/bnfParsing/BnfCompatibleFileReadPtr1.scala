@@ -247,14 +247,14 @@ trait BnfCompatibleFileReadPtrExtras1
       def tryForImmediateLoop
       : (
         (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-        (SpclSubject.ForReceiverAndROpt[ReceiT, R ] , SpclCountRange ) =>
+        (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange ) =>
           BnfCompatibleRetrialIterator[Seq[R] ]
       )
       = {
         ;
 
         (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-        (subject: SpclSubject.ForReceiverAndROpt[ReceiT, R ] , r: SpclCountRange ) =>
+        (subject: SpclSubject.ForReceiverAndRValue[ReceiT, R ] , r: SpclCountRange ) =>
           rImpl
             (backtrackWorthiness = backtrackWorthiness , eagerness = eagerness  )
             (subject, backConv = e => e.nextPos )
