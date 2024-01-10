@@ -31,7 +31,7 @@ package lscc.spclParsedConstructs1
 object ForNumericLiteral1 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -51,7 +51,7 @@ object ForBigDecimalLiteral1
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -73,7 +73,7 @@ object ForBigHexadecimalLiteral1
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -100,7 +100,7 @@ object ForImmediateUnescapedWord
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -126,7 +126,7 @@ object ForImmediateEscapedIdent
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 
@@ -149,7 +149,7 @@ object ForBhOrNmLiteral
 {
   ;
 
-  import lscalg.bnfParsing.{given }
+  // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
 

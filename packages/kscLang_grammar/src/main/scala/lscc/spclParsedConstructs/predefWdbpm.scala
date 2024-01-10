@@ -122,7 +122,7 @@ object WithDepsBasedFactoryMethods
     ;
   }
 
-  class for2TsImplWithReversedTList
+  class for2TsImplWithReversedTListImpl
     //
     [
       //
@@ -137,7 +137,7 @@ object WithDepsBasedFactoryMethods
       ,
       SubGvnT2Base,
       SubGvnT1Base ,
-    ]
+    ] private[WithDepsBasedFactoryMethods]
     (instantiateWithDeps: [t1 <: SubGvnT1Base, t2 <: SubGvnT2Base] => (deps: DepsT[t1, t2]) ?=> FinalT[deps.type] )
   extends
   _Any
@@ -185,28 +185,71 @@ object WithDepsBasedFactoryMethods
     >: _Main1[_Main1Deps[PAny, EOptConstructor] ]
     <: _Main1[_Main1Deps[PAny, EOptConstructor] ]
 
-
-    /* some post-checks */
-
-    ([
-        EOptConstructor
-        <: SubGvnT2Base
-        ,
-        PAny
-        <: SubGvnT1Base
-        ,
-      ] => () => {
-        ;
-        (e: _Main1Deps[PAny, EOptConstructor] ) => (e: _Main1DepsAny )
-
-        (e: _Main1[_Main1Deps[PAny, EOptConstructor] ] ) => (e: _Main1[_Main1DepsAny ] )
-      }
-    )
-
-    ((e: _Main1Deps[SubGvnT1Base, SubGvnT2Base] ) => (e: _Main1DepsAny ))
-
     ;
 
+  }
+
+  object For2TsImplWithReversedTList {
+    class Builder
+      [
+        //
+        FinalT
+          [+deps <: DepsT[SubGvnT1Base, SubGvnT2Base] ]
+        ,
+        DepsT
+          [
+            +t1 <: SubGvnT1Base,
+            +t2 <: SubGvnT2Base,
+          ]
+        ,
+        SubGvnT2Base,
+        SubGvnT1Base ,
+      ] private[WithDepsBasedFactoryMethods]
+    {
+      ;
+
+      def withBaseTs
+        [
+          //
+          SubGvnT2Base,
+          SubGvnT1Base ,
+        ]
+      = new Builder[[_] =>> Nothing , [_, _] =>> Nothing, SubGvnT2Base, SubGvnT1Base]
+
+      def withDepsT
+        [
+          //
+          DepsT
+            [
+              +t1 <: SubGvnT1Base,
+              +t2 <: SubGvnT2Base,
+            ]
+          ,
+        ]
+      = new Builder[[_] =>> Nothing , DepsT, SubGvnT2Base, SubGvnT1Base]
+
+      def withFinalT
+        [
+          //
+          FinalT
+            [+deps <: DepsT[SubGvnT1Base, SubGvnT2Base] ]
+          ,
+        ]
+      = new Builder[FinalT , DepsT, SubGvnT2Base, SubGvnT1Base]
+
+      def completeWith
+        //
+        (instantiateWithDeps: [t1 <: SubGvnT1Base, t2 <: SubGvnT2Base] => (deps: DepsT[t1, t2]) ?=> FinalT[deps.type] )
+      = {
+        ;
+        new for2TsImplWithReversedTListImpl
+          [FinalT, DepsT, SubGvnT2Base, SubGvnT1Base]
+          (instantiateWithDeps = instantiateWithDeps )
+      }
+    }
+
+    def builder()
+    = new Builder[[_] =>> Unit, [_, _] =>> Unit, Unit, Unit ]
   }
 
   ;

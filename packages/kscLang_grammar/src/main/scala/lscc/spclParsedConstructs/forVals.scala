@@ -30,42 +30,6 @@ object ForValsImpl
 
   ;
 
-  transparent inline
-  given _MainPublic
-    //
-    [
-      EOptConstructor
-      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
-      ,
-      PAny
-      ,
-    ]
-    //
-    (using c1 : _Main1Deps[PAny, EOptConstructor] )
-    //
-  : _MainPublic[EOptConstructor, PAny]
-  = {
-    ;
-    (new AnyRef with _Main[c1.type] )
-    .match { case r => r }
-  }
-
-  type _MainPublic
-    [
-      +
-      EOptConstructor
-      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
-      ,
-      PAny
-      ,
-    ]
-  = (
-    AnyRef
-    // & _Main[PAny]
-    // & _Main1Deps[PAny, EOptConstructor]
-    & _Main[? <: _Main1Deps[PAny, EOptConstructor] ] 
-  )
-
   ;
 
   trait _Main1Deps
@@ -99,6 +63,11 @@ object ForValsImpl
     : (
       ForNumericLiteranAndWordsAndIdentsImpl._MainPublic[SpclAfterDigestTupleOption.type , PAnyImpl ]
     )
+
+    transparent inline
+    def givenFispoSupp
+    : rc.ccImpl.type
+    = rc.ccImpl
 
     ;
   }
@@ -206,28 +175,36 @@ object ForValsImpl
        * TODO
        * 
        */
-      transparent inline
+      // transparent inline
       def immediateKeyword
         //
+        (using kwIngCtx : (
+          lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ]
+        ) )
         ()
+      : Option[(givenFispoSupp.SpclMatchContent, givenFispoSupp.T)]
       = {
         ;
 
-        import scala.util.matching.Regex.quote
-        import privateImplicits.{*, given }
+        ({
+          ;
 
-        (
-          Nil
-          :+ "abstract"
-        )
-        .foldLeft[SpclAfterDigestTupleOption._Any ] (SpclAfterDigestTupleOption._Impl1.None )((o, newS) => {
-          o orElse {
-            ((wrd: String) => (
-              p.immediateMatchOf(wrd.quotingR )
-            ) )(newS)
-          }
-        } )
+          import scala.util.matching.Regex.quote
+          import privateImplicits.{*, given }
+
+          val sj
+          = (kwIngCtx.asParseSubject )
+
+          // TODO
+          sj.applyBrt(p)
+        })
+        .headOption
       }
+      
+    }
+
+    extension (p: PAny ) {
+      
 
       /** 
        * `immediateIdent` ;
@@ -235,43 +212,81 @@ object ForValsImpl
        * TODO
        * 
        */
-      transparent inline
+      // @annotation.experimental
       def immediateKeywordOrIdent
         //
+        (using kwdIng : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
         ()
       = {
         ;
-        // p.immediateMatchOf("""\`\w+\`""".r)
-        ({
-          ;
-          import scala.util.matching.Regex.quote
-          import privateImplicits.{*, given }
-          (
-            p.immediateKeyword()
-            .toOption.map(r => {
-              Iiik.KEYWORD(r)
-            } )
 
-            orElse
+        (
+          // p.immediateKeyword()
+          // .map(Iiik.KEYWORD(_) )
+          (for { r <- p.immediateKeyword() } yield Iiik.KEYWORD(r) )
+          
+          orElse
+          
+          // p.immediateEscapedIdent()
+          // .map(Iiik.KEYWORD(_) )
+          (for { r1 <- p.immediateEscapedIdent().toOption ; r = (r1, r1.nextPos) } yield Iiik.IDENTIFIER(r) )
 
-            p.immediateEscapedIdent()
-            .toOption.map(r => {
-              Iiik.IDENTIFIER(r)
-            } )
-          )
-        })
+          // THE COMPILER WENT INTO CPU 100% HANG, WITH `.map`
+          //
+          //
+          //
+        )
       }
 
-      //
+
+      
     }
 
     enum Iiik {
-      case KEYWORD(value: SpclAfterDigestTupleOption.PositiveInstance )
-      case IDENTIFIER(value: SpclAfterDigestTupleOption.PositiveInstance )
+      case KEYWORD   (value: (givenFispoSupp.SpclMatchContent, givenFispoSupp.T) )
+      case IDENTIFIER(value: (givenFispoSupp.SpclMatchContent, givenFispoSupp.T) )
     }
 
     ;
   }
+
+  ;
+
+  transparent inline
+  given _MainPublic
+    //
+    [
+      PAny
+      ,
+      EOptConstructor
+      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
+      ,
+    ]
+    (using c1 : _Main1Deps[PAny, EOptConstructor] )
+  : _MainPublic[EOptConstructor, PAny]
+  = {
+    ;
+    (new AnyRef with _Main[c1.type] )
+    .match { case r => r }
+  }
+
+  type _MainPublic
+    [
+      +
+      EOptConstructor
+      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
+      ,
+      PAny
+      ,
+    ]
+  = (
+    AnyRef
+    & _Main[? <: _Main1Deps[PAny, EOptConstructor] ] 
+  )
+
+  ;
+
+  ;
 
   ;
 }
