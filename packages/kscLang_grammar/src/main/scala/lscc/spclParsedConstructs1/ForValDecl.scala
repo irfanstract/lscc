@@ -10,11 +10,6 @@ package lscc.spclParsedConstructs1
 
 
 
-import lscalg.bnfParsing.{*, given }
-
-
-
-
 
 
 
@@ -24,126 +19,259 @@ import lscalg.bnfParsing.{*, given }
 
 ;
 
-// /** 
-//  * `immediateKeyword` ;
-//  * 
-//  * TODO
-//  * 
-//  */
-// transparent inline
-// def immediateKeyword
-//   //
-//   ()
-// = {
-//   ;
-
-//   import scala.util.matching.Regex.quote
-//   import privateImplicits.{*, given }
-
-//   (
-//     Nil
-//     :+ "abstract"
-//   )
-//   .foldLeft[SpclAfterDigestTupleOption._Any ] (SpclAfterDigestTupleOption._Impl1.None )((o, newS) => {
-//     o orElse {
-//       ((wrd: String) => (
-//         p.immediateMatchOf(wrd.quotingR )
-//       ) )(newS)
-//     }
-//   } )
-// }
-
-// TODO
-object ForMustAlwaysBeKeyword
-{
+object ForPrefixedExpr {
   ;
 
-  // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
+    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    ()
   = {
-    ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      ForBhOrNmLiteral("""fi|do|if|for|while|until|case|trait|class|object|not|(?:do|does|done|did)|(?:is|are|was|were)|none|some|this|that|[ijkldfarcbx](\d+)""".r )
-    ))
+    (
+      ForPrefixedScrutTermLvlExpr()
+    )
   }
+
+  ;
 }
 
-// TODO
-object ForTermLevelKeyword
+
+
+
+;
+
+object ForPrefixedScrutTermLvlExpr
 {
   ;
 
-  // protected
+  // val kwIngCtx
+  // = ForTermLevelUnprefixedKeyword()
+
+  ;
+
+  /**
+   * `val example1 @ (expr)`, `val exampleSome : T`
+   * 
+   */
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
+    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    ()
+  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , FvdParsed._Any ]
   = {
     ;
-    import IRegExp.tagImplicits.r
 
-    // TODO
-    FTLK((
-      ForMustAlwaysBeKeyword()
+    import givenFispoSupp.T as PAny
+    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+    ({
+      ;
+
+
+      ({
+        ;
+
+        ({
+          ;
+          import lscalg.parsing.subjectConcatOps1.given
+
+          (
+            ForPrefixingScrutTermLvlExpr()
+
+            +%:
+
+            ForScrutSyntactic()
+
+            +%:
+
+            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
+          )
+          .map({ case (bindingExpr, s) => bindingExpr } )
+        })
+      })
+    })
+  }
+
+  ;
+}
+
+object ForPrefixingScrutTermLvlExpr {
+  ;
+
+  def apply
+    //
+    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    ()
+  = {
+    ;
+
+    import givenFispoSupp.T as PAny
+    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+    
+    ;
+
+    (
+      ForValDefOnly()
+      .map(e => {
+        e.map(PrefixScrutLhsExpr.ForValDef.apply _ )
+      } )
+
       orElse
-      ForBhOrNmLiteral("""ref|refs""".r )
-    ))
+
+      ForUnderscoreWildcardDefOnly()
+      .map(e => {
+        e.map(_ => PrefixScrutLhsExpr.ForIgnorableWildcard() )
+      } )
+    )
   }
+
+  ;
 }
 
-// TODO
-object ForTypeLevelKeyword
+enum PrefixScrutLhsExpr {
+  ;
+
+  case ForIgnorableWildcard()
+
+  case ForValDef(value: FvdParsed._Any )
+
+}
+
+
+
+
+
+;
+
+object ForUnderscoreWildcardDefOnly {
+  ;
+
+  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+  /**
+   * `__`
+   * 
+   */
+  def apply
+    //
+    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    ()
+  = (
+    ForUnderscoreWildcardPattern.apply()
+    .mapWithFinalPtrPosVl((vl, pos) => {
+      vl
+      .withSrcInfo(srcPosInfo = pos )
+    } )
+  )
+
+  ;
+}
+
+
+
+
+object ForValDefOnly
 {
   ;
 
-  // protected
+  /**
+   * `val example1`, `val exampleSome`
+   * 
+   */
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
+    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    ()
+  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , FvdParsed._Any ]
   = {
     ;
-    import IRegExp.tagImplicits.r
 
-    // TODO
-    FTLK((
-      ForMustAlwaysBeKeyword()
-      orElse
-      ForBhOrNmLiteral("""fi|do|if|for|while|until|case|abs|abstract|absol|trait|sealed|cap|capt|fnl|final|class|not|[ijkldfarcbx](\d+)|object|type|singletype|as|did""".r )
-    ))
+    import givenFispoSupp.T as PAny
+
+    ({
+      ;
+
+      /** 
+       * impose
+       * altered definition of the WithFilter ops, which is better for this usage.
+       * 
+       */
+      import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+      import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+      ({
+        ;
+
+        ({
+          ;
+
+          import lscalg.parsing.subjectConcatOps1.given
+
+          (
+            ForOccurringKeywordOrRef()
+            .collect({ case (Keyword(iTypeKwd @ ("val" | "const" | "let" ) )) => Keyword(iTypeKwd) } )
+            .mapWithFinalPtrPosVl({ case (vl, pos) => vl.withSrcInfo(srcPosInfo = pos) })
+
+            +%:
+
+            ForOccurringKeywordOrRef()
+            .collect({ case (Identifier(ident)) => (ident ) } )
+            .mapWithFinalPtrPosVl({ case (vl, pos) => vl.withSrcInfo(srcPosInfo = pos) })
+
+            +%:
+
+            // ForScrutSyntactic()
+
+            // +%:
+              
+            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
+          )
+          .map({ case (iType, ident) => FvdParsed(ident = ident, iTypeKw = iType ) } )
+        })
+        .mapWithFinalPtrPosVl({ case (vl, pos) => vl.withSrcInfo(srcPosInfo = pos) })
+      })
+    })
   }
+
+  ;
 }
 
-// TODO
-object FTLK
+object FvdParsed
 {
   ;
 
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    // (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    (impl: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent] )
-  = {
-    ;
-    SpclCont(impl)
-  }
+  type _Any
+  = FvdParsed[?, ?]
 
-  /* auxiliary */
-  protected[FTLK]
-  case class SpclCont[+Impl ](impl : Impl )
-
+  ;
 }
 
+case class FvdParsed
+  [
+    +Ident,
+    +IType ,
+  ] (
+    ident : Ident ,
+    iTypeKw : IType ,
+  )
 
 
 

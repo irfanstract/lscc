@@ -106,7 +106,7 @@ class forConcatenationSb
       (subject: ([A] =>> A )[(
         //
         Seq[(
-          SpclSubject.ForReceiverAndROpt[_Any, (
+          SpclSubject.ForReceiverAndRValue[_Any, (
             SpclAfterDigestTupleOption
           ) ]
         ) ]
@@ -138,7 +138,7 @@ class forConcatenationSb
       (subject: ([A] =>> A )[(
         //
         Seq[(
-          SpclSubject.ForReceiverAndROpt[_Any, (
+          SpclSubject.ForReceiverAndRValue[_Any, (
             SpclAfterDigestTupleOption
           ) ]
         ) ]

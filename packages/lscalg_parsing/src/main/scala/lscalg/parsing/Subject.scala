@@ -88,7 +88,7 @@ object subjectConcatOps1
 
   ;
 
-  ([Pt, T] => (ea : ParseFunction.ForReceiverAndRValue[Pt, T ] ) => {
+  locally([Pt, T] => (ea : ParseFunction.ForReceiverAndRValue[Pt, T ] ) => {
     Nil :+ ea :+ ea
   } )
 
@@ -111,6 +111,7 @@ object subjectConcatOps1
        * 
        */
       @deprecated
+      infix
       transparent inline
       def andThenAlso
         [
@@ -142,6 +143,7 @@ object subjectConcatOps1
        * concatenation of two Subject(s)
        * 
        */
+      infix
       def zip
         [
           RhsVal ,
@@ -175,8 +177,15 @@ object subjectConcatOps1
 
   }
 
+  /** 
+   * the default concat operator (specifically, `PHTCO`) op impl,
+   * being a strict-concat one.
+   * 
+   * (for comparison, there may be an alt impl which adds optional in-between whitespace-match rule )
+   * 
+   */
   given prsHeadTailConcatOp
-  : AnyRef with {
+  : AnyRef with PHTCO with {
     ;
 
     extension [
@@ -225,6 +234,36 @@ object subjectConcatOps1
   ;
 }
 
+trait PHTCO {
+  ;
+
+  extension [
+    //
+    ReceiT,
+    LhsVal,
+  ] (impl: ParseFunction.ForReceiverAndRValue[ReceiT, LhsVal] )
+  {
+    //
+
+    /** 
+     * concatenation of expected inputs,
+     * effectively composition of *inp-pos*,
+     * returned as `parsed1 *: parsed2`
+     * 
+     * concatenation of two Subject(s)
+     * 
+     */
+    def +%:
+      [
+        RhsVal ,
+      ]
+      (implRhs : ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
+      (using RVT : RhsVal <:< Tuple )
+    : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal *: (RhsVal & Tuple ) ) ]
+  }
+
+  ;
+}
 
 
 
