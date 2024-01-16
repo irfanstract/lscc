@@ -234,12 +234,25 @@ object subjectConcatOps1
   ;
 }
 
-trait PHTCO {
+
+
+
+type PHTCO
+= PHTCOAlt[Nothing, Any ]
+
+type PHTCOAlt
+  [+RL <: RU, -RU ]
+= PHTCOImpl[RL, RU ]
+
+protected
+trait PHTCOImpl
+  [+RL <: RU, -RU ]
+{
   ;
 
   extension [
     //
-    ReceiT,
+    ReceiT >: RL <: RU ,
     LhsVal,
   ] (impl: ParseFunction.ForReceiverAndRValue[ReceiT, LhsVal] )
   {

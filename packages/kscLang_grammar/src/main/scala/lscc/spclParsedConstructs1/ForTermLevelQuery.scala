@@ -47,6 +47,9 @@ object ForScrutSyntactic
       import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
       import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
 
+      /** to impose `prsWhitespaceableHeadTailConcatOp` */
+      import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+
       (
         //
 
