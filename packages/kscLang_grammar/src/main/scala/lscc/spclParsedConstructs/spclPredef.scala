@@ -19,7 +19,7 @@ package spclParsedConstructs
 
 
 
-
+import lscalg.bnfParsing.BnfCompatibleFileReadPtr1.{GeneralisedSpclAfterDigestTupleOption, GeneralisedSpclAfterDigestTupleOptionLU }
 
 
 
@@ -36,61 +36,66 @@ import lscalg.bnfParsing.spclCommonLookaheadCaps as GrmPtrStrMatchOpTraits1
 
 
 
-trait BnfParseOptionCtorAndPtrTypeDefiner private[BnfParseOptionCtorAndPtrTypeDefiner] ()
+;
+
+export lscalg.bnfParsing.spclBnfParseOptionCtorAndPtrTypeDefinerExtras.BnfParseOptionCtorAndPtrTypeDefiner
+
+
+
+
+
+
+// @deprecated("instead, split the dependency into two: 'BnfParseOptionCtorAndPtrTypeDefiner' and also 'ForImmediatePatterOccurence'.")
+trait BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps private[BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps] ()
+// extends
+// AnyRef with BnfParseOptionCtorAndPtrTypeDefiner
 {
   thisBnfParseOptionCtorAndPtrTypeDefiner =>
   ;
 
-  type PAny
+  val ieoc
+  : BnfParseOptionCtorAndPtrTypeDefiner
 
-  val SpclAfterDigestTupleOption
-  : GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
+  export ieoc.PAny
+
+  export ieoc.SpclAfterDigestTupleOption
+
+  export ieoc.ccImpl
 
   given iemiOpsR : (
     lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType
       [PAny, util.matching.Regex , SpclAfterDigestTupleOption._Any ]
   )
 
-  given ccImpl
-  : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp with {
-    ;
-
-    type T
-    >: PAny
-    <: PAny
-
-    // TODO
-    // val SpclAfterDigestTupleOption
-    // : BnfCompatibleFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[T]
-    export thisBnfParseOptionCtorAndPtrTypeDefiner.SpclAfterDigestTupleOption as SpclAfterDigestTupleOption
-  }
-
 }
 
-object BnfParseOptionCtorAndPtrTypeDefiner
+// @deprecated("instead, split the dependency into two: 'BnfParseOptionCtorAndPtrTypeDefiner' and also 'ForImmediatePatterOccurence'.")
+object BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps
 {
   ;
 
-  type _Any = BnfParseOptionCtorAndPtrTypeDefiner
+  type _Any
+  = BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps
 
   type ForPtrTypeAndParseOptionConstructor
     //
     [
-      PAny
+      PAnyImpl
       ,
       +EOptConstructor
-      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
+      <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAnyImpl]
       ,
     ]
-  = ([PAnyImpl] =>> (
-    BnfParseOptionCtorAndPtrTypeDefiner
+  = ((
+    BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps
     {
-      type PAny >: PAnyImpl <: PAnyImpl
-      val SpclAfterDigestTupleOption : EOptConstructor
+      val ieoc
+      : BnfParseOptionCtorAndPtrTypeDefiner.ForPtrTypeAndParseOptionConstructor[PAnyImpl, EOptConstructor ]
     }
-  ))[PAny]
+  ))
 
   // TODO
+  // @deprecated("instead, split the dependency into two: 'BnfParseOptionCtorAndPtrTypeDefiner' and also 'ForImmediatePatterOccurence'.")
   // transparent inline
   given iForPtrTypeAndParseOptionConstructor
     [
@@ -100,10 +105,11 @@ object BnfParseOptionCtorAndPtrTypeDefiner
       <: Singleton & GrmSpclFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[PAny]
       ,
     ]
-    (using VO_EOptConstructor : ValueOf[EOptConstructor] )
+    // (using VO_EOptConstructor : ValueOf[EOptConstructor] )
+    (using ieocImpl : BnfParseOptionCtorAndPtrTypeDefiner.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor] )
     (using rr : (
       GrmPtrStrMatchOpTraits1.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType
-        [PAny, util.matching.Regex , VO_EOptConstructor.value._Any ]
+        [PAny, util.matching.Regex , ieocImpl.SpclAfterDigestTupleOption._Any ]
     ) )
   : ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor]
   = {
@@ -114,21 +120,31 @@ object BnfParseOptionCtorAndPtrTypeDefiner
     new _Any {
       ;
 
-      type PAny
-      >: PAnyT
-      <: PAnyT
+      // type PAny
+      // >: PAnyT
+      // <: PAnyT
 
-      val SpclAfterDigestTupleOption
-      : VO_EOptConstructor.value.type
-      = VO_EOptConstructor.value
+      // val SpclAfterDigestTupleOption
+      // : VO_EOptConstructor.value.type
+      // = VO_EOptConstructor.value
+
+      val ieoc
+      : ieocImpl.type
+      = ieocImpl
 
       val iemiOpsR : (
         lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType
-          [PAny, util.matching.Regex , SpclAfterDigestTupleOption._Any ]
+          [PAnyT, util.matching.Regex , SpclAfterDigestTupleOption._Any ]
       )
       = rr
     }
   }
+
+  transparent inline
+  given given_underlying_BnfParseOptionCtorAndPtrTypeDefiner
+    (using c : _Any)
+  : (BnfParseOptionCtorAndPtrTypeDefiner & c.ieoc.type )
+  = c.ieoc
 
   ;
 }

@@ -41,14 +41,22 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       PAny
       ,
     ]
-    (using rc : BnfParseOptionCtorAndPtrTypeDefiner.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor] )
+    (using rc0 : BnfParseOptionCtorAndPtrTypeDefiner.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor] )
     (using rr : (
       GrmPtrStrMatchOpTraits1.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType
-        [PAny, util.matching.Regex , rc.SpclAfterDigestTupleOption._Any ]
+        [PAny, util.matching.Regex , rc0.SpclAfterDigestTupleOption._Any ]
     ) )
   : _MainPublic[EOptConstructor, PAny]
   = {
     ;
+
+    val rc
+    // : BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor]
+    = {
+      // summon[BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps ]
+      BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps.iForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor]
+    }
+
     val rcAlias
     : rc.type
     = valueOf
@@ -90,10 +98,25 @@ object ForNumericLiteranAndWordsAndIdentsImpl
 
     // private[ForNumericLiteranAndWordsAndIdentsImpl]
     val rc
-    : BnfParseOptionCtorAndPtrTypeDefiner.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor]
+    : BnfParseOptionCtorAndPtrTypeDefinerAndIemiOps.ForPtrTypeAndParseOptionConstructor[PAny, EOptConstructor]
+
+    protected
+    transparent inline
+    given given_rc_self
+    : rc.type
+    = rc
+
+    protected
+    transparent inline
+    given given_rc_underl_self
+    : rc.ieoc.type
+    = rc.ieoc
 
     export rc.{SpclAfterDigestTupleOption}
-    export rc.{given}
+
+    // export rc.{ccImpl}
+
+    export rc.{iemiOpsR}
 
     ;
   }
@@ -138,21 +161,13 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       def immediateNumericLiteral
         //
         ()
-      = (
-        // p.immediateBigDecimalLiteral()
-        // // orElse
-        // // p.immediateBigHexadecimalLiteral()
-        // .match { case result0 => {
-        //   val result2
-        //   = p.immediateBigHexadecimalLiteral()
-
-        //   SpclAfterDigestTupleOption._Impl1.orElse(result0 )(result2 )
-        //   .match { case r => r }
-        // } }
+      : SpclAfterDigestTupleOption._Any
+      = ({
+        ;
 
         lscc.spclParsedConstructs1.ForNumericLiteral1()
         .applyOET(p)
-      )
+      })
 
       //
     }
@@ -168,8 +183,8 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       def immediateBigDecimalLiteral
         //
         ()
+      : SpclAfterDigestTupleOption._Any
       = (
-        // p.immediateMatchOf("""(?!0x)[0-9]+(\.[0-9]+)?([eE][+\-][0-9]+)?""".r)
         lscc.spclParsedConstructs1.ForBigDecimalLiteral1()
         .applyOET(p)
       )
@@ -182,8 +197,8 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       def immediateBigHexadecimalLiteral
         //
         ()
+      : SpclAfterDigestTupleOption._Any
       = (
-        // p.immediateMatchOf("""0x(?:[0-9A-Z]+|[0-9a-z]+)(\.[0-9A-Za-z]+)?""".r)
         lscc.spclParsedConstructs1.ForBigHexadecimalLiteral1()
         .applyOET(p)
       )
@@ -203,10 +218,10 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       def immediateUnescapedWord
         //
         ()
+      : SpclAfterDigestTupleOption._Any
         // TODO
       // : VO_EOptConstructor.value._Any
       = (
-        // p.immediateMatchOf("""(?![0-9])(?:[\w]|\\p\{.*?\})+""".r)
         lscc.spclParsedConstructs1.ForImmediateUnescapedWord()
         .applyOET(p)
       )
@@ -225,8 +240,8 @@ object ForNumericLiteranAndWordsAndIdentsImpl
       def immediateEscapedIdent
         //
         ()
+      : SpclAfterDigestTupleOption._Any
       = (
-        // p.immediateMatchOf("""\`\w+\`""".r)
         lscc.spclParsedConstructs1.ForImmediateEscapedIdent()
         .applyOET(p)
       )

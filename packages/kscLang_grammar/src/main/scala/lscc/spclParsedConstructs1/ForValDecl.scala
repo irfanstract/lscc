@@ -80,7 +80,8 @@ object ForPrefixedScrutTermLvlExpr
 
         ({
           ;
-          import lscalg.parsing.subjectConcatOps1.given
+
+          import fwscImplicits.prsWhitespaceableHeadTailConcatOp
 
           (
             ForPrefixingScrutTermLvlExpr()
@@ -223,7 +224,7 @@ object ForValDefOnly
         ({
           ;
 
-          import lscalg.parsing.subjectConcatOps1.given
+          import fwscImplicits.prsWhitespaceableHeadTailConcatOp
 
           (
             ForOccurringKeywordOrRef()
