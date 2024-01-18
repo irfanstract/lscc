@@ -81,6 +81,30 @@ object ForOccurringKeywordOrRef
   ;
 }
 
+object ForOccurringKeywordOrRefP
+{
+  ;
+
+  transparent inline /* forwarders need to be `tr inline` so that narrowing of the peer method gets properly reflected */
+  def apply
+    //
+    // (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    // (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+    (using ctx: SpclGrammaticalPxery )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    ()
+  //
+  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] | Identifier[String] ]
+  = {
+    import ctx.given
+
+    ForOccurringKeywordOrRef()
+    .nn
+  }
+
+  ;
+}
+
 
 
 
