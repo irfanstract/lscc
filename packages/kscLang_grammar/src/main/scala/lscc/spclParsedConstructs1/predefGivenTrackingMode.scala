@@ -75,6 +75,17 @@ object SpclApm {
         : AfterSi[value.type]
         = { value }
       }
+
+      ;
+
+      extension [V0] (cw: AfterSi[V0]) {
+        def zip
+          [V2] (m: AfterSi[V2] )
+        : (cw.type, m.type )
+        // : AfterSi[(V0, V2)]
+        = (cw, m)
+      }
+
     }
   }
 
@@ -120,6 +131,12 @@ trait SpclApm
 
   val ec
   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
+
+  extension [V0] (cw: AfterSi[V0]) {
+    def zip
+      [V2] (m: AfterSi[V2] )
+    : AfterSi[(V0, V2)]
+  }
 
   ;
 }
