@@ -142,26 +142,6 @@ trait SdfZipWithReceiverIPackedCases
 
     ;
 
-    type ForReceiverAndRMonad
-      [ReceiU, +RMonad <: Either[Sdf.RExceptionUpperBound, ? ] ]
-    = (
-      // _Any
-      // &
-      ForReceiverAndRValue[ReceiU, Any ]
-      &
-      Sdf.ForReceiverAndRMonad[ReceiU, RMonad ]
-    )
-
-    type ForReceiverLUAndRMonad
-      [-ReceiL <: ReceiU, +ReceiU, +RMonad <: Either[Sdf.RExceptionUpperBound, ? ] ]
-    = (
-      // _Any
-      // &
-      ForReceiverLUAndRValue[ReceiL, ReceiU, Any ]
-      &
-      Sdf.ForReceiverAndRMonad[ReceiL, RMonad ]
-    )
-
     ;
 
     ;
@@ -286,6 +266,10 @@ trait SdfZipWithReceiverIPackedCases
 
   ;
 }
+
+
+
+
 
 
 

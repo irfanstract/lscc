@@ -29,20 +29,10 @@ trait SdfCases
 
   type ForReceiverAndRValue
     [-ReceiT, +R ]
-  = ForReceiverAndRMonad[ReceiT , Either[RExceptionUpperBound, R ] ]
-
-  @deprecated
-  type ForReceiverAndRMonad
-    [-ReceiT, +R <: Either[RExceptionUpperBound, ? ] ]
-  // <: ForReceiverAndRAndRMonad[ReceiT, Any, R ]
-  <: AnyRef
-
-  // type ForReceiverAndRAndRMonad
-  //   [-ReceiT, +RValue, +R <: Either[RExceptionUpperBound, RValue ] ]
-  // <: AnyRef
 
   type _Any
-  = ForReceiverAndRMonad[Nothing, Either[RExceptionUpperBound, ? ] ]
+  >: ForReceiverAndRValue[Nothing, Any ]
+  <: Any
 
   ;
 
@@ -63,12 +53,22 @@ with SdfCases
   ;
 
   override
+  type ForReceiverAndRValue
+    [-ReceiT, +R ]
+  = ForReceiverAndRMonad[ReceiT , Either[RExceptionUpperBound, R ] ]
+
+  protected[SdfRepr]
   opaque type ForReceiverAndRMonad
     [-ReceiT, +R <: Either[RExceptionUpperBound, ? ] ]
   // <: AnyRef
-  // = ReceiT => R
   <: SdfRepr1[? >: ReceiT, ERhs[R] @annotation.unchecked.uncheckedVariance , ? <: R ]
   =  SdfRepr1[? >: ReceiT, ERhs[R] @annotation.unchecked.uncheckedVariance , ? <: R ]
+
+  override
+  type _Any
+  = ForReceiverAndRMonad[Nothing, Either[RExceptionUpperBound, ? ] ]
+
+  ;
 
   type ERhs[REi <: Either[RExceptionUpperBound, ? ] ] =
     REi match { case Either[?, r] => r }
@@ -151,16 +151,6 @@ with SdfCases
     }
   }
 
-  // extension [ReceiT, R, RException <: RExceptionUpperBound, REi <: Either[RException, R ] ] (impl: ForReceiverAndRMonad[ReceiT, REi] ) {
-  //   //
-
-  //   def applyEi
-  //     (receiver: ReceiT )
-  //   : REi
-  //   = impl.apply(receiver )
-
-  // }
-
   extension [ReceiT, R ] (impl: ForReceiverAndRValue[ReceiT, R ] ) {
     //
 
@@ -172,7 +162,11 @@ with SdfCases
      * supposed to be equivalent to `applyBrt(receiver).headOption`
      * .
      * 
+     * a lossy op,
+     * only taking at-most one perm, unlike `applyBrt` which may casually extend off
+     * 
      */
+    @deprecated("'applyO' is effectively lossy op.")
     def applyO
       (receiver: ReceiT )
     : Option[R]

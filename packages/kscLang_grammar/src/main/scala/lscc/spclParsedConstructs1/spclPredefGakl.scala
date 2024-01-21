@@ -25,7 +25,13 @@ trait SpclGrammaticalPxery {
 
   implicit
   val apMode
-  : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+
+  // implicit
+  transparent inline
+  def grmMetadataWrapMode
+  : apMode.type
+  = apMode
 
   implicit
   val expcRx
@@ -39,8 +45,8 @@ trait SpclGrammaticalPxery {
    */
   type SpclSdfYielding
     [+Value]
-  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[Value ] ] @annotation.unchecked.uncheckedVariance
-  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[Value ] ] //
+  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , grmMetadataWrapMode.AfterSi[Value ] ] @annotation.unchecked.uncheckedVariance
+  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , grmMetadataWrapMode.AfterSi[Value ] ] //
 
   ;
 }
@@ -55,7 +61,7 @@ object SpclGrammaticalPxery
   def make
     //
     (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using a : SpclApm.withPtrTRange[g.T, g.T ] )
+    (using a : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[g.T, g.T ] )
     (using eRx : (
       lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.T, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
     ))

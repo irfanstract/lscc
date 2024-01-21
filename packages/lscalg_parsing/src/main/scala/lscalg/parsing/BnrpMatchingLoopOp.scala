@@ -25,8 +25,14 @@ opaque type BnrpCountRange
 = Range
 
 object BnrpCountRange
+extends
+AnyRef
+with BnrpCountRangeLowPriorityImplicits
 {
   ;
+
+  type _Any
+  = BnrpCountRange
 
   //
   transparent inline
@@ -34,20 +40,47 @@ object BnrpCountRange
   : BnrpCountRange
   = Range.inclusive(start, `end`)
 
+  transparent inline
+  def exclusive(start: Int, end: Int)
+  = inclusive(start = start , `end` = end + -1 )
+
   // extension (d: BnrpCountRange )
   //   def start = d.start
   //   def end   = d.end
 
-  @deprecated
-  given Conversion[Range, BnrpCountRange]
-  = (<:<.refl[Range] ).apply _
+  case class SpclStartAndEndIndexOps(val d: Range ) :
+    export d.{start, end }
+  //
+  given cSpclStartAndEndIndexOps
+  : Conversion[_Any, SpclStartAndEndIndexOps]
+  = SpclStartAndEndIndexOps.apply
 
-  @deprecated
-  given Conversion[BnrpCountRange, Range]
-  = (<:<.refl[Range] ).apply _
+  // protected
+  object implicitConversionsFromAndToStdRangeObj
+  {
+    ;
+
+    @deprecated("use factory-method 'inclusive'. ")
+    given Conversion[Range, BnrpCountRange]
+    = (<:<.refl[Range] ).apply
+
+    @deprecated
+    given Conversion[BnrpCountRange, Range]
+    = (<:<.refl[Range] ).apply
+
+  }
 
 
   ;
+}
+
+protected
+trait BnrpCountRangeLowPriorityImplicits
+{ this : BnrpCountRange.type =>
+  ;
+
+  export implicitConversionsFromAndToStdRangeObj.given
+
 }
 
 
@@ -84,7 +117,7 @@ object BnrpMatchingLoopOp {
       : (
         (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
         (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange ) =>
-          BRetrialIterator.ForR[Seq[R] ]
+          BRetrialIterator.ForItemT[Seq[R] ]
       )
     //
 
@@ -94,7 +127,7 @@ object BnrpMatchingLoopOp {
       def tryForImmediateLoop1
       : (
         (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange, SpclEagerness ) =>
-          BRetrialIterator.ForR[Seq[R] ]
+          BRetrialIterator.ForItemT[Seq[R] ]
       )
       = { case e => {
         pt0
@@ -107,11 +140,11 @@ object BnrpMatchingLoopOp {
 
   }
 
-  // export lscalg.digestivity.Subject as SpclSubject
+  // export lscalg.digestivity.Sdf as SpclSubject
   transparent inline
   def SpclSubject
-  : lscalg.digestivity.Subject.type
-  = lscalg.digestivity.Subject
+  : lscalg.digestivity.Sdf.type
+  = lscalg.digestivity.Sdf
 
   type SpclCountRange
   = BnrpCountRange
@@ -165,7 +198,7 @@ object BnrpMatchingLoopOp {
       (subject: SpclSubject.ForReceiverAndRValue[ReceiT, R1 ] , backConv: R1 => ReceiT )
     : (
       (p0: ReceiT, countBnds: SpclCountRange ) =>
-        BRetrialIterator.ForR[Seq[R1] ]
+        BRetrialIterator.ForItemT[Seq[R1] ]
     )
     = {
       ;
@@ -173,7 +206,7 @@ object BnrpMatchingLoopOp {
       // TODO
       def %%%%
         (p0: ReceiT, countBnds0: Range.Inclusive )
-      : BRetrialIterator.ForR[Seq[R1] ]
+      : BRetrialIterator.ForItemT[Seq[R1] ]
       = {
         if countBnds0.end < 0 then {
           return BRetrialIterator.from(Nil )

@@ -17,11 +17,23 @@ package lscc.spclParsedConstructs1
 
 
 
-object SpclApm {
+transparent inline
+def SpclApm
+: SpclGrammaticalItemMetaDataWrapMode.type
+= SpclGrammaticalItemMetaDataWrapMode
+
+type SpclApm[+R]
+= SpclGrammaticalItemMetaDataWrapMode
+
+
+
+
+
+object SpclGrammaticalItemMetaDataWrapMode {
   ;
 
   type _Any
-  = SpclApm
+  = SpclGrammaticalItemMetaDataWrapMode
 
   type withPtrTRange
     [-TL <: TU, +TU ]
@@ -42,7 +54,7 @@ object SpclApm {
     //
     (using ecImpl : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
   = {
-    new AnyRef with SpclApm
+    new AnyRef with SpclGrammaticalItemMetaDataWrapMode
     {
       //
 
@@ -92,7 +104,7 @@ object SpclApm {
   ;
 }
 
-trait SpclApm
+trait SpclGrammaticalItemMetaDataWrapMode
 {
   ;
 
