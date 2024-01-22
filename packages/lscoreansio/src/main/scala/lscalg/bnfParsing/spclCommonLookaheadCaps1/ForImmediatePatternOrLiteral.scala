@@ -19,7 +19,13 @@ import lscalg.cli.repl.{*}
 
 
 
-object ForImmediateStrPatternOccurence
+@deprecated("alias of 'ForImmediateRegexSelectedRawOccurence'.")
+transparent inline
+def ForImmediateStrPatternOccurence
+: ForImmediateRegexSelectedRawOccurence.type
+= ForImmediateRegexSelectedRawOccurence
+
+object ForImmediateRegexSelectedRawOccurence
 {
   ;
 
@@ -47,7 +53,13 @@ object ForImmediateStrPatternOccurence
   ;
 }
 
-object ForImmediateStrLiteralOccurence
+@deprecated("alias of 'ForImmediateLiterallyRawOccurence'.")
+transparent inline
+def ForImmediateStrLiteralOccurence
+: ForImmediateLiterallyRawOccurence.type
+= ForImmediateLiterallyRawOccurence
+
+object ForImmediateLiterallyRawOccurence
 {
   ;
 

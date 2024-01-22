@@ -127,6 +127,9 @@ object ParseFunction
   : eApplyEiOrOptionPkOps.type
   = eApplyEiOrOptionPkOps
 
+  /** 
+   * the `applyBrt` methods provider
+   */
   given eApplyEiOrOptionPkOps
   : AnyRef with {
     ;
@@ -141,9 +144,67 @@ object ParseFunction
     }
   }
 
+  /** 
+   * the WithFilter methods provider,
+   * defined to be on the main-value (of two values, the other one being `the subsequent parser-position`)
+   * 
+   */
   def returnedMainValueMapOp1
   : (AnyRef & SdfWithFilter[ForReceiverAndRValue ] )
   = Sdf.returnedMainValueMapOpExtras.returnedMainValueMapOp1.nn
+
+  given returnedMainValueMapOpAlt
+  : AnyRef with {
+    ;
+
+    import Sdf.monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
+
+    extension [ReceiT, LRV] (lhsI : ForReceiverAndRValue[ReceiT, LRV ] )
+    {
+      //
+
+      def mapMainValue
+        //
+        [NewRV]
+        (proj: LRV => NewRV )
+      : ForReceiverAndRValue[ReceiT, NewRV ]
+      = {
+        lhsI
+        .map({ case (value, nextPt) => (proj(value) , nextPt ) })
+      }
+
+      // def flatMapMainValue
+      //   //
+      //   [NewRV]
+      //   (proj: LRV => NewRV )
+      // : ForReceiverAndRValue[ReceiT, NewRV ]
+      // = {
+      //   lhsI
+      //   .map({ case (value, nextPt) => (proj(value) , nextPt ) })
+      // }
+    }
+  }
+
+  /** 
+   * the `orElse` provider
+   */
+  given alternationalOp
+  : (AnyRef & lscalg.digestivity.SdfFallBackOps[ForReceiverAndRValue ] )
+  = new AnyRef with lscalg.digestivity.SdfFallBackOps[ForReceiverAndRValue ] {
+    ;
+
+    import Sdf.alternativeOp.{orElse as orElseImpl }
+
+    extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, LRV ] )
+
+      infix
+      def orElse
+        [UniRV >: LRV]
+        (rhsI : ForReceiverAndRValue[LA, UniRV ] )
+      = (
+        lhsI.orElseImpl(rhsI)
+      ).nn
+  }
 
   ;
 
