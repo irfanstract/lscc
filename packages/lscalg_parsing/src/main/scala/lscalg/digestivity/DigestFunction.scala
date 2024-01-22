@@ -41,7 +41,109 @@ object ParseFunction
 {
   ;
 
-  export Sdf.zippedWithReceiverInstances.{*, given}
+  // export Sdf.zippedWithReceiverInstances.{*, given}
+
+  type ForReceiverAndRValue
+    [ReceiT, +R ]
+  = ForReceiverLUAndRValue[ReceiT, ReceiT, R ]
+
+  type ForReceiverLUAndRValue
+    [-ReceiL <: ReceiU, +ReceiU, +R ]
+  = ImplForReceiverLUAndRValue[ReceiL, ReceiU, R ]
+
+  /** 
+   * `ImplForReceiverLUAndRValue`
+   * 
+   * 
+   */
+  protected
+  opaque type ImplForReceiverLUAndRValue
+    [-ReceiL <: ReceiU, +ReceiU, +R ]
+  <: AnyRef
+  = Sdf.ForReceiverAndRValue[ReceiL, (R, ReceiU) ]
+
+  type _Any
+  = ImplForReceiverLUAndRValue[Nothing, Any, Any ]
+
+  ;
+
+  // TODO
+
+  def emptyTupleValuedInstance
+    [ReceiT]
+  : ForReceiverAndRValue[ReceiT, (EmptyTuple.type)]
+  = resolvingWith[ReceiT, EmptyTuple.type ] (_ => EmptyTuple )
+
+  def resolvingWith
+    [ReceiT, R ]
+    (vf: ReceiT => R )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = fromTotalFunction((ptr: ReceiT) => (vf(ptr), ptr ) ).nn
+
+  def fromAltBRetrialFunction
+    [A, R ]
+    (impl: A => lscalg.parsing.BRetrialIterator[(R, A)] )
+  : ForReceiverAndRValue[A, R ]
+  = Sdf.fromAltBRetrialFunction(impl).nn
+
+  def fromLiftedPartialFunction
+    [ReceiT, R ]
+    (impl: Function1[ReceiT, Option[(R, ReceiT)] ] )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = fromAltBRetrialFunction((
+    impl
+    andThen
+    (o => lscalg.probing.BRetrialIterator.from(o ).nn )
+  ) )
+
+  /**
+   * from a func which is "defined for subset inst of `ReceiT`"
+   * 
+   */
+  def fromPartialFunction
+    [ReceiT, R ]
+    (impl: PartialFunction[ReceiT, (R, ReceiT) ] )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = {
+    Sdf.fromPartialFunction(impl).nn
+  }
+
+  /**
+   * from a func which is "defined for all inst of `ReceiT`"
+   * 
+   */
+  def fromTotalFunction
+    [ReceiT, R ]
+    (impl: Function[ReceiT, (R, ReceiT) ] )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = {
+    Sdf.fromTotalFunction(impl).nn
+  }
+
+  ;
+
+  transparent inline
+  def eBrtOps
+  : eApplyEiOrOptionPkOps.type
+  = eApplyEiOrOptionPkOps
+
+  given eApplyEiOrOptionPkOps
+  : AnyRef with {
+    ;
+
+    extension [ReceiT, R ] (d: ForReceiverAndRValue[ReceiT, R ])
+    {
+      private
+      def asHasApplyBRT: Sdf.ForReceiverAndRValue[ReceiT, (R, ReceiT) ]
+      = d
+      export asHasApplyBRT.{applyBrt, applyEi}
+
+    }
+  }
+
+  def returnedMainValueMapOp1
+  : (AnyRef & SdfWithFilter[ForReceiverAndRValue ] )
+  = Sdf.returnedMainValueMapOpExtras.returnedMainValueMapOp1.nn
 
   ;
 

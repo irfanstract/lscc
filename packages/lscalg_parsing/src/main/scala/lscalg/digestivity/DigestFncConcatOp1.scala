@@ -42,7 +42,7 @@ with {
       (implRhs : ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
     : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal, RhsVal)]
     = {
-      Sdf.fromAltBRetrialFunction((receiverL0: ReceiT) => {
+      ParseFunction.fromAltBRetrialFunction((receiverL0: ReceiT) => {
         ;
 
         /** 
@@ -93,9 +93,11 @@ object subjectConcatOps1
 
     // import Subject.returnedMainValueMapOpExtras.given
     implicit val rmvo
-    = Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+    // = Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
+    = ParseFunction.returnedMainValueMapOp1
 
     lscalg.digestivity.sdfSuccessionalOpsImpl[ParseFunction.ForReceiverAndRValue ]
+    .nn
   }
 
   given prsZipOps
@@ -149,7 +151,7 @@ object subjectConcatOps1
           ) })
         ) )
         .match { case fnc => {
-          Subject.fromAltBRetrialFunction(fnc)
+          ParseFunction.fromAltBRetrialFunction(fnc)
           .match { case r => {
             // prsSuccessionalOps.andThenAlso(ParseFunction.fromTotalFunction((_: ReceiT) => {} ) )(r )
             (ParseFunction.fromTotalFunction((p: ReceiT) => ((), p ) ) andThenAlso r )

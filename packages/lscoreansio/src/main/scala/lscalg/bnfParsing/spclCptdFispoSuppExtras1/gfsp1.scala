@@ -85,7 +85,7 @@ with GivenFiSpoSuppImplicits
   : AnyRef with {
     ;
 
-    extension [A, ActualR] (r: lscalg.digestivity.Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[A, ActualR] ) (using ec : ForTAssignableFrom[A] )
+    extension [A, ActualR] (r: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[A, ActualR] ) (using ec : ForTAssignableFrom[A] )
       //
 
       /** 
@@ -97,10 +97,10 @@ with GivenFiSpoSuppImplicits
         (receiver: A )
         (using eAcRTEquiv : (ActualR <:< ec.SpclMatchContent) )
       = {
-        r.applyO(receiver)
+        r.applyBrt(receiver).headOption
         .map({ case (m, newPos) => (eAcRTEquiv(m) ) })
         .getOrElse[ec.SpclAfterDigestTupleOption._Any ] (ec.SpclAfterDigestTupleOption.negativeInstance )
-      }
+      }.nn
   }
 
   implicit
