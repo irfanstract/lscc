@@ -19,13 +19,13 @@ import lscalg.cli.repl.{*}
 
 
 
-@deprecated("alias of 'ForImmediateRegexSelectedRawOccurence'.")
+@deprecated("alias of 'ForImmediateRawOcc'.")
 transparent inline
 def ForImmediateStrPatternOccurence
-: ForImmediateRegexSelectedRawOccurence.type
-= ForImmediateRegexSelectedRawOccurence
+: ForImmediateRawOcc.type
+= ForImmediateRawOcc
 
-object ForImmediateRegexSelectedRawOccurence
+object ForImmediateRawOcc
 {
   ;
 
