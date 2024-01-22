@@ -28,215 +28,45 @@ package lscc.spclParsedConstructs1
 // }
 
 // TODO
-object ForNumericLiteral1 {
-  ;
+export lscc.spclTerminalGrammarsB.{ForNumericLiteral1 }
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+export lscc.spclTerminalGrammarsB.{ForBigDecimalLiteral1 }
 
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = {
-    // TODO
-    ForBigDecimalLiteral1() orElse ForBigHexadecimalLiteral1()
-  }
-}
-
-object ForBigDecimalLiteral1
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = ForBhOrNmLiteral("""(?!0x)[0-9]+(\.[0-9]+)?([eE][+\-][0-9]+)?""".r )
-
-  ;
-}
-
-object ForBigHexadecimalLiteral1
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = ForBhOrNmLiteral("""0x(?:[0-9A-Z]+|[0-9a-z]+)(\.[0-9A-Za-z]+)?""".r )
-
-  ;
-}
+export lscc.spclTerminalGrammarsB.{ForBigHexadecimalLiteral1 }
 
 /** 
  * `immediateUnescapedWord` ;
  * *excludes numeric literals, escaped identifiers,*
  * 
  */
-object ForImmediateUnescapedWord
-{
-  ;
+export lscc.spclTerminalGrammarsB.{ForImmediateUnescapedWord }
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = ForBhOrNmLiteral("""(?![0-9])(?:[\w]|\\p\{.*?\})+""".r )
-
-  ;
-}
-
-object ForUnderscoreWildcardPattern
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
-
-  import IRegExp.tagImplicits.{r}
-
-  val SUnderscore
-  = """_+""".r
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = (
-    ForBhOrNmLiteral(SUnderscore )
-    .mapMainValue({ case v => "__" } )
-  )
-
-  ;
-}
+export lscc.spclTerminalGrammarsB.{ForUnderscoreWildcardPattern }
 
 /**
  * escaped identifier
  * 
  */
-object ForImmediateEscapedIdent {
-  //
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = (
-    ForImmediateBacktickedIdent()
-  )
-
-}
+// @deprecated
+export lscc.spclTerminalGrammarsB.{ForImmediateEscapedIdent }
 
 /**
  * `quoted (with)in (a pair of) backticks` 
  * 
  */
-object ForImmediateBacktickedIdent
-{
-  ;
+export lscc.spclTerminalGrammarsB.{ForImmediateBacktickedIdent }
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+export lscc.spclTerminalGrammarsB.{Identifier }
 
-  import IRegExp.tagImplicits.{r}
+export lscc.spclTerminalGrammarsB.{FixedIdentifier }
 
-  // TODO
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = ({
-    ;
-    import lscalg.parsing.subjectConcatOps1.given
+export lscc.spclTerminalGrammarsB.{ForKwPre}
 
-    (
-      ForBhOrNmLiteral("""\`""".r )
-      +%:
-      ForBhOrNmLiteral(""".+?(?=\`)""".r )
-      +%:
-      ForBhOrNmLiteral("""\`""".r )
-      +%:
-      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ec.T ]
-    )
-    .mapMainValue({ case ((_, v, _)) => v })
-  })
+export lscc.spclTerminalGrammarsB.{Keyword}
 
-  ;
-}
+export lscc.spclTerminalGrammarsB.ForBhOrNmLiteral
 
-case class Identifier [+Value] (val value: Value )
-
-object ForKwPre
-{
-  // TODO
-  export ForBhOrNmLiteral.apply
-}
-
-// TODO
-case class Keyword[+Value] private[Keyword] (val value: Value )
-object Keyword {
-  ;
-  def apply[Value] (value: Value )(using DummyImplicit )
-  : Keyword[value.type]
-  = new Keyword[value.type](value )
-  ;
-}
-
-object ForBhOrNmLiteral
-{
-  ;
-
-  //
-
-  export ForImmediateSingleLineMatchOf.apply
-
-  ;
-}
+export lscc.spclTerminalGrammarsB.ForTerminalLiteral1
 
 
 
