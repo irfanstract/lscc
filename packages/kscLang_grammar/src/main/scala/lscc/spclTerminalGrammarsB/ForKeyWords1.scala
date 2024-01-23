@@ -25,8 +25,7 @@ object ForCzps
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -60,8 +59,7 @@ object ForCondZeroPrepositionates
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -90,8 +88,7 @@ object ForCondZeroNouns
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -121,8 +118,7 @@ object ForCondZeroModifiers
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -148,8 +144,7 @@ object ForCondZeroPronouns
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -175,8 +170,7 @@ object ForCondZeroDataTypeKwds
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -204,8 +198,7 @@ object ForCondZeroIjftTypeKwds
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;
@@ -231,8 +224,7 @@ object ForCondZeroClassTraitInterfaceTypeKwds
   // protected
   def apply
     //
-    (using ec : GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
   = {
     ;

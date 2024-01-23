@@ -34,9 +34,34 @@ def ForImmediateSingleLineMatchOf
  * immediate, single-line occurence of what the RegExp would select
  * 
  */
-final
-lazy val ForImmediateSingleLineRawOcc
-= glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc
+object ForImmediateSingleLineRawOcc
+{
+  ;
+
+  import lscalg.bnfParsing.IRegExp
+  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+
+  import BnfCompatibleFileReadPtr1 as BC
+
+  import IRegExp.tagImplicits.{r}
+
+  // TODO
+  transparent inline
+  def apply
+    //
+    (using ctx : SpclPxery )
+    (subject: IRegExp.ForRegexp[String] )
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  = {
+    ;
+    import ctx.given
+
+    glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc.apply
+      (subject )
+  }.nn
+
+  ;
+}
 
 
 

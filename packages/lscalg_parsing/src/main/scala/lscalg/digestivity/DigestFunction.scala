@@ -149,9 +149,17 @@ object ParseFunction
    * defined to be on the main-value (of two values, the other one being `the subsequent parser-position`)
    * 
    */
-  def returnedMainValueMapOp1
+  final
+  lazy val returnedMainValueMapOp1
   : (AnyRef & SdfWithFilter[ForReceiverAndRValue ] )
   = Sdf.returnedMainValueMapOpExtras.returnedMainValueMapOp1.nn
+
+  object returnedMainValueMapOpImplicits {
+    given returnedMainValueMapOp
+    : returnedMainValueMapOp1.type
+    = returnedMainValueMapOp1
+
+  }
 
   given returnedMainValueMapOpAlt
   : AnyRef with {
@@ -183,6 +191,33 @@ object ParseFunction
       //   .map({ case (value, nextPt) => (proj(value) , nextPt ) })
       // }
     }
+  }
+
+  given returnedMainValueWithFinalPosMapOps11
+  : AnyRef with {
+    ;
+
+    import Sdf.monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp.{collect as collectBoth, flatMap as flatMapBoth }
+
+    extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, LRV ] )
+    {
+      //
+
+      /** 
+       * `collectWithFinalPtrPosVl`
+       * 
+       */
+      def mapWithFinalPtrPosVl
+        //
+        [NewRV]
+        (proj: PartialFunction[(LRV, LA), NewRV] )
+      : ForReceiverAndRValue[LA, NewRV ]
+      = lhsI.collectBoth((v0, nextP) => (proj((v0, nextP )) , nextP ) )
+
+      //
+    }
+
+    ;
   }
 
   /** 

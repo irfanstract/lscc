@@ -35,35 +35,7 @@ object ForTermLevelUnprefixedKeyword
 {
   ;
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = {
-    ;
-    
-    ({
-      ;
-
-      import IRegExp.tagImplicits.r
-
-      // TODO
-      FTLK((
-        ForMustAlwaysBeKeyword()
-        orElse
-        ForKwPre("""ref|refs""".r )
-      ))
-    })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
-  }.nn
+  export lscc.spclGrammar.forTermOrTypeLevelExprs.XTermLevelUnprefixedKeyword.{apply }
 }
 
 /** 
@@ -75,35 +47,7 @@ object ForTypeLevelUnprefixedKeyword
 {
   ;
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = {
-    ;
-
-    ({
-      ;
-
-      import IRegExp.tagImplicits.r
-
-      // TODO
-      FTLK((
-        ForMustAlwaysBeKeyword()
-        orElse
-        ForKwPre("""([_]+|)(object(?:ype|)|single(?:ton|type|t|)|match(?:es|))""".r )
-      ))
-    })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
-  }.nn
+  export lscc.spclGrammar.forTermOrTypeLevelExprs.XTypeLevelUnprefixedKeyword.{apply }
 }
 
 // TODO
@@ -116,35 +60,7 @@ object ForTypeLevelNsDotQualifiedKeyword
 {
   ;
 
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    ( )
-  = {
-    ;
-    
-    ({
-      ;
-
-      import IRegExp.tagImplicits.r
-
-      // TODO
-      FTLK((
-        ForMustAlwaysBeKeyword()
-        orElse
-        ForKwPre("""ref(?:)|object(?:ype|)|single(?:ton|type|t|)""".r )
-      ))
-    })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
-  }.nn
+  export lscc.spclGrammar.forTermOrTypeLevelExprs.XTypeLevelNsDotQualifiedKeyword.{apply }
 }
 
 

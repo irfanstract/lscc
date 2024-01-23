@@ -19,13 +19,6 @@ package lscc.spclTerminalGrammarsB
 
 
 
-// object ForNumericLiteralAndWordsAndIdents
-// {
-//   ;
-//   import BnfCompatibleFileReadPtr1._Any as T
-//   ;
-// }
-
 // TODO
 object ForNumericLiteral1 {
   ;
@@ -37,10 +30,9 @@ object ForNumericLiteral1 {
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = {
     // TODO
     ForBigDecimalLiteral1() orElse ForBigHexadecimalLiteral1()
@@ -61,10 +53,9 @@ object ForBigDecimalLiteral1
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ForTerminalLiteral1("""(?!0x)[0-9]+(\.[0-9]+)?([eE][+\-][0-9]+)?""".r )
 
   ;
@@ -84,10 +75,9 @@ object ForBigHexadecimalLiteral1
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ForTerminalLiteral1("""0x(?:[0-9A-Z]+|[0-9a-z]+)(\.[0-9A-Za-z]+)?""".r )
 
   ;
@@ -112,10 +102,9 @@ object ForImmediateUnescapedWord
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ForTerminalLiteral1("""(?![0-9])(?:[\w]|\\p\{.*?\})+""".r )
 
   ;
@@ -140,9 +129,9 @@ object ForUnderscoreWildcardPattern
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
+  : ctx.SpclSdfYieldingUnwrapped[String ]
   = (
     ForTerminalLiteral1(SUnderscore )
     .mapMainValue({ case v => "__" } )
@@ -164,10 +153,9 @@ object ForImmediateEscapedIdent {
 
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = (
     ForImmediateBacktickedIdent()
   )
@@ -192,10 +180,9 @@ object ForImmediateBacktickedIdent
   // protected
   def apply
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : SpclPxery )
     ( )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ({
     ;
     import lscalg.parsing.subjectConcatOps1.given
@@ -207,7 +194,7 @@ object ForImmediateBacktickedIdent
       +%:
       ForTerminalLiteral1("""\`""".r )
       +%:
-      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ec.T ]
+      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ctx.givenFispoSupp.T ]
     )
     .mapMainValue({ case ((_, v, _)) => (
       v
@@ -249,13 +236,14 @@ object ForKwPre
   transparent inline
   def apply
     //
-    (using ec : GivenFiSpoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     (subject: IRegExp.ForRegexp[String] )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+    (using ctx : SpclPxery )
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ({
+    import ctx.given
+
     lscc.spclGrammar.KeywordPrf.forContentPattern(subject)
-  })
+  }).nn
 
 }
 
@@ -278,7 +266,7 @@ object ForInlineTerminalLiteral1
 
   //
 
-  export glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc.apply
+  export ForImmediateSingleLineRawOcc.apply
 
   ;
 }

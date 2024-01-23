@@ -80,49 +80,20 @@ object ForOccurringKeywordPr
 
 
 
-@deprecated
-object ForOccurringKeywordOrRef
+@deprecated("an alias of 'ForOccurringKeywordOrIdentifier1'.")
+transparent inline
+def ForOccurringKeywordOrRefP
+= ForOccurringKeywordOrIdentifier1
+
+/**
+ * 
+ * first, try parsing as kwd, then as ident
+ * 
+ */
+object ForOccurringKeywordOrIdentifier1
 {
   ;
 
-  /**
-   * `ForOccurringKeywordOrRef` specific to `kwIngCtx`.
-   * first, `ForOccurringKeyword`, and then, as fallback, `ForImmediateUnescapedWord`.
-   * 
-   */
-  def apply
-    //
-    (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
-    ()
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, Keyword[String] | FixedIdentifier[String] ]
-  = {
-    ;
-
-    import givenFispoSupp.T as PAny
-
-    (
-      ForOccurringKeyword()
-      .mapMainValue(v => Keyword(v.matchedStr) )
-
-      orElse
-
-      (ForImmediateUnescapedWord() orElse ForImmediateEscapedIdent() )
-      .mapMainValue(v => FixedIdentifier(v.matchedStr) )
-
-    )
-  }.nn
-
-  ;
-}
-
-@deprecated
-object ForOccurringKeywordOrRefP
-{
-  ;
-
-  transparent inline /* forwarders need to be `tr inline` so that narrowing of the peer method gets properly reflected */
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
@@ -133,8 +104,19 @@ object ForOccurringKeywordOrRefP
   = {
     import ctx.given
 
-    ForOccurringKeywordOrRef()
-    .nn
+    import ctx.givenFispoSupp.T as PAny
+
+    (
+      ForOccurringKeyword()
+      .mapMainValue(v => Keyword(v.matchedStr) )
+
+      orElse
+
+      (ForImmediateUnescapedWord() orElse ForImmediateEscapedIdent() )
+      .mapMainValue(<:<.refl[ctx.givenFispoSupp.SpclMatchContent ] )
+      .mapMainValue(v => FixedIdentifier(v.matchedStr) )
+
+    )
   }
 
   ;

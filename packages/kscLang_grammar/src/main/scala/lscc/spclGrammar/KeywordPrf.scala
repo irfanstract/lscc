@@ -25,6 +25,7 @@ object KeywordPrf
 
   // import lscalg.bnfParsing.{given }
   import lscalg.bnfParsing.IRegExp
+
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
   import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFiSpoSupp
 
@@ -37,24 +38,38 @@ object KeywordPrf
    */
   def forContentPattern
     //
-    (using ec : GivenFiSpoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     (subject: IRegExp.ForRegexp[String] )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ({
-    import IRegExp.tagImplicits.r
+    import ctx.given
 
     /** 
      * compensate for very speculable absence of the meta-char `\b`
      * 
      */
     glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc({
-      subject
-      .regex
-      .match { case s => s"""\b(?:$s)\b""" }
-      .r
+      wrapRegex(subject)
     })
-  })
+  }).nn
+
+  ;
+
+  private
+  transparent inline
+  def wrapRegex
+    //
+    (subject: IRegExp.ForRegexp[String] )
+  : IRegExp.ForRegexp[String]
+  = {
+    ;
+    import IRegExp.tagImplicits.r
+
+    subject
+    .regex
+    .match { case s => s"""\b(?:$s)\b""" }
+    .r
+  }
 
 }
 

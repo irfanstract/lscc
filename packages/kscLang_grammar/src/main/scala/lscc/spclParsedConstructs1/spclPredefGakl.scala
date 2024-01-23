@@ -45,8 +45,25 @@ trait SpclGrammaticalPxery {
    */
   type SpclSdfYielding
     [+Value]
-  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , grmMetadataWrapMode.AfterSi[Value ] ] @annotation.unchecked.uncheckedVariance
-  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , grmMetadataWrapMode.AfterSi[Value ] ] //
+  = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
+
+  type SpclSdfYieldingUnwrapped
+    [+Value]
+  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
+  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
+
+  extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
+    def withFinalPtrPosVl
+      ()
+      (using util.NotGiven[Value <:< grmMetadataWrapMode.AfterSi[Any] ] )
+    : SpclSdfYielding[Value ]
+    = {
+      f.mapWithFinalPtrPosVl((vau, pos) => (
+        vau
+        .withSrcInfo(srcPosInfo = pos )
+      ) )
+    }
+  //
 
   ;
 }
