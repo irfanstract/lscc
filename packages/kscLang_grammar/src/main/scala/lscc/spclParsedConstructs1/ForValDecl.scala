@@ -73,14 +73,18 @@ case class UnderscoreWildcardPatternImpl[T] private [UnderscoreWildcardPatternIm
 
 
 
+/**
+ * 
+ * exclusively a sequence a Taglining Keyword `val` and then a BindingNameIsh,
+ * without anything else
+ * 
+ * `val example1`, `val exampleSome`
+ * 
+ */
 object ForValDefOnly
 {
   ;
 
-  /**
-   * `val example1`, `val exampleSome`
-   * 
-   */
   transparent inline // delegating methods shall always be `tr inline`
   def apply
     //
@@ -156,7 +160,7 @@ object ForValDefOnly
 
             +%:
 
-            // ForScrutOperatorAndRhs()
+            // ForTermOrTypeAscriptiveInfixAndRhs()
 
             // +%:
               
