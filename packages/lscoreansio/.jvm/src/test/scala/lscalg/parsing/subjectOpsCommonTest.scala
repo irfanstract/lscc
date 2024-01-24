@@ -20,6 +20,7 @@ org.scalatest.funsuite.AnyFunSuite
   ;
 
   ({
+    @deprecated
     val subjectCmbnOpsCdt
     = subjectOpsCommon.sCdt
   })
@@ -28,14 +29,15 @@ org.scalatest.funsuite.AnyFunSuite
     ;
 
     import subjectConcatOps1.{*, given }
+    import lscalg.parsing.ParseFunction
 
     object Eh {
       opaque type _Any = 5
       def apply() : _Any = 5
     }
 
-    val sUnit = Subject.fromPartialFunction((p => ((), p ) ) : PartialFunction[Eh._Any, (Unit, Eh._Any )] )
-    val sFive = Subject.fromPartialFunction((p => (5, p ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
+    val sUnit = ParseFunction.fromPartialFunction((p => ((), p ) ) : PartialFunction[Eh._Any, (Unit, Eh._Any )] )
+    val sFive = ParseFunction.fromPartialFunction((p => (5, p ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
 
     (sUnit andThenAlso sFive )
     .applyEi(Eh() )
@@ -51,6 +53,7 @@ org.scalatest.funsuite.AnyFunSuite
     ;
 
     import subjectConcatOps1.{*, given }
+    import lscalg.parsing.ParseFunction
 
     object Eh {
       type _Any
@@ -58,8 +61,8 @@ org.scalatest.funsuite.AnyFunSuite
       <: Seq[Int]
     }
 
-    val sUnit = Subject.fromPartialFunction((p => ((), p :+ 1 ) ) : PartialFunction[Eh._Any, (Unit, Eh._Any )] )
-    val sFive = Subject.fromPartialFunction((p => (5, p :+ 2 ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
+    val sUnit = ParseFunction.fromPartialFunction((p => ((), p :+ 1 ) ) : PartialFunction[Eh._Any, (Unit, Eh._Any )] )
+    val sFive = ParseFunction.fromPartialFunction((p => (5, p :+ 2 ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
 
     (sUnit andThenAlso sFive )
     .applyEi(Nil :+ 7 )
@@ -81,6 +84,7 @@ org.scalatest.funsuite.AnyFunSuite
     ;
 
     import subjectOpsCommon.{*, given }
+    import lscalg.parsing.ParseFunction
 
     object Eh {
       type _Any
@@ -88,14 +92,14 @@ org.scalatest.funsuite.AnyFunSuite
       <: Seq[Int]
     }
 
-    val sInt1 = Subject.fromPartialFunction((p => (p.last, p :+ 1 ) ) : PartialFunction[Eh._Any, (Int, Eh._Any )] )
-    val sFive = Subject.fromPartialFunction((p => (5, p :+ 2 ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
+    val sInt1 = ParseFunction.fromPartialFunction((p => (p.last, p :+ 1 ) ) : PartialFunction[Eh._Any, (Int, Eh._Any )] )
+    val sFive = ParseFunction.fromPartialFunction((p => (5, p :+ 2 ) ) : PartialFunction[Eh._Any, (5, Eh._Any ) ] )
 
     import lscalg.bnfParsing.{BnrpMatchingLoopOp, sBnrpMatchingLoopOpOptInImplicits}, sBnrpMatchingLoopOpOptInImplicits.{*, given }
 
     (sInt1 andThenAlso sFive )
     .repeated(backtrackWorthiness = BnrpMatchingLoopOp.SpclBacktrackworthiness._1, eagerness = BnrpMatchingLoopOp.SpclEagerness.+ )
-      ((), Range(3, 3) )
+      ((), BnrpMatchingLoopOp.SpclCountRange.exclusive(3, 3) )
     .applyEi(Nil :+ 7 )
     .match { case r => {
       assert((

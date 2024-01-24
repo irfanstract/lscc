@@ -62,6 +62,32 @@ trait SdfWithFilter[ ForReceiverAndRValue[ReceiT, +Value ] ]
   ;
 }
 
+trait SdfWithFilterOnMain[ ForReceiverAndRValue[ReceiT, +Value ] ]
+{
+  ;
+
+  ;
+
+  extension [ReceiT0, LRV] (lhsI : ForReceiverAndRValue[ReceiT0, LRV ] )
+  {
+    //
+
+    def mapMainValue
+      //
+      [NewRV]
+      (proj: LRV => NewRV )
+    : ForReceiverAndRValue[ReceiT0, NewRV]
+
+    def flatMapMainValue
+      //
+      [NewRV]
+      (proj: LRV => collection.IterableOnce[NewRV] )
+    : ForReceiverAndRValue[ReceiT0, NewRV]
+  }
+
+  ;
+}
+
 trait SdfFallBackOps[ ForReceiverAndRValue[ReceiT, +Value ] ]
 {
   ;

@@ -74,25 +74,85 @@ object SubjectLoopOpOptInImplicits1
 
   import sBnrpMatchingLoopOpOptInImplicits1.given_sBnrpMatchingLoopOp_tupleTwo
 
-  given given_sBnrpSubjectLoopOp[ReceiT , RValue ]
-  : AnyRef with {
+  trait GeneralisedSBSLO[PreRepForm, +PostRepForm ]
+  {
     ;
-
-    type R[+C[+r] ]
-    >: (lscalg.parsing.Subject.ForReceiverAndRValue[ReceiT , (C[RValue] , ReceiT ) ] )
-    <: (lscalg.parsing.Subject.ForReceiverAndRValue[ReceiT , (C[RValue] , ReceiT ) ] )
 
     import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
 
-    extension (impl0: R[[e] =>> e] ) {
+    extension (impl0: PreRepForm ) {
       def repeated
         //
         (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
         (eu1: Unit , nRange: SpclCountRange )
-      : R[[e] =>> Seq[e] ]
+      : PostRepForm
+    }
+  }
+
+  import lscalg.digestivity.{Sdf, ParseFunction}
+
+  // // protected 
+  // given given_sBnrpSubjectLoopOpP[ReceiT , R ]
+  // : AnyRef with GeneralisedSBSLO[
+  //   //
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
+  //   ,
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+  //   ,
+  // ]
+  // with {
+  //   ;
+
+  //   import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
+
+  //   extension (impl0: ParseFunction.ForReceiverAndRValue[ReceiT, R ] )
+  //   {
+  //     //
+
+  //     def repeated
+  //       //
+  //       (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
+  //       (eu1: Unit , nRange: SpclCountRange )
+  //     = {
+  //       impl0
+  //       .match { case c => ParseFunction.iev }
+  //     }
+  //   }
+
+  //   ;
+  // }
+
+  // private
+  // def given_sBnrpSubjectLoopOpP_impl
+  // = {
+  //   ;
+  // }
+
+  given given_sBnrpSubjectLoopOp[ReceiT , R ]
+  : AnyRef with GeneralisedSBSLO[
+    //
+    Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[ReceiT, R]
+    ,
+    Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[ReceiT, Seq[R]]
+    ,
+  ]
+  with {
+    ;
+
+    import lscalg.parsing.Subject.zippedWithReceiverInstances as S
+
+    import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
+
+    extension (impl0: S.ForReceiverAndRValue[ReceiT, R ] )
+    {
+      def repeated
+        //
+        (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
+        (eu1: Unit , nRange: SpclCountRange )
+      : S.ForReceiverAndRValue[ReceiT, Seq[R] ]
       = {
         lscalg.parsing.Subject.fromAltBRetrialFunction ((pt0: ReceiT) => {
-          given_sBnrpMatchingLoopOp_tupleTwo[ReceiT , RValue ]
+          given_sBnrpMatchingLoopOp_tupleTwo[ReceiT , R ]
           .tryForImmediateLoop
             (pt0 )
             (backtrackWorthiness = backtrackWorthiness , eagerness = eagerness )
@@ -107,7 +167,7 @@ object SubjectLoopOpOptInImplicits1
           .nn
         } )
         .match { case s1 => s1 }
-      }
+      }.nn
     }
   }
 

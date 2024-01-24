@@ -122,6 +122,22 @@ object ParseFunction
 
   ;
 
+  /** 
+   * 
+   * evidence that `ParseFunction.ForReceiverAndRValue[ReceiT, R ] =:= Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[ReceiT, R ]`,
+   * a utility to simplify deriving
+   * 
+   */
+  def iev
+  : (
+    { type Main[ReceiT, R ] = ParseFunction.ForReceiverAndRValue[ReceiT, R ] }
+    =:=
+      { type Main[ReceiT, R ] = Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[ReceiT, R ] }
+  )
+  = <:<.refl[{ type Main[ReceiT, R ] = ParseFunction.ForReceiverAndRValue[ReceiT, R ] } ]
+
+  ;
+
   transparent inline
   def eBrtOps
   : eApplyEiOrOptionPkOps.type
@@ -162,36 +178,8 @@ object ParseFunction
   }
 
   given returnedMainValueMapOpAlt
-  : AnyRef with {
-    ;
-
-    import Sdf.monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
-
-    extension [ReceiT, LRV] (lhsI : ForReceiverAndRValue[ReceiT, LRV ] )
-    {
-      //
-
-      def mapMainValue
-        //
-        [NewRV]
-        (proj: LRV => NewRV )
-      : ForReceiverAndRValue[ReceiT, NewRV ]
-      = {
-        lhsI
-        .map({ case (value, nextPt) => (proj(value) , nextPt ) })
-      }
-
-      // def flatMapMainValue
-      //   //
-      //   [NewRV]
-      //   (proj: LRV => NewRV )
-      // : ForReceiverAndRValue[ReceiT, NewRV ]
-      // = {
-      //   lhsI
-      //   .map({ case (value, nextPt) => (proj(value) , nextPt ) })
-      // }
-    }
-  }
+  : (AnyRef with SdfWithFilterOnMain[ForReceiverAndRValue ])
+  = Sdf.returnedMainValueMapOp
 
   given returnedMainValueWithFinalPosMapOps11
   : AnyRef with {
@@ -239,6 +227,23 @@ object ParseFunction
       = (
         lhsI.orElseImpl(rhsI)
       ).nn
+  }
+
+  ;
+
+  // TODO
+  @deprecated
+  // protected 
+  given given_sBnrpSubjectLoopOpP[ReceiT , R ]
+  : (AnyRef with lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLO[
+    //
+    ParseFunction.ForReceiverAndRValue[ReceiT, R]
+    ,
+    ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+    ,
+  ])
+  = {
+    lscalg.parsing.SubjectLoopOpOptInImplicits1.given_sBnrpSubjectLoopOp[ReceiT , R ]
   }
 
   ;
@@ -346,7 +351,7 @@ trait SdfZipWithReceiverIPackedCases
   }
 
   given returnedMainValueMapOp
-  : AnyRef with {
+  : AnyRef with SdfWithFilterOnMain[[LA, LRV] =>> ForReceiverAndRValue[LA, (LRV, LA) ] ] with {
     ;
 
     import monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
@@ -361,16 +366,22 @@ trait SdfZipWithReceiverIPackedCases
         (proj: LRV => NewRV )
       = {
         lhsI
-        .map({ case (value, nextPt) => (proj(value) , nextPt ) })
+        .map({ case (v0, nextPt) => {
+          val v2 = proj(v0)
+          (v2 , nextPt )
+        } })
       }
 
       def flatMapMainValue
         //
         [NewRV]
-        (proj: LRV => NewRV )
+        (proj: LRV => collection.IterableOnce[NewRV] )
       = {
         lhsI
-        .map({ case (value, nextPt) => (proj(value) , nextPt ) })
+        .flatMap({ case (v0, nextPt) => {
+          for { v2 <- proj(v0) }
+          yield (v2 , nextPt )
+        } })
       }
     }
   }

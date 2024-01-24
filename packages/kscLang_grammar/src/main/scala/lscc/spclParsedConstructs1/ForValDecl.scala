@@ -73,21 +73,25 @@ case class UnderscoreWildcardPatternImpl[T] private [UnderscoreWildcardPatternIm
 
 
 
+/**
+ * 
+ * exclusively a sequence a Taglining Keyword `val` and then a BindingNameIsh,
+ * without anything else
+ * 
+ * `val example1`, `val exampleSome`
+ * 
+ */
 object ForValDefOnly
 {
   ;
 
-  /**
-   * `val example1`, `val exampleSome`
-   * 
-   */
   transparent inline // delegating methods shall always be `tr inline`
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
-  : ctx.SpclSdfYielding[FvdParsed._Any ]
+  : ctx.SpclSdfYielding[ValDefOnlyAst._Any ]
   = apply(mainBindingIdentKwdIngMode = kwIngCtx ).nn
 
   /**
@@ -99,7 +103,7 @@ object ForValDefOnly
     (using ctx: SpclGrammaticalPxery )
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     (mainBindingIdentKwdIngMode: lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ]  )
-  : ctx.SpclSdfYielding[FvdParsed._Any ]
+  : ctx.SpclSdfYielding[ValDefOnlyAst._Any ]
   = {
     ;
 
@@ -156,13 +160,13 @@ object ForValDefOnly
 
             +%:
 
-            // ForScrutOperatorAndRhs()
+            // ForTermOrTypeAscriptiveInfixAndRhs()
 
             // +%:
               
             lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
           )
-          .map({ case (iType, ident) => FvdParsed(ident = ident, iTypeKw = iType ) } )
+          .map({ case (iType, ident) => ValDefOnlyAst(ident = ident, iTypeKw = iType ) } )
         })
         .withFinalPtrPosVl()
       })
@@ -173,24 +177,7 @@ object ForValDefOnly
   ;
 }
 
-object FvdParsed
-{
-  ;
-
-  type _Any
-  = FvdParsed[?, ?]
-
-  ;
-}
-
-case class FvdParsed
-  [
-    +Ident,
-    +IType ,
-  ] (
-    ident : Ident ,
-    iTypeKw : IType ,
-  )
+export lscc.spclGrammar.forTermOrTypeLevelExprs.ValDefOnlyAst
 
 
 
