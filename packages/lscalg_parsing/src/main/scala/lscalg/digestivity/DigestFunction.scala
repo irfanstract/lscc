@@ -296,52 +296,7 @@ trait SdfZipWithReceiverIPackedCases
       [-ReceiL <: ReceiU, +ReceiU, +R ]
     = Sdf.ForReceiverAndRValue[ReceiL, (R, ReceiU) ]
 
-    type _Any
-    = ImplForReceiverLUAndRValue[Nothing, Any, Any ]
-
     ;
-
-    def emptyTupleValuedInstance
-      [ReceiT]
-    = resolvingWith[ReceiT, EmptyTuple.type ] (_ => EmptyTuple )
-
-    def resolvingWith
-      [ReceiT, R ]
-      (vf: ReceiT => R )
-    = fromTotalFunction((pt0: ReceiT) => (vf(pt0), pt0 ) )
-
-    export misnamedFtfReExports.{*, given }
-
-    protected
-    object misnamedFtfReExports {
-      ;
-      export Sdf.{
-        fromTotalFunction ,
-        fromPartialFunction ,
-        // fromLiftedPartialFunction ,
-        fromAltLiftedFunction ,
-      }
-    }
-
-    /**
-     * `fromLiftedPartialFunction`
-     * 
-     * caveat --
-     * it's essential to make the lambda explicitly ascribe the main arg type,
-     * to work-around limitations of type-inference
-     * 
-     */
-    def fromLiftedPartialFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, Option[(R, ReceiT)] ] )
-    : ForReceiverAndRValue[ReceiT, R ]
-    = Sdf.fromLiftedPartialFunction(impl).nn
-
-    def fromBPermutLiftedFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, lscalg.parsing.BRetrialIterator[(R, ReceiT)] ] )
-    : ForReceiverAndRValue[ReceiT, R ]
-    = Sdf.fromAltBRetrialFunction(impl).nn
 
     ;
 
