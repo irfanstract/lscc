@@ -119,7 +119,7 @@ with SdfWithFilterOpsImpl
   given returnValueProjectiveOp
   : (AnyRef & SdfWithFilter[ForReceiverAndRValue] )
   = {
-    import monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
+    import returnedCompleteValueMapOpExtras.monaryReturnValueProjectiveOp
     monaryReturnValueProjectiveOp
   }
 
@@ -137,12 +137,13 @@ trait SdfWithFilterOpsImpl
   ) =>
   ;
 
+  @deprecated("an alias of 'returnedCompleteValueMapOpExtras'.")
   transparent inline
-  def returnedCompleteValueMapOpExtras
-  : monaryReturnValueProjectiveOpImplicits.type
-  = monaryReturnValueProjectiveOpImplicits
+  def monaryReturnValueProjectiveOpImplicits
+  : returnedCompleteValueMapOpExtras.type
+  = returnedCompleteValueMapOpExtras
 
-  object monaryReturnValueProjectiveOpImplicits
+  object returnedCompleteValueMapOpExtras
   {
     ;
 

@@ -31,19 +31,11 @@ object sBnrpMatchingLoopOpOptInImplicits1
     >: (RValue, ReceiT)
     <: (RValue, ReceiT)
 
-    new BnrpMatchingLoopOp.ForReceiverImpl[ReceiT, R ] {
+    BnrpMatchingLoopOp.fromFunction1[ReceiT, R ] ((pt0) => {
       ;
-
-      import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclSubject, SpclCountRange}
-
-      extension (pt0: ReceiT)
-        def tryForImmediateLoop
-        : (
-          (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness ) =>
-          (SpclSubject.ForReceiverAndRValue[ReceiT, R ] , SpclCountRange ) =>
-            BRetrialIterator.ForR[Seq[R] ]
-        )
-        = { case (backtrackWorthiness , eagerness ) => {
+      (
+        //
+        { case (backtrackWorthiness , eagerness ) => {
           (subject, nRange) => {
             ;
 
@@ -54,7 +46,8 @@ object sBnrpMatchingLoopOpOptInImplicits1
             .match { case r => r }
           }
         }}
-    }
+      )
+    } )
   }
 
 }
@@ -74,6 +67,7 @@ object SubjectLoopOpOptInImplicits1
 
   import sBnrpMatchingLoopOpOptInImplicits1.given_sBnrpMatchingLoopOp_tupleTwo
 
+  @deprecatedInheritance
   trait GeneralisedSBSLO[PreRepForm, +PostRepForm ]
   {
     ;
@@ -89,44 +83,65 @@ object SubjectLoopOpOptInImplicits1
     }
   }
 
+  // TODO
+  given GeneralisedSBSLOOperator[PreRepForm, PostRepForm ]
+    (using GeneralisedSBSLO[PreRepForm, PostRepForm ] )
+  : AnyRef with {
+    ;
+
+    import lscalg.parsing.Subject.zippedWithReceiverInstances as S
+
+    import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
+
+    def maxLoopN: Int
+    = 1048576
+
+    extension (impl0: PreRepForm )
+    {
+      //
+
+      transparent inline
+      def ??
+      : PostRepForm
+      = :*?(0, 1)
+
+      transparent inline
+      def ?
+      : PostRepForm
+      = :*(0, 1)
+
+      transparent inline
+      def :*?(n: Int)
+      : PostRepForm
+      = :*?(n, n)
+
+      transparent inline
+      def :*(n: Int)
+      : PostRepForm
+      = :*(n, n)
+
+      transparent inline
+      def oneOrMoreTime
+      : PostRepForm
+      = :*(1, maxLoopN )
+
+      transparent inline
+      def oneOrMoreTimeLazily
+      : PostRepForm
+      = :*?(1, maxLoopN )
+
+      def :*(nMin: Int, nMax: Int)
+      : PostRepForm
+      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.+ )(() , SpclCountRange.inclusive(nMin, nMax ) )
+
+      def :*?(nMin: Int, nMax: Int)
+      : PostRepForm
+      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.lazyInstance )(() , SpclCountRange.inclusive(nMin, nMax ) )
+    }
+
+  }
+
   import lscalg.digestivity.{Sdf, ParseFunction}
-
-  // // protected 
-  // given given_sBnrpSubjectLoopOpP[ReceiT , R ]
-  // : AnyRef with GeneralisedSBSLO[
-  //   //
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
-  //   ,
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
-  //   ,
-  // ]
-  // with {
-  //   ;
-
-  //   import BnrpMatchingLoopOp.{SpclBacktrackworthiness, SpclEagerness, SpclCountRange}
-
-  //   extension (impl0: ParseFunction.ForReceiverAndRValue[ReceiT, R ] )
-  //   {
-  //     //
-
-  //     def repeated
-  //       //
-  //       (backtrackWorthiness: SpclBacktrackworthiness , eagerness: SpclEagerness )
-  //       (eu1: Unit , nRange: SpclCountRange )
-  //     = {
-  //       impl0
-  //       .match { case c => ParseFunction.iev }
-  //     }
-  //   }
-
-  //   ;
-  // }
-
-  // private
-  // def given_sBnrpSubjectLoopOpP_impl
-  // = {
-  //   ;
-  // }
 
   given given_sBnrpSubjectLoopOp[ReceiT , R ]
   : AnyRef with GeneralisedSBSLO[
@@ -169,6 +184,7 @@ object SubjectLoopOpOptInImplicits1
         .match { case s1 => s1 }
       }.nn
     }
+
   }
 
   ;

@@ -185,7 +185,7 @@ object ParseFunction
   : AnyRef with {
     ;
 
-    import Sdf.monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp.{collect as collectBoth, flatMap as flatMapBoth }
+    import Sdf.returnedCompleteValueMapOpExtras.monaryReturnValueProjectiveOp.{collect as collectBoth, flatMap as flatMapBoth }
 
     extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, LRV ] )
     {
@@ -244,7 +244,27 @@ object ParseFunction
   ])
   = {
     lscalg.parsing.SubjectLoopOpOptInImplicits1.given_sBnrpSubjectLoopOp[ReceiT , R ]
-  }
+  }.nn
+
+  // // TODO
+  // @deprecated
+  // given [ReceiT , R ]
+  // : lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
+  //   //
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
+  //   ,
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+  //   ,
+  // ]
+  // = {
+  // lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
+  //   //
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
+  //   ,
+  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+  //   ,
+  // ]
+  // }.nn
 
   ;
 
@@ -296,52 +316,7 @@ trait SdfZipWithReceiverIPackedCases
       [-ReceiL <: ReceiU, +ReceiU, +R ]
     = Sdf.ForReceiverAndRValue[ReceiL, (R, ReceiU) ]
 
-    type _Any
-    = ImplForReceiverLUAndRValue[Nothing, Any, Any ]
-
     ;
-
-    def emptyTupleValuedInstance
-      [ReceiT]
-    = resolvingWith[ReceiT, EmptyTuple.type ] (_ => EmptyTuple )
-
-    def resolvingWith
-      [ReceiT, R ]
-      (vf: ReceiT => R )
-    = fromTotalFunction((pt0: ReceiT) => (vf(pt0), pt0 ) )
-
-    export misnamedFtfReExports.{*, given }
-
-    protected
-    object misnamedFtfReExports {
-      ;
-      export Sdf.{
-        fromTotalFunction ,
-        fromPartialFunction ,
-        // fromLiftedPartialFunction ,
-        fromAltLiftedFunction ,
-      }
-    }
-
-    /**
-     * `fromLiftedPartialFunction`
-     * 
-     * caveat --
-     * it's essential to make the lambda explicitly ascribe the main arg type,
-     * to work-around limitations of type-inference
-     * 
-     */
-    def fromLiftedPartialFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, Option[(R, ReceiT)] ] )
-    : ForReceiverAndRValue[ReceiT, R ]
-    = Sdf.fromLiftedPartialFunction(impl).nn
-
-    def fromBPermutLiftedFunction
-      [ReceiT, R ]
-      (impl: Function1[ReceiT, lscalg.parsing.BRetrialIterator[(R, ReceiT)] ] )
-    : ForReceiverAndRValue[ReceiT, R ]
-    = Sdf.fromAltBRetrialFunction(impl).nn
 
     ;
 
@@ -354,7 +329,9 @@ trait SdfZipWithReceiverIPackedCases
   : AnyRef with SdfWithFilterOnMain[[LA, LRV] =>> ForReceiverAndRValue[LA, (LRV, LA) ] ] with {
     ;
 
-    import monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
+    // import monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
+
+    import returnedMainValueMapOpExtras.given
 
     extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, (LRV, LA) ] )
     {
@@ -364,25 +341,13 @@ trait SdfZipWithReceiverIPackedCases
         //
         [NewRV]
         (proj: LRV => NewRV )
-      = {
-        lhsI
-        .map({ case (v0, nextPt) => {
-          val v2 = proj(v0)
-          (v2 , nextPt )
-        } })
-      }
+      = lhsI.map(proj )
 
       def flatMapMainValue
         //
         [NewRV]
         (proj: LRV => collection.IterableOnce[NewRV] )
-      = {
-        lhsI
-        .flatMap({ case (v0, nextPt) => {
-          for { v2 <- proj(v0) }
-          yield (v2 , nextPt )
-        } })
-      }
+      = lhsI.flatMap(proj )
     }
   }
 
