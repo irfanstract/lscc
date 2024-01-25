@@ -55,12 +55,39 @@ object ForBindingFirstTermOrTypeAscribedExprP
   /** to impose `prsWhitespaceableHeadTailConcatOp` */
   import fwscImplicits.prsWhitespaceableHeadTailConcatOp
 
+  // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val ctx1 : ctx.type } )
+
+  transparent inline /* a must-have modifier for forwarders */
   def apply
+    //
+    (using ctx: SpclGrammaticalPxery )
+    //
+    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+    ( )
+  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
+  = forMode(m )
+
+  transparent inline /* a necessary modifier for forwarders */
+  def forMode
+    //
+    (using ctx: SpclGrammaticalPxery )
+    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
+  = {
+    import m.given
+    given m.spclUnprefixedKeywdingMode.type
+    = m.spclUnprefixedKeywdingMode
+
+    withImplicitKwdIngCtx( )
+  }
+
+  protected
+  def withImplicitKwdIngCtx
     //
     (using ctx: SpclGrammaticalPxery )
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.apMode.type ] ]
+  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
   = {
     ;
 
@@ -145,7 +172,7 @@ object ForTermOrTypeAscriptiveInfixAndRhs
     (using ctx: SpclGrammaticalPxery )
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
-  : ctx.SpclSdfYielding[AscriptiveExprPr[ctx.apMode.type ] ]
+  : ctx.SpclSdfYielding[AscriptiveExprPr[ctx.grmMetadataWrapMode.type ] ]
   = {
     ;
 
@@ -230,53 +257,6 @@ export lscc.spclGrammar.forTermOrTypeLevelExprs.{ ToTermPatternScrutiveAscriptio
 
 
 export lscc.spclGrammar.forTermOrTypeLevelExprs.{PrefixScrutLhsExpr }
-
-object ForUnparenthesedSimpleHeadBindingExpr {
-  ;
-
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[PrefixScrutLhsExpr ]
-  = {
-    ;
-
-    import ctx.given
-
-    import ctx.givenFispoSupp
-
-    import ctx.givenFispoSupp.T as PAny
-
-    import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
-    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
-
-    ;
-
-    (
-      ForValDefOnly()
-      .map(e => {
-        e
-        .map(e => (
-          PrefixScrutLhsExpr.ForValDef(e) : PrefixScrutLhsExpr.ForValDef
-        ) )
-      } )
-
-      orElse
-
-      ForUnderscoreWildcardDefOnly()
-      .map(e => {
-        e
-        .map(_ => (
-          PrefixScrutLhsExpr.ForIgnorableWildcard() : PrefixScrutLhsExpr.ForIgnorableWildcard
-        ) )
-      } )
-    )
-  }.nn
-
-  ;
-}
 
 
 

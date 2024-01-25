@@ -21,7 +21,15 @@ import lscc.spclParsing.SpclGrammaticalItemMetaDataWrapMode
 
 
 
-trait SpclPxery {
+import lscc.spclParsedConstructs1.{SpclPxeryOpsGivenFispoSupps, SpclPxeryOpsSdfDefine }
+
+
+trait SpclPxery
+extends
+AnyRef
+with SpclPxeryOpsGivenFispoSupps
+with SpclPxeryOpsSdfDefine
+{
   ;
 
   implicit
@@ -38,18 +46,18 @@ trait SpclPxery {
 
   ;
 
-  /** 
-   * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value`
-   * 
-   */
-  type SpclSdfYielding
-    [+Value]
-  = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
+  // /** 
+  //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value`
+  //  * 
+  //  */
+  // type SpclSdfYielding
+  //   [+Value]
+  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
 
-  type SpclSdfYieldingUnwrapped
-    [+Value]
-  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
-  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
+  // type SpclSdfYieldingUnwrapped
+  //   [+Value]
+  // >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
+  // <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
 
   ;
 }

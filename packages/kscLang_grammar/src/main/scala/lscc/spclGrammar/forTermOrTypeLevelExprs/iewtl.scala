@@ -17,6 +17,9 @@ package lscc.spclGrammar.forTermOrTypeLevelExprs
 object Aitl {
   ;
 
+  type _Any
+  = Aitl
+
   def forTermLevel
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
@@ -49,6 +52,10 @@ object Aitl {
 
   }
 
+  type ForGrammaticalCtxT
+    [+Ctx <: lscc.spclParsedConstructs1.SpclGrammaticalPxery ]
+  = _Any { val ctx1 : Ctx }
+
   ;
 }
 
@@ -59,9 +66,25 @@ trait Aitl protected[Aitl] () {
   val ctx1
   : lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
-  implicit
+  /**
+   * KeywordingCtx for
+   * *words to be treated as keywords when-and-only-when occurring unprefixed and not part of selection (ie `a.b.c.d`)*
+   * 
+   */
+  // implicit
   val spclUnprefixedKeywdingMode
   : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[ctx1.givenFispoSupp.type ]
+
+  /**
+   * KeywordingCtx for
+   * *words to be treated as keywords when-and-only-when occurring as part of selection (ie `a.b.c.d`)*
+   * 
+   */
+  final
+  lazy
+  val spclDotQualifiedKeywdingMode
+  : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[ctx1.givenFispoSupp.type ]
+  = spclUnprefixedKeywdingMode
 
   ;
 }

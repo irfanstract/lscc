@@ -57,11 +57,11 @@ object TermOrTypeAscribedExprImplAst {
 
   def apply
     //
-    (using apMode : SpclGrammaticalItemMetaDataWrapMode )
-    (bindingSideExpr: apMode.AfterSi[PrefixScrutLhsExpr], ascriptiveSideExpr: apMode.AfterSi[AscriptiveExpr ] )
+    (using grmMetadataWrapMode : SpclGrammaticalItemMetaDataWrapMode )
+    (bindingSideExpr: grmMetadataWrapMode.AfterSi[PrefixScrutLhsExpr], ascriptiveSideExpr: grmMetadataWrapMode.AfterSi[AscriptiveExpr ] )
   = new TermOrTypeAscribedExprImplAst((
-    (apMode, bindingSideExpr, ascriptiveSideExpr )
-    : ((apMode.type, bindingSideExpr.type, ascriptiveSideExpr.type ) )
+    (grmMetadataWrapMode, bindingSideExpr, ascriptiveSideExpr )
+    : ((grmMetadataWrapMode.type, bindingSideExpr.type, ascriptiveSideExpr.type ) )
   ) )
 
   type _DataAny

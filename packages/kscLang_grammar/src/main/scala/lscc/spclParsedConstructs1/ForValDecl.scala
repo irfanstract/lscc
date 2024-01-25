@@ -108,7 +108,7 @@ object ForValDefOnly
     ;
 
     import ctx.given
-    import ctx.{givenFispoSupp, apMode, expcRx}
+    import ctx.{givenFispoSupp, grmMetadataWrapMode, expcRx}
 
     import givenFispoSupp.T as PAny
 
@@ -178,6 +178,60 @@ object ForValDefOnly
 }
 
 export lscc.spclGrammar.forTermOrTypeLevelExprs.ValDefOnlyAst
+
+
+
+
+
+
+object ForUnparenthesedSimpleHeadBindingExpr {
+  ;
+
+  def apply
+    //
+    (using ctx: SpclGrammaticalPxery )
+    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    ()
+  : ctx.SpclSdfYielding[PrefixScrutLhsExpr ]
+  = {
+    ;
+
+    import ctx.given
+
+    import ctx.givenFispoSupp
+
+    import ctx.givenFispoSupp.T as PAny
+
+    import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
+    import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+    ;
+
+    (
+      ForValDefOnly()
+      .map(e => {
+        e
+        .map(e => (
+          PrefixScrutLhsExpr.ForValDef(e) : PrefixScrutLhsExpr.ForValDef
+        ) )
+      } )
+
+      orElse
+
+      ForUnderscoreWildcardDefOnly()
+      .map(e => {
+        e
+        .map(_ => (
+          PrefixScrutLhsExpr.ForIgnorableWildcard() : PrefixScrutLhsExpr.ForIgnorableWildcard
+        ) )
+      } )
+    )
+  }.nn
+
+  ;
+}
+
+
 
 
 

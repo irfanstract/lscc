@@ -16,6 +16,11 @@ package lscc.spclParsedConstructs1
 
 
 
+/** 
+ * 
+ * *term-level references*
+ * 
+ */
 object ForTermQueryExpr
 {
   ;
@@ -43,7 +48,16 @@ object ForTermQueryExpr
   ;
 }
 
-object ForTypeQueryExpr
+transparent inline
+def ForTypeQueryExpr
+= ForTypeRef
+
+/** 
+ * 
+ * *type-level reference to types*
+ * 
+ */
+object ForTypeRef
 {
   ;
 
@@ -75,6 +89,11 @@ object ForTypeQueryExpr
 
 
 
+/**
+ * 
+ * *either-level references*
+ * 
+ */
 object ForQueryExpr1
 {
   ;
@@ -94,57 +113,16 @@ object ForQueryExpr1
     //
     (using ctx: SpclGrammaticalPxery )
     //
-    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val ctx1 : ctx.type } )
+    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
   : ctx.SpclSdfYielding[Any ]
   = {
     import m.spclUnprefixedKeywdingMode
 
-    apply()
-  }
-
-  @deprecated
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    //
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[Any ]
-  = {
-    // TODO
-
-    (
-      ForPrefixedExpr()
-      .match { case r => r : ctx.SpclSdfYielding[Any] }
-    )
-    // .withFinalPtrPosVl()
-  }.nn
-
-  ;
-}
-
-
-
-object ForPrefixedExpr {
-  ;
-
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst._Any ]
-  = {
-    (
-      ForBindingFirstTermOrTypeAscribedExprP()
-    )
+    ForPrefixedExpr.withMode(m )
   }
 
   ;
 }
-
-
-
 
 
 
