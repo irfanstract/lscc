@@ -38,6 +38,9 @@ package lscalg.digestivity
  * 
  */
 object ParseFunction
+extends
+AnyRef
+with ParseFunctionExtras
 {
   ;
 
@@ -69,55 +72,24 @@ object ParseFunction
 
   // TODO
 
-  def emptyTupleValuedInstance
-    [ReceiT]
-  : ForReceiverAndRValue[ReceiT, (EmptyTuple.type)]
-  = resolvingWith[ReceiT, EmptyTuple.type ] (_ => EmptyTuple )
-
-  def resolvingWith
-    [ReceiT, R ]
-    (vf: ReceiT => R )
-  : ForReceiverAndRValue[ReceiT, R ]
-  = fromTotalFunction((ptr: ReceiT) => (vf(ptr), ptr ) ).nn
-
+  infix
   def fromAltBRetrialFunction
     [A, R ]
     (impl: A => lscalg.parsing.BRetrialIterator[(R, A)] )
   : ForReceiverAndRValue[A, R ]
   = Sdf.fromAltBRetrialFunction(impl).nn
 
-  def fromLiftedPartialFunction
-    [ReceiT, R ]
-    (impl: Function1[ReceiT, Option[(R, ReceiT)] ] )
-  : ForReceiverAndRValue[ReceiT, R ]
-  = fromAltBRetrialFunction((
-    impl
-    andThen
-    (o => lscalg.probing.BRetrialIterator.from(o ).nn )
-  ) )
-
   /**
    * from a func which is "defined for subset inst of `ReceiT`"
    * 
    */
+  infix
   def fromPartialFunction
     [ReceiT, R ]
     (impl: PartialFunction[ReceiT, (R, ReceiT) ] )
   : ForReceiverAndRValue[ReceiT, R ]
   = {
     Sdf.fromPartialFunction(impl).nn
-  }
-
-  /**
-   * from a func which is "defined for all inst of `ReceiT`"
-   * 
-   */
-  def fromTotalFunction
-    [ReceiT, R ]
-    (impl: Function[ReceiT, (R, ReceiT) ] )
-  : ForReceiverAndRValue[ReceiT, R ]
-  = {
-    Sdf.fromTotalFunction(impl).nn
   }
 
   ;
@@ -137,11 +109,6 @@ object ParseFunction
   = <:<.refl[{ type Main[ReceiT, R ] = ParseFunction.ForReceiverAndRValue[ReceiT, R ] } ]
 
   ;
-
-  transparent inline
-  def eBrtOps
-  : eApplyEiOrOptionPkOps.type
-  = eApplyEiOrOptionPkOps
 
   /** 
    * the `applyBrt` methods provider
@@ -165,15 +132,19 @@ object ParseFunction
    * defined to be on the main-value (of two values, the other one being `the subsequent parser-position`)
    * 
    */
-  final
-  lazy val returnedMainValueMapOp1
-  : (AnyRef & SdfWithFilter[ForReceiverAndRValue ] )
-  = Sdf.returnedMainValueMapOpExtras.returnedMainValueMapOp1.nn
+  @deprecated
+  transparent inline
+  def returnedMainValueMapOp1
+  : returnedMainValueMapOpImplicits.returnedMainValueMapOp.type
+  = returnedMainValueMapOpImplicits.returnedMainValueMapOp
 
-  object returnedMainValueMapOpImplicits {
+  object returnedMainValueMapOpImplicits
+  {
+    ;
+
     given returnedMainValueMapOp
-    : returnedMainValueMapOp1.type
-    = returnedMainValueMapOp1
+    : (AnyRef & SdfWithFilter[ForReceiverAndRValue ] )
+    = Sdf.returnedMainValueMapOpExtras.returnedMainValueMapOp1.nn
 
   }
 
@@ -247,24 +218,24 @@ object ParseFunction
   }.nn
 
   // // TODO
-  // @deprecated
-  // given [ReceiT , R ]
-  // : lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
-  //   //
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
-  //   ,
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
-  //   ,
-  // ]
-  // = {
-  // lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
-  //   //
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, R]
-  //   ,
-  //   ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
-  //   ,
-  // ]
-  // }.nn
+  @deprecated
+  given given_GeneralisedSBSLOOperator_ForReceiverAndRValue_ForReceiverAndRValue[ReceiT , R ]
+  : lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
+    //
+    ParseFunction.ForReceiverAndRValue[ReceiT, R]
+    ,
+    ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+    ,
+  ]
+  = {
+  lscalg.parsing.SubjectLoopOpOptInImplicits1.GeneralisedSBSLOOperator[
+    //
+    ParseFunction.ForReceiverAndRValue[ReceiT, R]
+    ,
+    ParseFunction.ForReceiverAndRValue[ReceiT, Seq[R]]
+    ,
+  ]
+  }.nn
 
   ;
 
@@ -437,6 +408,52 @@ trait SdfZipWithReceiverIPackedCases
 
     ;
   }
+
+  ;
+}
+
+trait ParseFunctionExtras
+{ this : ParseFunction.type =>
+  //
+
+  ;
+
+  def emptyTupleValuedInstance
+    [ReceiT]
+  : ForReceiverAndRValue[ReceiT, (EmptyTuple.type)]
+  = resolvingWith[ReceiT, EmptyTuple.type ] (_ => EmptyTuple )
+
+  def resolvingWith
+    [ReceiT, R ]
+    (vf: ReceiT => R )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = fromTotalFunction((ptr: ReceiT) => (vf(ptr), ptr ) ).nn
+
+  infix
+  def fromLiftedPartialFunction
+    [ReceiT, R ]
+    (impl: Function1[ReceiT, Option[(R, ReceiT)] ] )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = fromAltBRetrialFunction((
+    impl
+    andThen
+    (o => lscalg.probing.BRetrialIterator.from(o ).nn )
+  ) )
+
+  /**
+   * from a func which is "defined for all inst of `ReceiT`"
+   * 
+   */
+  infix
+  def fromTotalFunction
+    [ReceiT, R ]
+    (impl: Function[ReceiT, (R, ReceiT) ] )
+  : ForReceiverAndRValue[ReceiT, R ]
+  = {
+    fromPartialFunction(impl.apply )
+  }
+
+  ;
 
   ;
 }

@@ -100,20 +100,39 @@ object SubjectLoopOpOptInImplicits1
     {
       //
 
+      /* LAZY CASES */
+
       transparent inline
       def ??
       : PostRepForm
       = :*?(0, 1)
 
       transparent inline
-      def ?
-      : PostRepForm
-      = :*(0, 1)
-
-      transparent inline
       def :*?(n: Int)
       : PostRepForm
       = :*?(n, n)
+
+      transparent inline
+      def oneOrMoreTimeLazily
+      : PostRepForm
+      = :*?(1, maxLoopN )
+
+      transparent inline
+      def :*?(nMin: Int, nMax: Int)
+      : PostRepForm
+      = :*?(SpclCountRange.inclusive(nMin, nMax ) )
+
+      // transparent inline
+      def :*?(nRange: SpclCountRange._Any)
+      : PostRepForm
+      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.lazyInstance )(() , nRange )
+
+      /* EAGERLY CASES */
+
+      transparent inline
+      def ?
+      : PostRepForm
+      = :*(0, 1)
 
       transparent inline
       def :*(n: Int)
@@ -126,17 +145,15 @@ object SubjectLoopOpOptInImplicits1
       = :*(1, maxLoopN )
 
       transparent inline
-      def oneOrMoreTimeLazily
-      : PostRepForm
-      = :*?(1, maxLoopN )
-
       def :*(nMin: Int, nMax: Int)
       : PostRepForm
-      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.+ )(() , SpclCountRange.inclusive(nMin, nMax ) )
+      = :*(SpclCountRange.inclusive(nMin, nMax ) )
 
-      def :*?(nMin: Int, nMax: Int)
+      // transparent inline
+      def :*(nRange: SpclCountRange._Any)
       : PostRepForm
-      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.lazyInstance )(() , SpclCountRange.inclusive(nMin, nMax ) )
+      = impl0.repeated(SpclBacktrackworthiness._1, SpclEagerness.+ )(() , nRange )
+
     }
 
   }
@@ -173,10 +190,11 @@ object SubjectLoopOpOptInImplicits1
             (backtrackWorthiness = backtrackWorthiness , eagerness = eagerness )
             (impl0, nRange )
           .map(s => {
-            s.unzip
-            .match { case (s1, s2) => {
-              (s1, s2.prepended[ReceiT](pt0).head )
-            } }
+            val (matchedValues, _ ) = s.unzip
+
+            val ptrPosProgression = (pt0 +: s.unzip._2 )
+
+            (matchedValues, ptrPosProgression.last )
           } )
           .nn
           .nn

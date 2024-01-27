@@ -98,17 +98,29 @@ org.scalatest.funsuite.AnyFunSuite
     import lscalg.bnfParsing.{BnrpMatchingLoopOp, sBnrpMatchingLoopOpOptInImplicits}, sBnrpMatchingLoopOpOptInImplicits.{*, given }
 
     (sInt1 andThenAlso sFive )
-    .repeated(backtrackWorthiness = BnrpMatchingLoopOp.SpclBacktrackworthiness._1, eagerness = BnrpMatchingLoopOp.SpclEagerness.+ )
-      ((), BnrpMatchingLoopOp.SpclCountRange.exclusive(3, 3) )
+    .match { case prf => prf : ParseFunction.ForReceiverAndRValue[Eh._Any, (Int, Int) ] }
+    .:*(BnrpMatchingLoopOp.SpclCountRange.fromStartToBeforeEndIndex(3, 3) )
+    .match { case prf => prf : ParseFunction.ForReceiverAndRValue[Eh._Any, Seq[(Int, Int)] ] }
+
     .applyEi(Nil :+ 7 )
+    .match { case r => r }
     .match { case r => {
       assert((
         r
-        .toOption
-        .collect({ case (r, _) => r.unzip._1 })
-        .toRight(() )
+        .map({ case (value, _) => {
+          value
+        } })
         ==
-          Right(Nil :+ 7 :+ 2 :+ 2 )
+          Right(Nil :+ (7, 5) :+ (2, 5) :+ (2, 5) )
+      ))
+
+      assert((
+        r
+        .map({ case (value, newPos) => {
+          newPos
+        } })
+        ==
+          Right((Nil :+ 7 :+ 1 :+ 2 :+ 1 :+ 2 :+ 1 :+ 2 ) : Eh._Any)
       ))
 
       println(s"result: $r")
