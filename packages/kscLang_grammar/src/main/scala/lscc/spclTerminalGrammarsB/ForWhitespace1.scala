@@ -49,8 +49,32 @@ object ForSingleLineWhitespace
 
 
 object fwscImplicits {
+  ;
 
+  // TODO
+  given prsWhitespaceableHeadTailConcatOp0
+    //
+    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.T, ctx.givenFispoSupp.T] )
+  = {
+    import ctx.given
+
+    prsWhitespaceableHeadTailConcatOp1
+  }
+
+  // public
   given prsWhitespaceableHeadTailConcatOp
+    //
+    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.T, ctx.givenFispoSupp.T] )
+  = {
+    import ctx.given
+
+    prsWhitespaceableHeadTailConcatOp1
+  }
+
+  private
+  given prsWhitespaceableHeadTailConcatOp1
     //
     (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )

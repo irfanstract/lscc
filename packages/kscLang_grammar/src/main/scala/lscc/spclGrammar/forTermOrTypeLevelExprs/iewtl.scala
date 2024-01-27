@@ -20,14 +20,20 @@ object Aitl {
   type _Any
   = Aitl
 
+  /**
+   * 
+   * the term-level rules
+   * 
+   */
   def forTermLevel
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
     ( )
+  : ForGrammaticalCtxT[ctx.type]
   = new Aitl {
     ;
 
-    val ctx1
+    val basePxery
     : ctx.type
     = ctx
 
@@ -36,14 +42,20 @@ object Aitl {
 
   }
 
+  /**
+   * 
+   * the base type-level rules.
+   * 
+   */
   def forTypeLevel
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
     ( )
+  : ForGrammaticalCtxT[ctx.type]
   = new Aitl {
     ;
 
-    val ctx1
+    val basePxery
     : ctx.type
     = ctx
 
@@ -54,7 +66,7 @@ object Aitl {
 
   type ForGrammaticalCtxT
     [+Ctx <: lscc.spclParsedConstructs1.SpclGrammaticalPxery ]
-  = _Any { val ctx1 : Ctx }
+  = _Any { val basePxery : Ctx }
 
   ;
 }
@@ -63,7 +75,7 @@ trait Aitl protected[Aitl] () {
   ;
 
   implicit
-  val ctx1
+  val basePxery
   : lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   /**
@@ -73,7 +85,7 @@ trait Aitl protected[Aitl] () {
    */
   // implicit
   val spclUnprefixedKeywdingMode
-  : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[ctx1.givenFispoSupp.type ]
+  : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[basePxery.givenFispoSupp.type ]
 
   /**
    * KeywordingCtx for
@@ -83,7 +95,7 @@ trait Aitl protected[Aitl] () {
   final
   lazy
   val spclDotQualifiedKeywdingMode
-  : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[ctx1.givenFispoSupp.type ]
+  : lscc.spclGrammar.KeywordingCtx.WithGivenFispoSupp[basePxery.givenFispoSupp.type ]
   = spclUnprefixedKeywdingMode
 
   ;

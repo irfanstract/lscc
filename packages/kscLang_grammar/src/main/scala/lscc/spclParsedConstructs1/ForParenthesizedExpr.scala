@@ -131,13 +131,20 @@ object ForParenthesisedExpr
       ({
         ;
 
+        import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+
         ({
           ;
 
-          import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+          val (openingBracketPrf, closingBracketPrf )
+          = (
+            ForOccurringGeneralisedKeyword.forPattern("""(""".r )
+            ,
+            ForOccurringGeneralisedKeyword.forPattern(""")""".r )
+          )
 
           (
-            ForOccurringGeneralisedKeyword.forPattern("""(""".r )
+            openingBracketPrf
 
             +%:
 
@@ -145,7 +152,7 @@ object ForParenthesisedExpr
 
             +%:
 
-            ForOccurringGeneralisedKeyword.forPattern(""")""".r )
+            closingBracketPrf
 
             +%:
 
@@ -162,9 +169,13 @@ object ForParenthesisedExpr
     .withFinalPtrPosVl()
   }.nn
 
+  // TODO
+  // private[lscc]
   def spclWrap
     [A]
-    (mainValue : A )
+    (using ctx: SpclGrammaticalPxery )
+    (mainValue : ctx.grmMetadataWrapMode.AppliedTo[A] )
+  : (ctx.grmMetadataWrapMode.AppliedTo[A], Unit )
   = (mainValue, () )
 
   ;

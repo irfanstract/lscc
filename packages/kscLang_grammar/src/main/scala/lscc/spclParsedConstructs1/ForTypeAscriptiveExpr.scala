@@ -55,7 +55,7 @@ object ForBindingFirstTermOrTypeAscribedExprP
   /** to impose `prsWhitespaceableHeadTailConcatOp` */
   import fwscImplicits.prsWhitespaceableHeadTailConcatOp
 
-  // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val ctx1 : ctx.type } )
+  // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val basePxery : ctx.type } )
 
   transparent inline /* a must-have modifier for forwarders */
   def apply

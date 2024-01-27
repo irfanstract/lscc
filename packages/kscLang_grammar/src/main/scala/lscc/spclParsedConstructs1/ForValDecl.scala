@@ -208,24 +208,19 @@ object ForUnparenthesedSimpleHeadBindingExpr {
     ;
 
     (
-      ForValDefOnly()
+      ForValDefOnly().map(_.value )
       .map(e => {
-        e
-        .map(e => (
-          PrefixScrutLhsExpr.ForValDef(e) : PrefixScrutLhsExpr.ForValDef
-        ) )
+        PrefixScrutLhsExpr.ForValDef(e) : PrefixScrutLhsExpr.ForValDef
       } )
 
       orElse
 
-      ForUnderscoreWildcardDefOnly()
+      ForUnderscoreWildcardDefOnly().map(_.value )
       .map(e => {
-        e
-        .map(_ => (
-          PrefixScrutLhsExpr.ForIgnorableWildcard() : PrefixScrutLhsExpr.ForIgnorableWildcard
-        ) )
+        PrefixScrutLhsExpr.ForIgnorableWildcard() : PrefixScrutLhsExpr.ForIgnorableWildcard
       } )
     )
+    .withFinalPtrPosVl()
   }.nn
 
   ;
