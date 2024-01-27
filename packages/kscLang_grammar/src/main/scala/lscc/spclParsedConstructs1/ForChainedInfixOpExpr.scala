@@ -38,7 +38,7 @@ val _ = {}
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
 //     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[UnderscoreWildcardPatternImpl._Any ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
 //   = ???
 
 //   ;
@@ -88,8 +88,8 @@ val _ = {}
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
 //     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AfterSi[PrefixScrutLhsExpr ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AfterSi[ParsedChainedInfixOpItemExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AppliedTo[PrefixScrutLhsExpr ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AppliedTo[ParsedChainedInfixOpItemExpr ] ]
 //   = {
 //     ;
 
@@ -179,8 +179,8 @@ val _ = {}
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
 //     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[UnderscoreWildcardPatternImpl._Any ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[IInfixOpEdCompoundSelectExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
 //   = {
 //     // TODO
 
@@ -258,8 +258,8 @@ val _ = {}
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
 //     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[IInfixOpEdCompoundSelectExpr ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AfterSi[ISingleTokenLiteralExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[ISingleTokenLiteralExpr ] ]
 //   = {
 //     ;
 

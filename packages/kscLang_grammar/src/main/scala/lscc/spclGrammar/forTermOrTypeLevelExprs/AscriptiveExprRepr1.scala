@@ -58,7 +58,7 @@ object TermOrTypeAscribedExprImplAst {
   def apply
     //
     (using grmMetadataWrapMode : SpclGrammaticalItemMetaDataWrapMode )
-    (bindingSideExpr: grmMetadataWrapMode.AfterSi[PrefixScrutLhsExpr], ascriptiveSideExpr: grmMetadataWrapMode.AfterSi[AscriptiveExpr ] )
+    (bindingSideExpr: grmMetadataWrapMode.AppliedTo[PrefixScrutLhsExpr], ascriptiveSideExpr: grmMetadataWrapMode.AppliedTo[AscriptiveExpr ] )
   = new TermOrTypeAscribedExprImplAst((
     (grmMetadataWrapMode, bindingSideExpr, ascriptiveSideExpr )
     : ((grmMetadataWrapMode.type, bindingSideExpr.type, ascriptiveSideExpr.type ) )

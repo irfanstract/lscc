@@ -73,7 +73,7 @@ object ForPossiblyParenthesisedExpr
     //
     // (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
     (mainRule: ctx.SpclSdfYielding[( MainValue  ) ] )
-  : ctx.SpclSdfYielding[( ctx.grmMetadataWrapMode.AfterSi[MainValue] , Unit ) ]
+  : ctx.SpclSdfYielding[( ctx.grmMetadataWrapMode.AppliedTo[MainValue] , Unit ) ]
   = {
     ;
 
@@ -116,7 +116,7 @@ object ForParenthesisedExpr
     //
     // (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
     (mainRule: ctx.SpclSdfYielding[( MainValue  ) ] )
-  : ctx.SpclSdfYielding[( ctx.grmMetadataWrapMode.AfterSi[MainValue] , Unit ) ]
+  : ctx.SpclSdfYielding[( ctx.grmMetadataWrapMode.AppliedTo[MainValue] , Unit ) ]
   = {
     ;
 

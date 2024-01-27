@@ -39,12 +39,12 @@ with SpclPxeryOpsSdfDefine
   ;
 
   // /** 
-  //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value` wrapped in `grmMetadataWrapMode.AfterSi`
+  //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value` wrapped in `grmMetadataWrapMode.AppliedTo`
   //  * 
   //  */
   // type SpclSdfYielding
   //   [+Value]
-  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
+  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AppliedTo[Value ] ]
 
   // /** 
   //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value`
@@ -58,7 +58,7 @@ with SpclPxeryOpsSdfDefine
   // extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
   //   def withFinalPtrPosVl
   //     ()
-  //     (using util.NotGiven[Value <:< grmMetadataWrapMode.AfterSi[Any] ] )
+  //     (using util.NotGiven[Value <:< grmMetadataWrapMode.AppliedTo[Any] ] )
   //   : SpclSdfYielding[Value ]
   //   = {
   //     f.mapWithFinalPtrPosVl((vau, pos) => (
@@ -122,12 +122,12 @@ trait SpclPxeryOpsSdfDefine
   ;
 
   /** 
-   * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value` wrapped in `grmMetadataWrapMode.AfterSi`
+   * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value` wrapped in `grmMetadataWrapMode.AppliedTo`
    * 
    */
   type SpclSdfYielding
     [+Value]
-  = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
+  = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AppliedTo[Value ] ]
 
   /** 
    * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value`
@@ -141,7 +141,7 @@ trait SpclPxeryOpsSdfDefine
   extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
     def withFinalPtrPosVl
       ()
-      (using util.NotGiven[Value <:< grmMetadataWrapMode.AfterSi[Any] ] )
+      (using util.NotGiven[Value <:< grmMetadataWrapMode.AppliedTo[Any] ] )
     : SpclSdfYielding[Value ]
     = {
       f.mapWithFinalPtrPosVl((vau, pos) => (

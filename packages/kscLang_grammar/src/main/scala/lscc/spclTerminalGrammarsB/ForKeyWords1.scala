@@ -67,7 +67,7 @@ object ForCondZeroPrepositionates
 
     // TODO
     ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""fi|do|if|for|while|until|case|not|(?:do|does|done|did)|(?:is|are|was|were)""".r )
+      lscc.spclGrammar.KeywordPrf.forWordlikeContentByPattern("""fi|do|if|for|while|until|case|not|(?:do|does|done|did)|(?:is|are|was|were)""".r )
     ))
   }
 }

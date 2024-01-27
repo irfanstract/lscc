@@ -31,12 +31,30 @@ object KeywordPrf
 
   /**
    * 
-   * `KeywordPrf` to match items which matches the given RegExp (assumed to be `\w+`s)
-   * 
-   * compensate for very speculable absence of the meta-char `\b`
+   * alias of `forWordlikeContentByPattern`.
    * 
    */
+  @deprecated("alias of 'forWordlikeContentByPattern'.")
+  transparent inline
   def forContentPattern
+    //
+    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
+    (subject: IRegExp.ForRegexp[String] )
+  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  = forWordlikeContentByPattern(subject)
+
+  /**
+   * 
+   * `KeywordPrf`
+   * to match UnescapedWord(s) described by the given RegExp (and hence, assumed to be `\w+`s)
+   * .
+   * will
+   * compensate for very speculable absence, at either ends, of the meta-char `\b`,
+   * by adding one manually
+   * .
+   * 
+   */
+  def forWordlikeContentByPattern
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     (subject: IRegExp.ForRegexp[String] )
@@ -49,15 +67,26 @@ object KeywordPrf
      * 
      */
     glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc({
-      wrapRegex(subject)
+      wordLikeContentPattern(subject)
     })
   }).nn
 
   ;
 
-  private
-  transparent inline
-  def wrapRegex
+  /**
+   * 
+   * `IRegExp`
+   * to match UnescapedWord(s) described by the given RegExp (and hence, assumed to be `\w+`s)
+   * .
+   * will
+   * compensate for very speculable absence, at either ends, of the meta-char `\b`,
+   * by adding one manually
+   * .
+   * 
+   */
+  // private
+  // transparent inline
+  def wordLikeContentPattern
     //
     (subject: IRegExp.ForRegexp[String] )
   : IRegExp.ForRegexp[String]

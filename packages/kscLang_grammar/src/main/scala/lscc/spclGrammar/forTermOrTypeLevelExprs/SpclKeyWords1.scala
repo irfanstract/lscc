@@ -46,6 +46,7 @@ object XTermLevelUnprefixedKeyword
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
+  : KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ]
   = {
     ;
     import ctx.given
@@ -90,6 +91,7 @@ object XTypeLevelUnprefixedKeyword
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
+  : KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ]
   = {
     ;
     import ctx.given
@@ -135,6 +137,7 @@ object XTypeLevelNsDotQualifiedKeyword
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     ( )
+  : KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ]
   = {
     ;
     import ctx.given

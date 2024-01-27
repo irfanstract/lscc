@@ -51,7 +51,7 @@ object ForImmediateSingleLineRawOcc
     //
     (using ctx : SpclPxery )
     (subject: IRegExp.ForRegexp[String] )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  // : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = {
     ;
     import ctx.given
@@ -59,6 +59,9 @@ object ForImmediateSingleLineRawOcc
     glscc.spclTerminalGrammars.ForImmediateSingleLineRawOcc.apply
       (subject )
   }.nn
+
+  ((ctx : SpclPxery) => Seq[ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ] ]() )
+  .nn
 
   ;
 }

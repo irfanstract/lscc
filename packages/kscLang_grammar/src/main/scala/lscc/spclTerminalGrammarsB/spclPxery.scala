@@ -52,12 +52,12 @@ with SpclPxeryOpsSdfDefine
   //  */
   // type SpclSdfYielding
   //   [+Value]
-  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AfterSi[Value ] ]
+  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AppliedTo[Value ] ]
 
-  // type SpclSdfYieldingUnwrapped
-  //   [+Value]
-  // >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
-  // <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
+  type SpclSdfYieldingUnwrapped
+    [+Value]
+  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
+  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
 
   ;
 }
@@ -65,16 +65,26 @@ with SpclPxeryOpsSdfDefine
 object SpclPxery
 extends
 AnyRef
-with SpclPxeryReducedPriorityImplicits
-with SpclPxeryLowPrioImplicits
+with SpclPxeryImplicits
 {
   ;
 
   ;
 
-  implicit
+  ;
+}
+
+protected 
+trait SpclPxeryImplicits
+extends
+AnyRef
+with SpclPxeryReducedPriorityImplicits
+with SpclPxeryLowPrioImplicits
+{ this : SpclPxery.type =>
+  ;
+
   // transparent inline
-  def makeFromGrammaticalManif
+  given makeFromGrammaticalCaseManif
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
   //
@@ -82,21 +92,20 @@ with SpclPxeryLowPrioImplicits
   = {
     ;
     import ctx.given
-    make
+    makeFromConstituents
   }.nn
 
-  ;
 }
 
 protected 
 trait SpclPxeryReducedPriorityImplicits
 extends
 AnyRef
+with SpclPxeryLowPrioImplicits
 { this : SpclPxery.type =>
   ;
 
-  implicit
-  def make
+  given makeFromConstituents
     //
     (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
     (using a : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[g.T, g.T ] )
@@ -125,9 +134,8 @@ AnyRef
   ;
 
   @deprecated("this factory-method makes its own choice of 'SpclGrammaticalItemMetaDataWrapMode', possibly undesirable one.")
-  implicit
   // transparent inline
-  def makeAlt
+  given makeFromConstituentsAlt
     //
     (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
     (using eRx : (
@@ -141,7 +149,7 @@ AnyRef
     = SpclGrammaticalItemMetaDataWrapMode.identityInstance
     ;
 
-    make
+    makeFromConstituents
   }
 }
 

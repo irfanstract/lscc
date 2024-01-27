@@ -37,34 +37,36 @@ with SpclGrammaticalItemMetaDataWrapModeGivenInstances
 
   type withAfterSiType
     [+C[+Value] ]
-  = _Any { type AfterSi <: [value] =>> C[value] }
+  = _Any { type AppliedTo <: [value] =>> C[value] }
 
   ;
 
   ;
 }
 
-trait SpclGrammaticalItemMetaDataWrapMode
+@deprecatedInheritance
+sealed
+trait SpclGrammaticalItemMetaDataWrapMode private[lscc] ()
 {
   ;
 
   // type
-  type AfterSi
+  type AppliedTo
     [+Value]
   //
 
-  extension [Value] (cw: AfterSi[Value]) {
+  extension [Value] (cw: AppliedTo[Value]) {
     def value
     : Value
   }
 
-  extension [V0] (cw: AfterSi[V0]) {
+  extension [V0] (cw: AppliedTo[V0]) {
     def map
       [V2] (m: V0 => V2 )
-    : AfterSi[V2]
+    : AppliedTo[V2]
   }
 
-  extension [Value] (cw: AfterSi[Value]) {
+  extension [Value] (cw: AppliedTo[Value]) {
     def srcPtrMaybe
     : Option[SrcPtrInfo]
     = None
@@ -74,7 +76,7 @@ trait SpclGrammaticalItemMetaDataWrapMode
     def withSrcInfo
       //
       (srcPosInfo: SrcPtrInfo )
-    : AfterSi[value.type]
+    : AppliedTo[value.type]
   }
 
   type SrcPtrInfo
@@ -84,10 +86,10 @@ trait SpclGrammaticalItemMetaDataWrapMode
   val ec
   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
 
-  extension [V0] (cw: AfterSi[V0]) {
+  extension [V0] (cw: AppliedTo[V0]) {
     def zip
-      [V2] (m: AfterSi[V2] )
-    : AfterSi[(V0, V2)]
+      [V2] (m: AppliedTo[V2] )
+    : AppliedTo[(V0, V2)]
   }
 
   ;
@@ -99,54 +101,66 @@ trait SpclGrammaticalItemMetaDataWrapModeGivenInstances
 
   ;
 
-  // def
+  protected
+  sealed
+  trait SpwciIdentityInstanceImpl extends
+  _Any
+  {
+    ;
+
+    override
+    type AppliedTo
+      [+Value]
+    >: Value @annotation.unchecked.uncheckedVariance
+    <: Value @annotation.unchecked.uncheckedVariance
+
+    extension [Value] (cw: AppliedTo[Value]) {
+      def value
+      : cw.type
+      = cw
+    }
+
+    extension [V0] (cw: AppliedTo[V0]) {
+      def map
+        [V2] (m: V0 => V2 )
+      // : V2
+      : AppliedTo[V2]
+      = m(cw)
+    }
+
+    extension [Value] (value: Value) {
+      def withSrcInfo
+        //
+        (srcPosInfo: SrcPtrInfo )
+      : AppliedTo[value.type]
+      = { value }
+    }
+
+    ;
+
+    extension [V0] (cw: AppliedTo[V0]) {
+      def zip
+        [V2] (m: AppliedTo[V2] )
+      : (cw.type, m.type )
+      // : AppliedTo[(V0, V2)]
+      = (cw, m)
+    }
+
+  }
+
+  // TODO
   def identityInstance
     //
     (using ecImpl : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+  : SpwciIdentityInstanceImpl { val ec: ecImpl.type }
   = {
-    new AnyRef with SpclGrammaticalItemMetaDataWrapMode
+    new AnyRef with SpwciIdentityInstanceImpl
     {
       //
-
-      type AfterSi
-        [+Value]
-      >: Value @annotation.unchecked.uncheckedVariance
-      <: Value @annotation.unchecked.uncheckedVariance
-
-      extension [Value] (cw: AfterSi[Value]) {
-        def value
-        : cw.type
-        = cw
-      }
-
-      extension [V0] (cw: AfterSi[V0]) {
-        def map
-          [V2] (m: V0 => V2 )
-        // : V2
-        = m(cw)
-      }
 
       val ec
       : ecImpl.type
       = ecImpl
-
-      extension [Value] (value: Value) {
-        def withSrcInfo
-          //
-          (srcPosInfo: SrcPtrInfo )
-        : AfterSi[value.type]
-        = { value }
-      }
-
-      ;
-
-      extension [V0] (cw: AfterSi[V0]) {
-        def zip
-          [V2] (m: AfterSi[V2] )
-        : (cw.type, m.type )
-        // : AfterSi[(V0, V2)]
-        = (cw, m)
-      }
 
     }
   }
