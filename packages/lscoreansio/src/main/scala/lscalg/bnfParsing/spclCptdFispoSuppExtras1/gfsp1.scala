@@ -35,16 +35,27 @@ def GivenFispoSupp
 = GivenFiSpoSupp
 
 // TODO
+/** 
+ * 
+ * `InputStateAndAsciiMatchOptionConstructorPair`
+ * 
+ */
 trait GivenFiSpoSupp
 {
+  @deprecated
   type T
+  = InputState
+
+  type InputState
 
   val SpclAfterDigestTupleOption
-  : BnfCompatibleFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[T]
+  : BnfCompatibleFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[InputState ]
 
   type SpclMatchContent
   >: SpclAfterDigestTupleOption._Impl1.Some
   <: SpclAfterDigestTupleOption._Impl1.Some
+
+  ;
 }
 object GivenFiSpoSupp
 extends
@@ -58,15 +69,17 @@ with GivenFiSpoSuppImplicits
 
   transparent inline
   def apply[T](using impl : ForTExactly[T] )
+  : impl.type
   = impl
 
   transparent inline
   def inGiven(using impl : _Any )
+  : impl.type
   = impl
 
   @deprecated("this is a misnomer.")
   type ForTExtending[-CT]
-  = GivenFiSpoSupp { type T >: CT }
+  = GivenFiSpoSupp { type InputState >: CT }
 
   type ForTExactly[CT]
   = ForTInRange[CT, CT]
@@ -75,7 +88,7 @@ with GivenFiSpoSuppImplicits
   = ForTInRange[CT, Any ]
 
   type ForTInRange[-CTL <: CTU, +CTU]
-  = GivenFiSpoSupp { type T >: CTL <: CTU }
+  = GivenFiSpoSupp { type InputState >: CTL <: CTU }
 
   ;
 
@@ -164,8 +177,7 @@ trait GivenFiSpoSuppLowPriorityImplicits
     //
     import BnfCompatibleFileReadPtr1 as BC
 
-    @deprecated
-    type T
+    type InputState
     >: BC._Any
     <: BC._Any
 

@@ -52,7 +52,7 @@ trait BnfParseOptionCtorAndPtrTypeDefiner private[BnfParseOptionCtorAndPtrTypeDe
   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp with {
     ;
 
-    type T
+    type InputState
     >: PAny
     <: PAny
 

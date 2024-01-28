@@ -194,7 +194,7 @@ object ForImmediateBacktickedIdent
       +%:
       ForTerminalLiteral1("""\`""".r )
       +%:
-      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ctx.givenFispoSupp.T ]
+      lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ctx.givenFispoSupp.InputState ]
     )
     .mapMainValue({ case ((_, v, _)) => (
       v

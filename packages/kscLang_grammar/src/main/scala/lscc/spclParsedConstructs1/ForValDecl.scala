@@ -110,7 +110,7 @@ object ForValDefOnly
     import ctx.given
     import ctx.{givenFispoSupp, grmMetadataWrapMode, expcRx}
 
-    import givenFispoSupp.T as PAny
+    import givenFispoSupp.InputState as PAny
 
     ({
       ;
@@ -200,7 +200,7 @@ object ForUnparenthesedSimpleHeadBindingExpr {
 
     import ctx.givenFispoSupp
 
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
 
     import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1

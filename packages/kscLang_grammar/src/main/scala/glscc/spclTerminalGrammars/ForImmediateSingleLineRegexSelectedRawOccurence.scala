@@ -35,9 +35,9 @@ object ForImmediateSingleLineRawOcc
   def apply
     //
     (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     (subject: IRegExp._Any )
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent ]
+  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.InputState, ec.SpclMatchContent ]
   = {
     ;
 

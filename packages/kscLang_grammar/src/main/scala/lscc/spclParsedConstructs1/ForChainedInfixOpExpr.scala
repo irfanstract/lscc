@@ -34,11 +34,11 @@ val _ = {}
 //   def apply
 //     //
 //     (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-//     (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+//     (using apMode : SpclApm.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ] )
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
-//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
 //   = ???
 
 //   ;
@@ -50,7 +50,7 @@ val _ = {}
 // def ForChainedInfixOpItemExpr
 //   //
 //   (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-//   (using a : SpclApm.withPtrTRange[g.T, g.T ] )
+//   (using a : SpclApm.withPtrTRange[g.InputState, g.InputState ] )
 // = {
 //   new AnyRef with ForChainedInfixOpItemExprImpl {
 //     //
@@ -79,21 +79,21 @@ val _ = {}
 //   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
 
 //   implicit val apMode
-//   : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+//   : SpclApm.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ]
 
 //   ;
 
 //   def apply
 //     //
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
-//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AppliedTo[PrefixScrutLhsExpr ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, apMode.AppliedTo[ParsedChainedInfixOpItemExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState, apMode.AppliedTo[PrefixScrutLhsExpr ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState, apMode.AppliedTo[ParsedChainedInfixOpItemExpr ] ]
 //   = {
 //     ;
 
-//     import givenFispoSupp.T as PAny
+//     import givenFispoSupp.InputState as PAny
 
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
@@ -135,7 +135,7 @@ val _ = {}
 // def ForInfixOpEdCompoundSelectExpr
 //   //
 //   (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-//   (using a : SpclApm.withPtrTRange[g.T, g.T ] )
+//   (using a : SpclApm.withPtrTRange[g.InputState, g.InputState ] )
 // = {
 //   new AnyRef with ForInfixOpEdCompoundSelectExprImpl {
 //     //
@@ -165,7 +165,7 @@ val _ = {}
 //   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
 
 //   implicit val apMode
-//   : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+//   : SpclApm.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ]
 
 //   import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
 //   import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
@@ -177,14 +177,14 @@ val _ = {}
 //   def apply
 //     //
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
-//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , apMode.AppliedTo[UnderscoreWildcardPatternImpl._Any ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
 //   = {
 //     // TODO
 
-//     import givenFispoSupp.T as PAny
+//     import givenFispoSupp.InputState as PAny
 
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
@@ -254,16 +254,16 @@ val _ = {}
 //   def apply
 //     //
 //     (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-//     (using apMode : SpclApm.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ] )
+//     (using apMode : SpclApm.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ] )
 //     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
-//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
+//     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ] )
 //     ()
-//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
-//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , apMode.AppliedTo[ISingleTokenLiteralExpr ] ]
+//   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , apMode.AppliedTo[IInfixOpEdCompoundSelectExpr ] ]
+//   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , apMode.AppliedTo[ISingleTokenLiteralExpr ] ]
 //   = {
 //     ;
 
-//     import givenFispoSupp.T as PAny
+//     import givenFispoSupp.InputState as PAny
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
 //     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
 

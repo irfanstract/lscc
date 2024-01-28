@@ -30,11 +30,11 @@ with SpclPxeryOpsSdfDefine
 
   implicit
   val grmMetadataWrapMode
-  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ]
 
   implicit
   val expcRx
-  : lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.T, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ]
+  : lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ]
 
   ;
 
@@ -52,8 +52,8 @@ with SpclPxeryOpsSdfDefine
   //  */
   // type SpclSdfYieldingUnwrapped
   //   [+Value]
-  // >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
-  // <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
+  // >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
+  // <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] //
 
   // extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
   //   def withFinalPtrPosVl
@@ -81,9 +81,9 @@ object SpclGrammaticalPxery
   def make
     //
     (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using a : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[g.T, g.T ] )
+    (using a : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[g.InputState, g.InputState ] )
     (using eRx : (
-      lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.T, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
+      lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.InputState, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
     ))
   //
   : SpclGrammaticalPxery {val givenFispoSupp: g.type; val grmMetadataWrapMode: a.type; val expcRx: eRx.type}
@@ -112,7 +112,7 @@ trait SpclPxeryOpsGivenFispoSupps
 
   implicit
   val grmMetadataWrapMode
-  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.T, givenFispoSupp.T ]
+  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ]
 
   ;
 }
@@ -135,8 +135,8 @@ trait SpclPxeryOpsSdfDefine
    */
   type SpclSdfYieldingUnwrapped
     [+Value]
-  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
-  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T , ([e] =>> e )[Value ] ] //
+  >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
+  <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] //
 
   extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
     def withFinalPtrPosVl

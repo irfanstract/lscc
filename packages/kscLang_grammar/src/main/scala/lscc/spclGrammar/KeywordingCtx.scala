@@ -77,8 +77,8 @@ trait KeywordingCtx private[KeywordingCtx] ()
   val sc : FTLK.SpclCont
 
   type ParsePtr
-  >: sc.ec.T
-  <: sc.ec.T
+  >: sc.ec.InputState
+  <: sc.ec.InputState
 
   ;
 }
@@ -95,8 +95,8 @@ object FTLK
   def apply
     //
     (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    // (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-    (impl: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.T, ec.SpclMatchContent] )
+    // (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (impl: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ec.InputState, ec.SpclMatchContent] )
   = {
     ;
     SpclContImpl((ec, impl ) )
@@ -107,7 +107,7 @@ object FTLK
   case class SpclContImpl
     [+Impl <: (
       (lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any, lscalg.digestivity.ParseFunction._Any) {
-        val _2 : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[_1.T, _1.SpclMatchContent]
+        val _2 : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[_1.InputState, _1.SpclMatchContent]
       }
     ) ]
     (impl : Impl )

@@ -80,8 +80,8 @@ trait SpclGrammaticalItemMetaDataWrapMode private[lscc] ()
   }
 
   type SrcPtrInfo
-  >: ec.T
-  <: ec.T
+  >: ec.InputState
+  <: ec.InputState
 
   val ec
   : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any

@@ -122,7 +122,7 @@ object ForParenthesisedExpr
 
     import ctx.given
     import ctx.givenFispoSupp
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
 
     ({
       ;

@@ -34,11 +34,11 @@ object ForOccurringKeyword
     (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
     ()
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.T, givenFispoSupp.SpclMatchContent ]
+  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState, givenFispoSupp.SpclMatchContent ]
   = {
     ;
 
-    import givenFispoSupp.T as PAny
+    import givenFispoSupp.InputState as PAny
 
     kwIngCtx.asParseSubject
   }
@@ -67,7 +67,7 @@ object ForOccurringKeywordPr
   = {
     ;
 
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
     import ctx.given
 
     ForOccurringKeyword()
@@ -94,7 +94,7 @@ object ForOccurringGeneralisedKeyword
     (using ctx: SpclGrammaticalPxery )
     (subject: ([e] =>> e ) [String] )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] ]
+  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ ([e] =>> e )[String] ]
   = forPattern((subject match { case s => util.matching.Regex.quote(s) }).r )
 
@@ -104,13 +104,13 @@ object ForOccurringGeneralisedKeyword
     (using ctx: SpclGrammaticalPxery )
     (subject: IRegExp._Any )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] ]
+  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ ([e] =>> e )[String] ]
   = {
     ({
       ;
 
-      import ctx.givenFispoSupp.T as PAny
+      import ctx.givenFispoSupp.InputState as PAny
       import ctx.given
 
       ForTerminalLiteral1(subject)
@@ -139,7 +139,7 @@ object ForOccurringDelimiterPr
     (using ctx: SpclGrammaticalPxery )
     (  )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] ]
+  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ Keyword[String] ]
   = {
     ForOccurringGeneralisedKeyword.forPattern("""(?:\(|\)|\,|\;)""".r)
@@ -177,11 +177,11 @@ object ForOccurringKeywordOrIdentifier1
     (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
   //
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] | Identifier[String] ]
+  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] | Identifier[String] ]
   = {
     import ctx.given
 
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
 
     (
       ForOccurringKeyword()

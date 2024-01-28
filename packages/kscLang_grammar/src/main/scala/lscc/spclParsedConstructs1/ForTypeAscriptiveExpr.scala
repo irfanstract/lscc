@@ -93,7 +93,7 @@ object ForBindingFirstTermOrTypeAscribedExprP
 
     import ctx.given
     import ctx.givenFispoSupp
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
 
     ({
       ;
@@ -177,7 +177,7 @@ object ForTermOrTypeAscriptiveInfixAndRhs
     ;
 
     import ctx.given
-    import ctx.givenFispoSupp.T as PAny
+    import ctx.givenFispoSupp.InputState as PAny
     import ctx.givenFispoSupp
 
     ({

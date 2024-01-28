@@ -55,7 +55,7 @@ object fwscImplicits {
   given prsWhitespaceableHeadTailConcatOp0
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
-  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.T, ctx.givenFispoSupp.T] )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
   = {
     import ctx.given
 
@@ -66,7 +66,7 @@ object fwscImplicits {
   given prsWhitespaceableHeadTailConcatOp
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
-  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.T, ctx.givenFispoSupp.T] )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
   = {
     import ctx.given
 
@@ -77,9 +77,9 @@ object fwscImplicits {
   given prsWhitespaceableHeadTailConcatOp1
     //
     (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
-  : (AnyRef & lscalg.parsing.PHTCOAlt[ec.T, ec.T] )
-  = new AnyRef with lscalg.parsing.PHTCOAlt[ec.T, ec.T] {
+    (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] )
+  = new AnyRef with lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] {
     ;
 
     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
@@ -90,7 +90,7 @@ object fwscImplicits {
 
     extension [
       //
-      ReceiT >: ec.T <: ec.T ,
+      ReceiT >: ec.InputState <: ec.InputState ,
       LhsVal,
     ] (impl: ParseFunction.ForReceiverAndRValue[ReceiT, LhsVal] )
     {
