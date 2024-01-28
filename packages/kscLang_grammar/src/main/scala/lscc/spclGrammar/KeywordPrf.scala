@@ -39,7 +39,7 @@ object KeywordPrf
   def forContentPattern
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    (subject: IRegExp.ForRegexp[String] )
+    (subject: IRegExp._Any )
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = forWordlikeContentByPattern(subject)
 
@@ -57,7 +57,7 @@ object KeywordPrf
   def forWordlikeContentByPattern
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    (subject: IRegExp.ForRegexp[String] )
+    (subject: IRegExp._Any )
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ({
     import ctx.given
@@ -88,8 +88,8 @@ object KeywordPrf
   // transparent inline
   def wordLikeContentPattern
     //
-    (subject: IRegExp.ForRegexp[String] )
-  : IRegExp.ForRegexp[String]
+    (subject: IRegExp._Any )
+  : IRegExp._Any
   = {
     ;
     import IRegExp.tagImplicits.r

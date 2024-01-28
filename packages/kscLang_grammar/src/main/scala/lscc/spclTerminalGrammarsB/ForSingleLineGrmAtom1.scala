@@ -50,7 +50,7 @@ object ForImmediateSingleLineRawOcc
   def apply
     //
     (using ctx : SpclPxery )
-    (subject: IRegExp.ForRegexp[String] )
+    (subject: IRegExp._Any )
   // : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = {
     ;

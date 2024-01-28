@@ -236,7 +236,7 @@ object ForKwPre
   transparent inline
   def apply
     //
-    (subject: IRegExp.ForRegexp[String] )
+    (subject: IRegExp._Any )
     (using ctx : SpclPxery )
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = ({

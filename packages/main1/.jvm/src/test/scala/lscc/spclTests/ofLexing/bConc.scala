@@ -36,6 +36,10 @@ org.scalatest.funsuite.AnyFunSuite
 
   ;
 
+  import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+
+  ;
+
   ;
 
   test("given src `()()`, try to parse it alt") {
@@ -55,6 +59,56 @@ org.scalatest.funsuite.AnyFunSuite
 
         p
 
+        .match { case ptr0 => {
+          ({
+            import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1 }
+
+            (
+              ForInlineTerminalLiteral1(IRegExp.forLiteral("()") )
+              andThenAlso
+              ForInlineTerminalLiteral1(IRegExp.forLiteral("?") )
+            )
+          })
+          .applyBrt(ptr0)
+        } }
+      })
+      .match { case r => {
+        ;
+
+        assert(r.isEmpty )
+
+      } }
+
+      ({
+        ;
+
+        p
+
+        .match { case ptr0 => {
+          ({
+            import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1 }
+
+            (
+              ForInlineTerminalLiteral1(IRegExp.forLiteral("()") )
+              andThenAlso
+              ForInlineTerminalLiteral1(IRegExp.forLiteral("()()") )
+            )
+          })
+          .applyBrt(ptr0)
+        } }
+      })
+      .match { case r => {
+        ;
+
+        assert(r.nonEmpty )
+
+      } }
+
+      ({
+        ;
+
+        p
+
         // .immediateConcatOfSubjectsExre((
         //   //
 
@@ -64,67 +118,25 @@ org.scalatest.funsuite.AnyFunSuite
 
         //       _.immediateLiterally("()").toOption
         //       ,
-        //       _.immediateLiterally("?").toOption
+        //       _.immediateLiterally("()").toOption
         //       ,
         //     ))
         // ))
-        .match { case ptr0 => {
-          ({
-            ;
-
-            import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1 }
-
-            import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
-
-            (
-              //
-
-              ForInlineTerminalLiteral1("""\(\)""".r)
-              andThenAlso
-
-              ForInlineTerminalLiteral1("""\?""".r)
-            )
-          })
-          .applyBrt(ptr0)
-        } }
+        // .map({ case (e1 , nextPos) => {
+        //   ;
+        //   SpclGrmPtr.SpclAfterDigestTupleOption.describeAfterDigestTuple1(
+        //     finalPos = nextPos ,
+        //     prod = ((
+        //       ({
+        //         ;
+        //         e1
+        //         .map({ case (matchedStrs , _ ) => matchedStrs.mFullStr : String } )
+        //         .mkString("")
+        //       })
+        //       .match { case matchedStr => SpclGrmPtr.SpclAfterDigestTupleOption._Impl1.SpclMatchedStringArray(fullS = matchedStr , ms = IndexedSeq() ) }
+        //     ) , e1.map(_._2.regex ).mkString("|").r ) )
+        // } })
       })
-      .match { case r => {
-        assert(r.isEmpty )
-      } }
-
-      // ({
-      //   ;
-
-      //   p
-
-      //   .immediateConcatOfSubjectsExre((
-      //     //
-
-      //     lscalg.bnfParsing.BnrpMatchingLoopOp.SpclSubject.fromLiftedPartialFunctionList
-      //       (Seq[(p: SpclGrmPtr._Any ) => Option[SpclGrmPtr.SpclAfterDigestTupleOption.PositiveInstance ] ] (
-      //         //
-
-      //         _.immediateLiterally("()").toOption
-      //         ,
-      //         _.immediateLiterally("()").toOption
-      //         ,
-      //       ))
-      //   ))
-      //   .map({ case (e1 , nextPos) => {
-      //     ;
-      //     SpclGrmPtr.SpclAfterDigestTupleOption.describeAfterDigestTuple1(
-      //       finalPos = nextPos ,
-      //       prod = ((
-      //         ({
-      //           ;
-      //           e1
-      //           .map({ case (matchedStrs , _ ) => matchedStrs.mFullStr : String } )
-      //           .mkString("")
-      //         })
-      //         .match { case matchedStr => SpclGrmPtr.SpclAfterDigestTupleOption._Impl1.SpclMatchedStringArray(fullS = matchedStr , ms = IndexedSeq() ) }
-      //       ) , e1.map(_._2.regex ).mkString("|").r ) )
-      //   } })
-      // })
       // .match { case r => {
       //   assert(r.map(e => e.matchedStr ) == Some("()()") )
       // } }

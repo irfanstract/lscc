@@ -102,7 +102,7 @@ object ForOccurringGeneralisedKeyword
   def forPattern
     //
     (using ctx: SpclGrammaticalPxery )
-    (subject: IRegExp.ForRegexp[String] )
+    (subject: IRegExp._Any )
   //
   // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.T, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ ([e] =>> e )[String] ]
