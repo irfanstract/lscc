@@ -19,7 +19,13 @@ import lscalg.cli.repl.{*}
 
 
 
-object ForImmediateStrPatternOccurence
+@deprecated("alias of 'ForImmediateRawOcc'.")
+transparent inline
+def ForImmediateStrPatternOccurence
+: ForImmediateRawOcc.type
+= ForImmediateRawOcc
+
+object ForImmediateRawOcc
 {
   ;
 
@@ -27,16 +33,16 @@ object ForImmediateStrPatternOccurence
     //
     // [T]
     (using ec : GivenFispoSupp._Any )
-    (using spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     (subject: util.matching.Regex, lineCountLimit: Int )
   // : FromScRegex[subject.type]
   = {
-    import ec.T
+    import ec.InputState
     import ec.SpclAfterDigestTupleOption
     import ec.SpclMatchContent
     ;
 
-    lscalg.parsing.ParseFunction.fromLiftedPartialFunction((pt0: T) => {
+    lscalg.parsing.ParseFunction.fromLiftedPartialFunction((pt0: InputState) => {
       ;
       pt0.immediateMatchOf(subject )
       .toOption
@@ -47,7 +53,13 @@ object ForImmediateStrPatternOccurence
   ;
 }
 
-object ForImmediateStrLiteralOccurence
+@deprecated("alias of 'ForImmediateLiterallyRawOccurence'.")
+transparent inline
+def ForImmediateStrLiteralOccurence
+: ForImmediateLiterallyRawOccurence.type
+= ForImmediateLiterallyRawOccurence
+
+object ForImmediateLiterallyRawOccurence
 {
   ;
 
@@ -60,7 +72,7 @@ object ForImmediateStrLiteralOccurence
     //
     // [T]
     (using ec : GivenFispoSupp._Any )
-    (using spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.T, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     (subject: String )
   = {
     ;

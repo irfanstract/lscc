@@ -35,16 +35,27 @@ def GivenFispoSupp
 = GivenFiSpoSupp
 
 // TODO
+/** 
+ * 
+ * `InputStateAndAsciiMatchOptionConstructorPair`
+ * 
+ */
 trait GivenFiSpoSupp
 {
+  @deprecated
   type T
+  = InputState
+
+  type InputState
 
   val SpclAfterDigestTupleOption
-  : BnfCompatibleFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[T]
+  : BnfCompatibleFileReadPtr1.GeneralisedSpclAfterDigestTupleOption[InputState ]
 
   type SpclMatchContent
   >: SpclAfterDigestTupleOption._Impl1.Some
   <: SpclAfterDigestTupleOption._Impl1.Some
+
+  ;
 }
 object GivenFiSpoSupp
 extends
@@ -58,15 +69,17 @@ with GivenFiSpoSuppImplicits
 
   transparent inline
   def apply[T](using impl : ForTExactly[T] )
+  : impl.type
   = impl
 
   transparent inline
   def inGiven(using impl : _Any )
+  : impl.type
   = impl
 
   @deprecated("this is a misnomer.")
   type ForTExtending[-CT]
-  = GivenFiSpoSupp { type T >: CT }
+  = GivenFiSpoSupp { type InputState >: CT }
 
   type ForTExactly[CT]
   = ForTInRange[CT, CT]
@@ -75,7 +88,7 @@ with GivenFiSpoSuppImplicits
   = ForTInRange[CT, Any ]
 
   type ForTInRange[-CTL <: CTU, +CTU]
-  = GivenFiSpoSupp { type T >: CTL <: CTU }
+  = GivenFiSpoSupp { type InputState >: CTL <: CTU }
 
   ;
 
@@ -85,7 +98,7 @@ with GivenFiSpoSuppImplicits
   : AnyRef with {
     ;
 
-    extension [A, ActualR] (r: lscalg.digestivity.Sdf.zippedWithReceiverInstances.ForReceiverAndRValue[A, ActualR] ) (using ec : ForTAssignableFrom[A] )
+    extension [A, ActualR] (r: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[A, ActualR] ) (using ec : ForTAssignableFrom[A] )
       //
 
       /** 
@@ -97,10 +110,10 @@ with GivenFiSpoSuppImplicits
         (receiver: A )
         (using eAcRTEquiv : (ActualR <:< ec.SpclMatchContent) )
       = {
-        r.applyO(receiver)
+        r.applyBrt(receiver).headOption
         .map({ case (m, newPos) => (eAcRTEquiv(m) ) })
         .getOrElse[ec.SpclAfterDigestTupleOption._Any ] (ec.SpclAfterDigestTupleOption.negativeInstance )
-      }
+      }.nn
   }
 
   implicit
@@ -124,7 +137,7 @@ protected
 trait GivenFiSpoSuppImplicits
 extends
 AnyRef
-with GivenFiSpoSuppLowPriorityImplicits
+with GivenFiSpoSuppReducedPriorityImplicits
 { this : GivenFiSpoSupp.type =>
   ;
 
@@ -148,8 +161,13 @@ with GivenFiSpoSuppLowPriorityImplicits
 }
 
 protected
-trait GivenFiSpoSuppLowPriorityImplicits
+trait GivenFiSpoSuppReducedPriorityImplicits
+extends
+AnyRef
+with GivenFiSpoSuppLowPriorityImplicits
 { this : GivenFiSpoSupp.type =>
+  ;
+
   ;
 
   @deprecated
@@ -157,15 +175,24 @@ trait GivenFiSpoSuppLowPriorityImplicits
   inline
   given failIfFound
   : GivenFiSpoSupp
-  = compiletime.error(s"unexpected selection.")
+  = compiletime.error(s"unexpected selection of 'GivenFiSpoSupp#failIfFound'. please explicitly specify which GFSP to use, in your calling code.")
+
+  ;
+
+  ;
+}
+
+protected
+trait GivenFiSpoSuppLowPriorityImplicits
+{ this : GivenFiSpoSupp.type =>
+  ;
 
   given for_BC
   : GivenFiSpoSupp with {
     //
     import BnfCompatibleFileReadPtr1 as BC
 
-    @deprecated
-    type T
+    type InputState
     >: BC._Any
     <: BC._Any
 

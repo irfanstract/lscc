@@ -35,7 +35,8 @@ with SdfWithFilterOpsImpl
   ;
 
   given alternativeOp
-  : AnyRef with {
+  : AnyRef with lscalg.digestivity.SdfFallBackOps[ForReceiverAndRValue ]
+  with {
     ;
 
     extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, LRV ] )
@@ -60,7 +61,7 @@ with SdfWithFilterOpsImpl
           (lhsI.applyBrt(pt0) concat rhsI.applyBrt(pt0) )
           .match { case r => lscalg.parsing.BRetrialIterator.from(r) }
         } )
-      }
+      }.nn
     }
 
     //
@@ -118,7 +119,7 @@ with SdfWithFilterOpsImpl
   given returnValueProjectiveOp
   : (AnyRef & SdfWithFilter[ForReceiverAndRValue] )
   = {
-    import monaryReturnValueProjectiveOpImplicits.monaryReturnValueProjectiveOp
+    import returnedCompleteValueMapOpExtras.monaryReturnValueProjectiveOp
     monaryReturnValueProjectiveOp
   }
 
@@ -136,12 +137,13 @@ trait SdfWithFilterOpsImpl
   ) =>
   ;
 
+  @deprecated("an alias of 'returnedCompleteValueMapOpExtras'.")
   transparent inline
-  def returnedCompleteValueMapOpExtras
-  : monaryReturnValueProjectiveOpImplicits.type
-  = monaryReturnValueProjectiveOpImplicits
+  def monaryReturnValueProjectiveOpImplicits
+  : returnedCompleteValueMapOpExtras.type
+  = returnedCompleteValueMapOpExtras
 
-  object monaryReturnValueProjectiveOpImplicits
+  object returnedCompleteValueMapOpExtras
   {
     ;
 
@@ -162,7 +164,7 @@ trait SdfWithFilterOpsImpl
         = {
           fromAltBRetrialFunction((
             lhsI.applyBrt
-            .andThen((poset : lscalg.parsing.BRetrialIterator.ForR[LRV]) => poset.map(proj) )
+            .andThen((poset : lscalg.parsing.BRetrialIterator.ForItemT[LRV]) => poset.map(proj) )
           ))
         }
 
@@ -174,7 +176,7 @@ trait SdfWithFilterOpsImpl
         = {
           fromAltBRetrialFunction((
             lhsI.applyBrt
-            .andThen((poset : lscalg.parsing.BRetrialIterator.ForR[LRV]) => poset.collect(proj) )
+            .andThen((poset : lscalg.parsing.BRetrialIterator.ForItemT[LRV]) => poset.collect(proj) )
           ))
         }
 
@@ -186,7 +188,7 @@ trait SdfWithFilterOpsImpl
         = {
           fromAltBRetrialFunction((
             lhsI.applyBrt
-            .andThen((poset : lscalg.parsing.BRetrialIterator.ForR[LRV]) => poset.flatMap(proj) )
+            .andThen((poset : lscalg.parsing.BRetrialIterator.ForItemT[LRV]) => poset.flatMap(proj) )
           ))
         }
 
@@ -197,7 +199,7 @@ trait SdfWithFilterOpsImpl
         = {
           fromAltBRetrialFunction((
             lhsI.applyBrt
-            .andThen((poset : lscalg.parsing.BRetrialIterator.ForR[LRV]) => poset.filter(pred) )
+            .andThen((poset : lscalg.parsing.BRetrialIterator.ForItemT[LRV]) => poset.filter(pred) )
           ))
         }
 
@@ -220,51 +222,6 @@ trait SdfWithFilterOpsImpl
 
 
 
-
-trait SdfWithFilter[ ForReceiverAndRValue[LA, +LRV ] ]
-{
-  ;
-
-  ;
-
-  extension [LA, LRV] (lhsI : ForReceiverAndRValue[LA, LRV ] )
-  {
-    //
-
-    def map
-      //
-      [NewRV]
-      (proj: LRV => NewRV )
-    : ForReceiverAndRValue[LA, NewRV ]
-
-    def collect
-      //
-      [NewRV]
-      (proj: PartialFunction[LRV, NewRV] )
-    : ForReceiverAndRValue[LA, NewRV ]
-
-    def flatMap
-      //
-      [NewRV]
-      (proj: LRV => collection.IterableOnce[NewRV] )
-    : ForReceiverAndRValue[LA, NewRV ]
-
-    def filter
-      //
-      (pred: LRV => Boolean )
-    : ForReceiverAndRValue[LA, LRV ]
-
-    transparent inline
-    def withFilter
-      //
-      (pred: LRV => Boolean )
-    : ForReceiverAndRValue[LA, LRV ]
-    = lhsI.filter(pred )
-
-  }
-
-  ;
-}
 
 
 

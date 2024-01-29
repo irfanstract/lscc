@@ -100,7 +100,8 @@ object Build {
         // "3.3.2" /* led to "artifact not found" errors */
         // "3.3.1"
         // "3.3.2-RC1"
-        "3.4.0-RC1"
+        // "3.4.0-RC1"
+        "3.4.0-RC2"
       )
 
       ThisBuild / Keys.scalaVersion := suggestedScalaVersionV
