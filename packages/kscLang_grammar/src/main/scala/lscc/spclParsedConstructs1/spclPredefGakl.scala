@@ -17,6 +17,8 @@ package lscc.spclParsedConstructs1
 
 
 trait SpclGrammaticalPxery
+  //
+  // (using val entryAndExitLoggingMode1 : SpclGrammaticalPxery.SpclEntLoggingMode)
 extends
 AnyRef
 with SpclPxeryOpsGivenFispoSupps
@@ -69,6 +71,67 @@ with SpclPxeryOpsSdfDefine
   // //
 
   ;
+
+  // // implicit
+  // val entryAndExitLoggingMode1
+  // : SpclGrammaticalPxery.SpclEntLoggingMode
+
+  val entryAndExitLoggingMode1
+  : SpclGrammaticalPxery.SpclEntLoggingMode { type SupportedEnclosingCtx >: SpclGrammaticalPxery_this.type <: SpclGrammaticalPxery }
+
+  extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
+  {
+    def withLogging1(mainMsg: String)
+    : SpclSdfYieldingUnwrapped[Value]
+    = {
+      f
+      .match { case impl => {
+        import lscalg.digestivity.ParseFunction
+
+        ParseFunction.fromAltBRetrialFunction((
+          (pt: SpclGrammaticalPxery_this.givenFispoSupp.InputState ) => {
+            lazy val (started1 @ onExit) = {
+              entryAndExitLoggingMode1.onEntry(using SpclGrammaticalPxery_this )(msg = mainMsg , p = pt )
+            }
+
+            (f)
+            .applyBrt(pt )
+            .prependedAll
+              (LazyList.empty.lazyAppendedAll({ started1 ; Nil }) )
+            .zipWithIndex
+            .match { case s => {
+              s
+              .concat({
+                if s.nonEmpty then {
+                  ;
+                  new Exception(s"(${s.length } match(es) ) for ($mainMsg) ")
+                }
+                else {
+                  ;
+                  onExit.apply({
+                    util.Failure((
+                      new Exception(s"failure (n=${s.length }) for ($mainMsg) ")
+                    ))
+                  })
+                }
+                ;
+
+                Nil
+              })
+            } }
+            .map((v, i) => v )
+          }
+        ))
+      } }
+    }
+  }
+
+  transparent inline
+  def SpclGrammaticalPxery_this
+  : this.type
+  = this
+
+  ;
 }
 
 object SpclGrammaticalPxery
@@ -85,6 +148,15 @@ object SpclGrammaticalPxery
     (using eRx : (
       lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.InputState, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
     ))
+    (using onEntryAndExitLoggingModeImpl : (
+      SpclEntLoggingMode {
+        type SupportedEnclosingCtx
+          >: SpclGrammaticalPxery {
+            val givenFispoSupp: g.type
+          }
+          <: SpclGrammaticalPxery
+      }
+    ) )
   //
   : SpclGrammaticalPxery {val givenFispoSupp: g.type; val grmMetadataWrapMode: a.type; val expcRx: eRx.type}
   = {
@@ -93,9 +165,76 @@ object SpclGrammaticalPxery
       val givenFispoSupp : g.type = valueOf
       val grmMetadataWrapMode : a.type = valueOf
       val expcRx : eRx.type = valueOf
+      
+      val entryAndExitLoggingMode1 = onEntryAndExitLoggingModeImpl
     }
     .nn
   }
+
+  ;
+  
+  // TODO
+  trait SpclEntLoggingMode private [SpclGrammaticalPxery] ()
+  {
+    ;
+
+    type SupportedEnclosingCtx
+    <: SpclGrammaticalPxery
+
+    def onEntry
+      //
+      (using ctx: SupportedEnclosingCtx )
+      (msg: String, p: ctx.givenFispoSupp.InputState )
+    : SpclExitLoggingMode
+  }
+
+  object SpclEntLoggingMode
+  {
+    ;
+
+    def forCurriedFunc
+      //
+      [SupportedEnclosingCtxT <: SpclGrammaticalPxery ]
+      (impl: (
+        //
+        (ctx: SupportedEnclosingCtxT ) =>
+        (msg: String, p: ctx.givenFispoSupp.InputState ) =>
+          SpclExitLoggingMode
+      ) )
+    = new SpclEntLoggingMode {
+      ;
+
+      type SupportedEnclosingCtx
+      >: SupportedEnclosingCtxT
+      <: SupportedEnclosingCtxT
+
+      def onEntry
+        //
+        (using ctx: SupportedEnclosingCtx )
+        (msg: String, p: ctx.givenFispoSupp.InputState )
+      = impl(ctx)(msg = msg , p = p )
+    }
+
+    def noOpInstance
+    = forCurriedFunc((ctx: SpclGrammaticalPxery ) => { case e => {
+      ;
+      ({ case _ =>  } : (util.Try[Unit] => Unit )) : SpclExitLoggingMode
+    } } )
+
+    implicit
+    def defaultInstance
+      //
+      [T >: SpclGrammaticalPxery <: SpclGrammaticalPxery]
+    : (SpclEntLoggingMode{type SupportedEnclosingCtx >: T <: T } )
+    = noOpInstance
+
+  }
+
+  // TODO
+  opaque type SpclExitLoggingMode
+  >: (util.Try[Unit] => Unit )
+  <: (util.Try[Unit] => Unit )
+  =  (util.Try[Unit] => Unit )
 
   ;
 }

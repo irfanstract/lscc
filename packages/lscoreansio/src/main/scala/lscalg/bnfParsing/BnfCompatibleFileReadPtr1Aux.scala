@@ -78,6 +78,26 @@ AnyRef
 
   }
 
+  given edGRemainingLinesAsSingleLineStr1
+  : AnyRef with {
+    extension (inputState: _Any )
+    {
+
+      /** for debugging only */
+      def remainingLinesAsSingleLineStrBy
+        //
+        (n: Int )
+      : String
+      = s"InputState(${
+        inputState.remainingLinesImpl
+        .take(n)
+        .map(l => s"(Line ${l.index} ) ${l.contents}" )
+        .mkString("", " <<LINEBREAK>> " , "")
+        .match { case sv => s""" "$sv" """  }
+      })"
+    }
+  }
+
   given withRemainingLinesOp
   : AnyRef
   with {

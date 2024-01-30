@@ -35,7 +35,11 @@ object ForNumericLiteral1 {
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = {
     // TODO
-    ForBigDecimalLiteral1() orElse ForBigHexadecimalLiteral1()
+    (
+      ForBigDecimalLiteral1()
+      orElse
+      ForBigHexadecimalLiteral1()
+    )
   }
 }
 
@@ -78,7 +82,9 @@ object ForBigHexadecimalLiteral1
     (using ctx : SpclPxery )
     ( )
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
-  = ForTerminalLiteral1("""0x(?:[0-9A-Z]+|[0-9a-z]+)(\.[0-9A-Za-z]+)?""".r )
+  = ({
+    ForTerminalLiteral1("""0{1,5}x{1,5}((?:Neg)?(?:[0-9A-Za-z]+)(?:\.[0-9A-Za-z]+)?)""".r )
+  })
 
   ;
 }

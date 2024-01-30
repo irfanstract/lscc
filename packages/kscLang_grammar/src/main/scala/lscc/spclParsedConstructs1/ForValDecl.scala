@@ -55,6 +55,7 @@ object ForUnderscoreWildcardDefOnly {
     .match { case f => f : ctx.SpclSdfYieldingUnwrapped[String ] }
     .mapMainValue(UnderscoreWildcardPatternImpl.forExactSrcLevelToken(_) )
     .withFinalPtrPosVl()
+    .withLogging1(mainMsg = s"ForUnderscoreWildcardDefOnly(${kwIngCtx })")
   }).nn
 
   ;

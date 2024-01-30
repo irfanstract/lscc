@@ -126,6 +126,7 @@ object ForBindingFirstTermOrTypeAscribedExprP
       })
     })
     .withFinalPtrPosVl()
+    .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP")
   }.nn
 
   ;
@@ -158,6 +159,8 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 { 
   ;
 
+  import lscalg.bnfParsing.IRegExp
+
   import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
   import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
 
@@ -165,6 +168,8 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 
   /** to impose `prsWhitespaceableHeadTailConcatOp` */
   import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+
+  import IRegExp.tagImplicits.r
 
   def apply
     //
@@ -187,15 +192,17 @@ object ForTermOrTypeAscriptiveInfixAndRhs
         //
 
         (
-          ForOccurringKeywordOrRefP()
-          .map({ case (scrutMode @ (Keyword( kwd @ ("@" | "is") ) ) ) => {
+          ForOccurringGeneralisedKeyword.forPattern("""\@|is|was""".r )
+          .map({ case  kwd => {
             Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.LeadKeyWord(${kwIngCtx })")
 
           +%:
 
           ForTermQueryExpr()
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.Main(${kwIngCtx })")
 
           +%:
 
@@ -205,13 +212,14 @@ object ForTermOrTypeAscriptiveInfixAndRhs
           // (iTypeKw, vl )
           ToTermPatternScrutiveAscription(vl )
         } })
+        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv(${kwIngCtx })")
 
         orElse
 
         (
-          ForOccurringKeywordOrRefP()
-          .map({ case (scrutMode @ (Keyword( kwd @ (":" | "satisfies") ) )  ) => {
-            Keyword(kwd )
+          ForOccurringGeneralisedKeyword.forPattern("""\:|implements|satisfies""".r )
+          .map({ case  kwd => {
+            Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
 
@@ -242,8 +250,10 @@ object ForTermOrTypeAscriptiveInfixAndRhs
             }))
             .value
         })
+        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToType(${kwIngCtx })")
       )
       .withFinalPtrPosVl()
+      .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs(${kwIngCtx })")
     })
   }.nn
 
