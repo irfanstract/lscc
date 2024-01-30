@@ -115,7 +115,7 @@ trait SdfZipWithReceiverIPackedCases
         : ForReceiverAndRValue[LA, (NewRV, LA) ]
         = {
           lhsI
-          .collect(PartialFunction fromFunction proj )
+          .collect(PartialFunction fromFunction (<:<.refl[LRV] andThen proj ) )
         }
 
         /* LOCAL IMPL */

@@ -292,6 +292,70 @@ val _ = {}
 //   case ForNumeric()
 // }
 
+object ForSingleTokenLiteralExpr
+{
+  ;
+
+  ;
+
+  import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
+  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+  import lscalg.parsing.subjectConcatOps1.given
+
+  /** to impose `prsWhitespaceableHeadTailConcatOp` */
+  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+
+  // TODO
+  transparent inline
+  def apply
+    //
+    (using ctx: SpclGrammaticalPxery )
+    // (using flatCaseCtx : lscc.spclTerminalGrammarsB.SpclPxery )
+    //
+    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+    //
+    ( )
+  : ctx.SpclSdfYielding[Any ]
+  = { val flatCaseCtx = summon[lscc.spclTerminalGrammarsB.SpclPxery ] ; { import ctx.given ; given flatCaseCtx.type = flatCaseCtx ; {
+    ;
+
+    // import ctx.given
+
+    given m.spclUnprefixedKeywdingMode.type
+    = m.spclUnprefixedKeywdingMode
+
+    (
+      ForNumericLiteral1()
+      // .map(_ => (
+      //   ISingleTokenLiteralExpr.ForNumeric()
+      // ) )
+      .map(_ => {
+        FixedIdentifier("(numeric)")
+      } )
+      .withLogging1(mainMsg = "ForSingleTokenLiteralExpr.Numeric")
+
+      orElse
+
+      ForOccurringKeywordOrRefP()
+      .collect({ case e @ FixedIdentifier(_) => {
+        e
+      } })
+      // .map(Some(_) )
+      .withLogging1(mainMsg = "ForSingleTokenLiteralExpr.Ref")
+    )
+    // .map(_.value)
+    .mapWithFinalPtrPosVl((e, pos) => (
+      e
+      .withSrcInfo(srcPosInfo = pos )
+    ) )
+    .withLogging1(mainMsg = "ForSingleTokenLiteralExpr")
+    .nn
+  }}}
+
+  ;
+}
+
 
 
 

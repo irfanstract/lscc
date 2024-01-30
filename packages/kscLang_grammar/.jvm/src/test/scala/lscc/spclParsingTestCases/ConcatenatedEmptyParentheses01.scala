@@ -64,7 +64,7 @@ org.scalatest.funsuite.AnyFunSuite
 
             (
               ForInlineTerminalLiteral1(IRegExp.forLiteral("()") )
-              andThenAlso
+              zip
               ForInlineTerminalLiteral1(IRegExp.forLiteral("?") )
             )
           })
@@ -89,7 +89,7 @@ org.scalatest.funsuite.AnyFunSuite
 
             (
               ForInlineTerminalLiteral1(IRegExp.forLiteral("()") )
-              andThenAlso
+              zip
               ForInlineTerminalLiteral1(IRegExp.forLiteral("()()") )
             )
           })

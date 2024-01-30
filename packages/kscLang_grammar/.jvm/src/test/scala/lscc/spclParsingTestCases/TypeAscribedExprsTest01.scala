@@ -49,16 +49,81 @@ org.scalatest.funsuite.AnyFunSuite
 
   ;
 
+  test("underscore wildcard match") {
+    ;
+
+    ;
+
+    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("_ @ MainVariableExprImpl ; ")
+    .atBgnPars()
+
+    .match { case p => {
+      ;
+
+      ({
+        ;
+
+        p
+
+        .match { case ptr0 => {
+          lscc.spclTerminalGrammarsB.ForUnderscoreWildcardPattern()
+          .applyBrt(ptr0)
+        } }
+
+      })
+      .headOption
+      .orElse({
+        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+
+        None
+      })
+      .match { case r => {
+        ;
+
+        assert(r.nonEmpty )
+
+        println(r )
+
+      } }
+
+      ;
+    } }
+
+    ;
+
+    lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Expr `val MainVariableExpr @ MainVariableExprImpl ; `")
+  }
+
   test("type-ascribed val-def") {
     ;
 
-    val rule
+    import lscc.spclGrammar.{KeywordingCtx , forTermOrTypeLevelExprs }, forTermOrTypeLevelExprs.{Aitl }
+
+    // implicit
+    val exprMode
+    = {
+      Aitl.forTermLevel()
+    }
+
+    val headBindingRule
+    = {
+      ;
+
+      ({
+        given exprMode.type
+        = exprMode
+        given exprMode.spclUnprefixedKeywdingMode.type
+        = exprMode.spclUnprefixedKeywdingMode
+        lscc.spclParsedConstructs1.ForUnparenthesedSimpleHeadBindingExpr()
+      })
+    }
+
+    val fullExprRule
     = {
       ;
 
       import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1, ForImmediateUnescapedWord }
       import lscc.spclParsedConstructs1.{ForBindingFirstTermOrTypeAscribedExprP }
-      import lscc.spclGrammar.{KeywordingCtx , forTermOrTypeLevelExprs }, forTermOrTypeLevelExprs.{Aitl }
 
       (
         withMode(Aitl.forTermLevel() ) ((
@@ -81,9 +146,42 @@ org.scalatest.funsuite.AnyFunSuite
         p
 
         .match { case ptr0 => {
-          rule
+          headBindingRule
           .applyBrt(ptr0)
         } }
+
+      })
+      .headOption
+      .orElse({
+        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+
+        None
+      })
+      .match { case r => {
+        ;
+
+        assert(r.nonEmpty )
+
+        println(r )
+
+      } }
+
+      ({
+        ;
+
+        p
+
+        .match { case ptr0 => {
+          fullExprRule
+          .applyBrt(ptr0)
+        } }
+
+      })
+      .headOption
+      .orElse({
+        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+
+        None
       })
       .match { case r => {
         ;
@@ -109,7 +207,33 @@ org.scalatest.funsuite.AnyFunSuite
         p
 
         .match { case ptr0 => {
-          rule
+          headBindingRule
+          .applyBrt(ptr0)
+        } }
+
+      })
+      .headOption
+      .orElse({
+        assert(!((p.remainingLines.head).contents startsWith "val " ) )
+
+        None
+      })
+      .match { case r => {
+        ;
+
+        assert(r.nonEmpty )
+
+        println(r )
+
+      } }
+
+      ({
+        ;
+
+        p
+
+        .match { case ptr0 => {
+          fullExprRule
           .applyBrt(ptr0)
         } }
       })

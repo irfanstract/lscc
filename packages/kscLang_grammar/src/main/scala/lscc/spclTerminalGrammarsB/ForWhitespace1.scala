@@ -59,13 +59,24 @@ object fwscImplicits {
   = {
     import ctx.given
 
-    prsWhitespaceableHeadTailConcatOp1
+    prsWhitespaceableHeadTailConcatOpEx
   }
 
   // public
   given prsWhitespaceableHeadTailConcatOp
     //
     (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
+  = {
+    prsWhitespaceableHeadTailConcatOpEx
+  }
+
+  // public
+  protected
+  def prsWhitespaceableHeadTailConcatOpEx
+    //
+    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    (using regulSPa : lscc.spclTerminalGrammarsB.SpclPxery { val givenFispoSupp: ctx.givenFispoSupp.type } = lscc.spclTerminalGrammarsB.SpclPxery.makeFromGrammaticalCaseManif )
   : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
   = {
     import ctx.given
@@ -76,15 +87,24 @@ object fwscImplicits {
   private
   given prsWhitespaceableHeadTailConcatOp1
     //
-    (using ec : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    (using ctx1 : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    (using ec : (
+      // lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
+      ctx1.givenFispoSupp.type
+    ) )
     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
+    (using regulSPa : lscc.spclTerminalGrammarsB.SpclPxery { val givenFispoSupp: ec.type } )
+    (using ValueOf[ec.SpclAfterDigestTupleOption.type ])
   : (AnyRef & lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] )
   = new AnyRef with lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] {
     ;
 
     import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueMapOp1
 
-    import lscalg.parsing.subjectConcatOps1.prsHeadTailConcatOp.{+%: as &&: }
+    // import lscalg.parsing.subjectConcatOps1.prsHeadTailConcatOp.{+%: as &&: }
+    import lscalg.parsing.subjectConcatOps1.prsSuccessionalOps.{andThenAlso as &&: }
+    import lscalg.parsing.subjectConcatOps1.prsHeadTailConcatOp.{+%: as /&&: }
+    import lscalg.parsing.subjectConcatOps1.prsZipOps.{zip as +/&&: }
 
     import lscalg.parsing.ParseFunction
 
@@ -104,10 +124,28 @@ object fwscImplicits {
         (using RVT : RhsVal <:< Tuple )
       : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal *: (RhsVal & Tuple ) ) ]
       = ParseFunction.lazily {
-        (impl &&: (ForSingleLineWhitespace( ) ) &&: implRhs )
+        ;
+
+        val delimitingOptWhitespaceRule
+        = {
+          ;
+          ForSingleLineWhitespace( )
+          .withLogging1(mainMsg = s"prsWhitespaceableHeadTailConcat.DelimitingWhitespace")
+        }
+
+        // (impl &&: delimitingOptWhitespaceRule &&: implRhs )
+        // (impl /&&: delimitingOptWhitespaceRule +/&&: implRhs )
+        (impl /&&: delimitingOptWhitespaceRule /&&: implRhs /&&: lscalg.digestivity.ParseFunction.emptyTupleValuedInstance[ReceiT] )
+
+        .withLogging1(mainMsg = s"prsWhitespaceableHeadTailConcat.L140")
+
+        .mapMainValue(<:<.refl )
         .mapMainValue({ case (cLhs, sp, cRhs : (RhsVal & Tuple) ) => {
           cLhs *: cRhs
         } })
+
+        .withLogging1(mainMsg = s"prsWhitespaceableHeadTailConcat.L147")
+
         .match { case e => e }
       }
     }
