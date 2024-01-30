@@ -58,7 +58,7 @@ object XTermLevelUnprefixedKeyword
 
       // TODO
       FTLK((
-        ForCzps()
+        ForXtuCzps()
         orElse
         ForKwPre("""ref|refs""".r )
       ))
@@ -103,7 +103,7 @@ object XTypeLevelUnprefixedKeyword
 
       // TODO
       FTLK((
-        ForCzps()
+        ForXtuCzps()
         orElse
         ForKwPre("""([_]+|)(object(?:ype|)|single(?:ton|type|t|)|match(?:es|))""".r )
       ))
@@ -149,7 +149,7 @@ object XTypeLevelNsDotQualifiedKeyword
 
       // TODO
       FTLK((
-        ForCzps()
+        ForXtuCzps()
         orElse
         ForKwPre("""ref(?:)|object(?:ype|)|single(?:ton|type|t|)""".r )
       ))
@@ -158,6 +158,13 @@ object XTypeLevelNsDotQualifiedKeyword
       KeywordingCtx.fromFtlk(r)
     } }
   }.nn
+}
+
+object ForXtuCzps
+{
+  import lscc.spclTerminalGrammarsB.ForCzps
+
+  export ForCzps.apply as apply
 }
 
 

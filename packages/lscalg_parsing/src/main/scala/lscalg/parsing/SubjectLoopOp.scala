@@ -120,7 +120,7 @@ object SubjectLoopOpOptInImplicits1
       transparent inline
       def :*?(nMin: Int, nMax: Int)
       : PostRepForm
-      = :*?(SpclCountRange.inclusive(nMin, nMax ) )
+      = :*?(SpclCountRange.fromStartToIncludingEndIndex(nMin, nMax ) )
 
       // transparent inline
       def :*?(nRange: SpclCountRange._Any)
@@ -147,7 +147,7 @@ object SubjectLoopOpOptInImplicits1
       transparent inline
       def :*(nMin: Int, nMax: Int)
       : PostRepForm
-      = :*(SpclCountRange.inclusive(nMin, nMax ) )
+      = :*(SpclCountRange.fromStartToIncludingEndIndex(nMin, nMax ) )
 
       // transparent inline
       def :*(nRange: SpclCountRange._Any)

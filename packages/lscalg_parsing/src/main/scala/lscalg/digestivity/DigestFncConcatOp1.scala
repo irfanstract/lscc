@@ -135,10 +135,10 @@ object subjectConcatOps1
         [
           RhsVal ,
         ]
-        (implRhs : ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
+        (implRhs : => ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
         (using RVT : RhsVal <:< Tuple )
       : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal *: (RhsVal & Tuple ) ) ]
-      = {
+      = ParseFunction.lazily {
         (impl zip implRhs )
         .applyBrt
         .andThen(o => (
@@ -207,7 +207,7 @@ trait PHTCOImpl
       [
         RhsVal ,
       ]
-      (implRhs : ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
+      (implRhs : => ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
       (using RVT : RhsVal <:< Tuple )
     : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal *: (RhsVal & Tuple ) ) ]
   }

@@ -10,18 +10,24 @@ package lscc.spclTests
 
 
 
+/** 
+ * 
+ * `BasicGrammaticalPxeryImplicits`
+ * 
+ */
+private[lscc ]
 object BasicGrammaticalPxeryImplicits
 {
   ;
 
-  @deprecated
+  // @deprecated
   implicit
   def spclGrmMetadataWrapMode1
     (using gfsp : lscalg.bnfParsing.spclCptdFispoSuppExtras1.GivenFiSpoSupp._Any )
-  : lscc.spclParsing.SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[gfsp.T, gfsp.T ]
+  : lscc.spclParsing.SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[gfsp.InputState, gfsp.InputState ]
   = lscc.spclParsing.SpclGrammaticalItemMetaDataWrapMode.identityInstance
 
-  @deprecated
+  // @deprecated
   implicit
   final
   lazy val spclPxery
@@ -35,10 +41,10 @@ object BasicGrammaticalPxeryImplicits
     lscc.spclParsedConstructs1.SpclGrammaticalPxery.make
   }
 
-  @deprecated
+  // @deprecated
   implicit
   final
-  lazy val spclPxeryAlt
+  lazy val spclPxeryAlt1
   : lscc.spclTerminalGrammarsB.SpclPxery {
     val givenFispoSupp
     : lscalg.bnfParsing.spclCptdFispoSuppExtras1.GivenFiSpoSupp.for_BC.type

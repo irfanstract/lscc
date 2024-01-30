@@ -100,10 +100,10 @@ object fwscImplicits {
         [
           RhsVal ,
         ]
-        (implRhs : ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
+        (implRhs : => ParseFunction.ForReceiverAndRValue[ReceiT, RhsVal] )
         (using RVT : RhsVal <:< Tuple )
       : ParseFunction.ForReceiverAndRValue[ReceiT, (LhsVal *: (RhsVal & Tuple ) ) ]
-      = {
+      = ParseFunction.lazily {
         (impl &&: (ForSingleLineWhitespace( ) ) &&: implRhs )
         .mapMainValue({ case (cLhs, sp, cRhs : (RhsVal & Tuple) ) => {
           cLhs *: cRhs
