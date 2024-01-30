@@ -38,6 +38,41 @@ object BasicGrammaticalPxeryImplicits
   = {
     implicit val gfsp
     = lscalg.bnfParsing.spclCptdFispoSuppExtras1.GivenFiSpoSupp.for_BC
+
+    def runLoggingModeEntryPtTask
+      (e: (String, gfsp.InputState) )
+    : lscc.spclParsedConstructs1.SpclGrammaticalPxery.SpclExitLoggingMode
+    = {
+      ;
+
+      val (msg *: inputState *: _ ) = e
+
+      val oisS
+      = inputState.remainingLinesAsSingleLineStrBy(n = 2 )
+
+      println(s"==> ($msg) on $oisS ")
+
+      ((r) => {
+        import language.unsafeNulls
+        if msg.contains("prP") then {
+          locally(() )
+        }
+        r
+        .fold[Unit] (z => println(s"<==FAILED with ($z) on $oisS ") , (_: Unit) => println(s"<==SOME on $oisS ; $msg ") )
+      } ) : (util.Try[Unit] => Unit )
+    }
+    implicit
+    val loggingMode
+    = {
+      import lscc.spclParsedConstructs1.SpclGrammaticalPxery
+
+      SpclGrammaticalPxery.SpclEntLoggingMode.forCurriedFunc((
+        (c: SpclGrammaticalPxery { val givenFispoSupp : gfsp.type } ) => {
+          case evt => runLoggingModeEntryPtTask(evt)
+        }
+      ))
+    }
+
     lscc.spclParsedConstructs1.SpclGrammaticalPxery.make
   }
 

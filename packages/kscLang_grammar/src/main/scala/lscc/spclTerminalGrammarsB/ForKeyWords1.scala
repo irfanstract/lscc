@@ -232,7 +232,7 @@ object ForCondZeroClassTraitInterfaceTypeKwds
 
     // TODO
     ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""(?:tr|tra|trait|cl|cl[a]|cla+s+|ob|obj|obje|obje[ck]t*)\b""".r )
+      lscc.spclGrammar.KeywordPrf.forContentPattern("""(?:const|cons|con|co|val|let|var|va|tr|tra|trait|cl|cl[a]|cla+s+|ob|obj|obje|obje[ck]t*)\b""".stripMargin.r )
     ))
   }
 

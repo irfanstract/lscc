@@ -116,9 +116,30 @@ object ForQueryExpr1
     (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
   : ctx.SpclSdfYielding[Any ]
   = {
+    given aitl
+    : m.type
+    = m
+
+    apply()
+  }
+
+  transparent inline
+  def apply
+    //
+    (using ctx: SpclGrammaticalPxery )
+    //
+    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+    //
+    ( )
+  : ctx.SpclSdfYielding[Any ]
+  = {
     import m.spclUnprefixedKeywdingMode
 
-    ForPrefixedExpr.withMode(m )
+    (
+      ForPrefixedExpr()
+      orElse
+      ForSingleTokenLiteralExpr()
+    )
   }
 
   ;

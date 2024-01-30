@@ -68,6 +68,17 @@ with SPostZipConvLowPrioImplicits
 { this : SPostZipConv.type =>
   ;
 
+  transparent
+  inline
+  given idmTuple1
+    //
+    [RhsVal]
+    (using ([e] =>> e )[RhsVal <:< Tuple ] )
+  // : _Any { type Value2Base >: RhsVal }
+  : idmTuple.type
+  = idmTuple
+
+  protected
   given idmTuple
   : _Any with {
     ;
@@ -95,6 +106,17 @@ AnyRef
 { this : SPostZipConv.type =>
   ;
 
+  // transparent
+  inline
+  given idm1
+    //
+    [RhsVal]
+    (using util.NotGiven[RhsVal <:< Tuple ] )
+  // : _Any { type Value2Base >: RhsVal }
+  : idm
+  = idm
+
+  protected
   given idm(using DummyImplicit)
   : _Any with {
     ;

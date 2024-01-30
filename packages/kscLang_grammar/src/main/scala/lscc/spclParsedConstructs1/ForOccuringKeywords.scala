@@ -72,6 +72,7 @@ object ForOccurringKeywordPr
 
     ForOccurringKeyword()
     .mapMainValue(v => Keyword(v.matchedStr) )
+    .withLogging1(mainMsg = s"ForOccurringKeywordOrRefP()")
   }.nn
 
   ;
@@ -186,14 +187,17 @@ object ForOccurringKeywordOrIdentifier1
     (
       ForOccurringKeyword()
       .mapMainValue(v => Keyword(v.matchedStr) )
+      .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1.Kwd")
 
       orElse
 
       (ForImmediateUnescapedWord() orElse ForImmediateEscapedIdent() )
       .mapMainValue(<:<.refl[ctx.givenFispoSupp.SpclMatchContent ] )
       .mapMainValue(v => FixedIdentifier(v.matchedStr) )
+      .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1.Ref")
 
     )
+    .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1")
   }
 
   ;

@@ -55,6 +55,7 @@ object ForUnderscoreWildcardDefOnly {
     .match { case f => f : ctx.SpclSdfYieldingUnwrapped[String ] }
     .mapMainValue(UnderscoreWildcardPatternImpl.forExactSrcLevelToken(_) )
     .withFinalPtrPosVl()
+    .withLogging1(mainMsg = s"ForUnderscoreWildcardDefOnly(${kwIngCtx })")
   }).nn
 
   ;
@@ -138,6 +139,7 @@ object ForValDefOnly
             ForOccurringKeywordOrRefP()
             .collect({ case (Keyword(iTypeKwd @ ("val" | "const" | "let" ) )) => Keyword(iTypeKwd) } )
             .withFinalPtrPosVl()
+            .withLogging1(mainMsg = s"ForValDefOnly.Tag(${kwIngCtx })")
           )
 
           val bindingNameTokenPrf
@@ -149,6 +151,7 @@ object ForValDefOnly
             })
             .collect({ case s @ (Identifier(ident)) => (ident ) } )
             .withFinalPtrPosVl()
+            .withLogging1(mainMsg = s"ForValDefOnly.MainBindingNameExpr(${kwIngCtx })")
           )
 
           (
@@ -169,6 +172,7 @@ object ForValDefOnly
           .map({ case (iType, ident) => ValDefOnlyAst(ident = ident, iTypeKw = iType ) } )
         })
         .withFinalPtrPosVl()
+        .withLogging1(mainMsg = s"ForValDefOnly(${kwIngCtx })")
       })
     })
     .nn
@@ -221,6 +225,7 @@ object ForUnparenthesedSimpleHeadBindingExpr {
       } )
     )
     .withFinalPtrPosVl()
+    .withLogging1(mainMsg = s"ForUnparenthesedSimpleHeadBindingExpr")
   }.nn
 
   ;

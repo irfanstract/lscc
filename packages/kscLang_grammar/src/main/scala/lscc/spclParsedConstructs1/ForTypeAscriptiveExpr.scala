@@ -105,27 +105,47 @@ object ForBindingFirstTermOrTypeAscribedExprP
         ({
           ;
 
+          /**
+           * won't work if these `import`s were placed outside this method.
+           */
           import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+          import lscalg.digestivity.subjectConcatOps1.prsHeadTailConcatOp.{+%: as +:}
+
+          val headRule
+          =
+            ForUnparenthesedSimpleHeadBindingExpr()
+            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.HeadBinding")
+
+          val tailRule
+          =
+            ForTermOrTypeAscriptiveInfixAndRhs()
+            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.TailAscription")
 
           (
-            ForUnparenthesedSimpleHeadBindingExpr()
+            headRule
 
             +%:
 
-            ForTermOrTypeAscriptiveInfixAndRhs()
+            tailRule
 
-            +%:
+            +:
 
             lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
           )
+          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L135")
+          .map(e => {
+            e
+          } )
           .map({ case (bindingExpr, s) => {
             TermOrTypeAscribedExprImplAst(bindingSideExpr = bindingExpr, ascriptiveSideExpr = s )
           } } )
+          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L142")
           .nn
         })
       })
     })
     .withFinalPtrPosVl()
+    .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP")
   }.nn
 
   ;
@@ -158,6 +178,8 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 { 
   ;
 
+  import lscalg.bnfParsing.IRegExp
+
   import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
   import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
 
@@ -165,6 +187,8 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 
   /** to impose `prsWhitespaceableHeadTailConcatOp` */
   import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+
+  import IRegExp.tagImplicits.r
 
   def apply
     //
@@ -180,6 +204,12 @@ object ForTermOrTypeAscriptiveInfixAndRhs
     import ctx.givenFispoSupp.InputState as PAny
     import ctx.givenFispoSupp
 
+    /**
+     * won't work if these `import`s were placed outside this method.
+     */
+    import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+    import lscalg.digestivity.subjectConcatOps1.prsHeadTailConcatOp.{+%: as +:}
+
     ({
       ;
 
@@ -187,17 +217,19 @@ object ForTermOrTypeAscriptiveInfixAndRhs
         //
 
         (
-          ForOccurringKeywordOrRefP()
-          .map({ case (scrutMode @ (Keyword( kwd @ ("@" | "is") ) ) ) => {
+          ForOccurringGeneralisedKeyword.forPattern("""\@|is|was""".r )
+          .map({ case  kwd => {
             Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.LeadKeyWord(${kwIngCtx })")
 
           +%:
 
           ForTermQueryExpr()
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.Main(${kwIngCtx })")
 
-          +%:
+          +:
 
           lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
         )
@@ -205,13 +237,14 @@ object ForTermOrTypeAscriptiveInfixAndRhs
           // (iTypeKw, vl )
           ToTermPatternScrutiveAscription(vl )
         } })
+        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv(${kwIngCtx })")
 
         orElse
 
         (
-          ForOccurringKeywordOrRefP()
-          .map({ case (scrutMode @ (Keyword( kwd @ (":" | "satisfies") ) )  ) => {
-            Keyword(kwd )
+          ForOccurringGeneralisedKeyword.forPattern("""\:|implements|satisfies""".r )
+          .map({ case  kwd => {
+            Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
 
@@ -219,7 +252,7 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 
           ForTypeQueryExpr()
 
-          +%:
+          +:
 
           lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
         )
@@ -242,8 +275,10 @@ object ForTermOrTypeAscriptiveInfixAndRhs
             }))
             .value
         })
+        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToType(${kwIngCtx })")
       )
       .withFinalPtrPosVl()
+      .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs(${kwIngCtx })")
     })
   }.nn
 
