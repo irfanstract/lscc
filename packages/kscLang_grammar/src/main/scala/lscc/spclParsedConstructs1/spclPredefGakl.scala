@@ -298,8 +298,7 @@ trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 
             (f)
             .applyBrt(pt )
-            .prependedAll
-              (LazyList.empty.lazyAppendedAll({ started1 ; Nil }) )
+            .lazyPrependedAllC({ started1 ; Nil })
             .zipWithIndex
             .match { case s => {
               ;
@@ -318,7 +317,7 @@ trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 
                   _ => asDone
                 })
-              }) :++ LazyList.empty.lazyAppendedAll({
+              }) lazyAppendedAllC ({
                 ;
 
                 if s.nonEmpty then {
