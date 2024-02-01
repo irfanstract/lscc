@@ -105,12 +105,6 @@ object ForBindingFirstTermOrTypeAscribedExprP
         ({
           ;
 
-          /**
-           * won't work if these `import`s were placed outside this method.
-           */
-          import fwscImplicits.prsWhitespaceableHeadTailConcatOp
-          import lscalg.digestivity.subjectConcatOps1.prsHeadTailConcatOp.{+%: as +:}
-
           val headRule
           =
             ForUnparenthesedSimpleHeadBindingExpr()
@@ -124,11 +118,11 @@ object ForBindingFirstTermOrTypeAscribedExprP
           (
             headRule
 
-            +%:
+            +++%:
 
             tailRule
 
-            +:
+            ++%:
 
             lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
           )
@@ -204,35 +198,60 @@ object ForTermOrTypeAscriptiveInfixAndRhs
     import ctx.givenFispoSupp.InputState as PAny
     import ctx.givenFispoSupp
 
-    /**
-     * won't work if these `import`s were placed outside this method.
-     */
-    import fwscImplicits.prsWhitespaceableHeadTailConcatOp
-    import lscalg.digestivity.subjectConcatOps1.prsHeadTailConcatOp.{+%: as +:}
-
     ({
       ;
 
-      (
+      // TODO
+      enum SpclAscriptiveMode1
+        (
+          val conformedExprLvl : lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type] , val tagPattern : IRegExp._Any )
+      // extends java.lang.Enum[SpclAscriptiveMode1]
+      {
+        ;
+
+        given conformedExprLvl.type = conformedExprLvl
+
+        case ToTerm extends SpclAscriptiveMode1 (
+          conformedExprLvl = lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTermLevel() ,
+          tagPattern = """\@|:={1,2}|={1,2}:|={2,3}|=|is|was""".r )
         //
 
-        (
-          ForOccurringGeneralisedKeyword.forPattern("""\@|is|was""".r )
+        case ToType extends SpclAscriptiveMode1 (
+          conformedExprLvl = lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTypeLevel() ,
+          tagPattern = """\:|implements|satisfies""".r )
+        //
+
+        def tagPrf
+        = {
+          ;
+
+          ForOccurringGeneralisedKeyword.forPattern(tagPattern )
           .map({ case  kwd => {
             Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.LeadKeyWord(${kwIngCtx })")
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${productPrefix}.LeadKeyWord()")
+        }
 
-          +%:
+        lazy val conformedExprPrf
+        = {
+          ForQueryExpr1.withMode(conformedExprLvl)
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${productPrefix}.Main(${kwIngCtx })")
+        }
 
-          ForTermQueryExpr()
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv.Main(${kwIngCtx })")
-
-          +:
-
-          lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
+        lazy val fullExprPrf1 = (
+          tagPrf
+          +++%:
+          conformedExprPrf
+          ++%:
+            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
         )
+      }
+
+      (
+        //
+
+        SpclAscriptiveMode1.ToTerm.fullExprPrf1
         .map({ case (iTypeKw, vl) => {
           // (iTypeKw, vl )
           ToTermPatternScrutiveAscription(vl )
@@ -241,21 +260,7 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 
         orElse
 
-        (
-          ForOccurringGeneralisedKeyword.forPattern("""\:|implements|satisfies""".r )
-          .map({ case  kwd => {
-            Keyword (kwd )
-          } } )
-          .withFinalPtrPosVl()
-
-          +%:
-
-          ForTypeQueryExpr()
-
-          +:
-
-          lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
-        )
+        SpclAscriptiveMode1.ToType.fullExprPrf1
         .map({
           //
           case (iTypeKw0 , vl) =>

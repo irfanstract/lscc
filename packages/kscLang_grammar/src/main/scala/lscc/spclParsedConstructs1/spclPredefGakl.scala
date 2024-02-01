@@ -24,6 +24,7 @@ AnyRef
 with SpclGrammaticalPxeryThisType
 with SpclPxeryOpsGivenFispoSupps
 with SpclPxeryOpsSdfDefine
+with SpclGrammaticalPxeryAndExpecRxOps
 with SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 {
   ;
@@ -42,35 +43,28 @@ with SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 
   ;
 
-  // /** 
-  //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value` wrapped in `grmMetadataWrapMode.AppliedTo`
-  //  * 
-  //  */
-  // type SpclSdfYielding
-  //   [+Value]
-  // = SpclSdfYieldingUnwrapped[grmMetadataWrapMode.AppliedTo[Value ] ]
+  /* `SpclSdfYielding`s have been refactored out, below */
 
-  // /** 
-  //  * spcl ParseFunction/FromSrcStreamDigestFnc which yields as-value instance-of `Value`
-  //  * 
-  //  */
-  // type SpclSdfYieldingUnwrapped
-  //   [+Value]
-  // >: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] @annotation.unchecked.uncheckedVariance
-  // <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] //
+  ;
 
-  // extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
-  //   def withFinalPtrPosVl
-  //     ()
-  //     (using util.NotGiven[Value <:< grmMetadataWrapMode.AppliedTo[Any] ] )
-  //   : SpclSdfYielding[Value ]
-  //   = {
-  //     f.mapWithFinalPtrPosVl((vau, pos) => (
-  //       vau
-  //       .withSrcInfo(srcPosInfo = pos )
-  //     ) )
-  //   }
-  // //
+  given spclPrfCompositveOps
+  : AnyRef with {
+    ;
+
+    val prsWhitespacedHeadTailConcatOpImpl
+    = {
+      import lscc.spclTerminalGrammarsB.fwscImplicits
+
+      fwscImplicits.prsWhitespaceableHeadTailConcatOp
+    }
+
+    export lscalg.digestivity.subjectConcatOps1.prsHeadTailConcatOp as prsCompactHeadTailConcatOpImpl
+
+    export prsCompactHeadTailConcatOpImpl.{+%: as ++%: }
+
+    export prsWhitespacedHeadTailConcatOpImpl.{+%: as +++%: }
+
+  }
 
   ;
 
@@ -120,72 +114,13 @@ object SpclGrammaticalPxery
   }
 
   ;
+
+  export SpclGrammaticalPxeryEntryAndExitLogging.{SpclEntLoggingMode, SpclExitLoggingMode}
   
-  // TODO
-  trait SpclEntLoggingMode private [SpclGrammaticalPxery] ()
-  {
-    ;
-
-    type SupportedEnclosingCtx
-    <: SpclGrammaticalPxery
-
-    def onEntry
-      //
-      (using ctx: SupportedEnclosingCtx )
-      (msg: String, p: ctx.givenFispoSupp.InputState )
-    : SpclExitLoggingMode
-  }
-
-  object SpclEntLoggingMode
-  {
-    ;
-
-    def forCurriedFunc
-      //
-      [SupportedEnclosingCtxT <: SpclGrammaticalPxery ]
-      (impl: (
-        //
-        (ctx: SupportedEnclosingCtxT ) =>
-        (msg: String, p: ctx.givenFispoSupp.InputState ) =>
-          SpclExitLoggingMode
-      ) )
-    = new SpclEntLoggingMode {
-      ;
-
-      type SupportedEnclosingCtx
-      >: SupportedEnclosingCtxT
-      <: SupportedEnclosingCtxT
-
-      def onEntry
-        //
-        (using ctx: SupportedEnclosingCtx )
-        (msg: String, p: ctx.givenFispoSupp.InputState )
-      = impl(ctx)(msg = msg , p = p )
-    }
-
-    def noOpInstance
-    = forCurriedFunc((ctx: SpclGrammaticalPxery ) => { case e => {
-      ;
-      ({ case _ =>  } : (util.Try[Unit] => Unit )) : SpclExitLoggingMode
-    } } )
-
-    implicit
-    def defaultInstance
-      //
-      [T >: SpclGrammaticalPxery <: SpclGrammaticalPxery]
-    : (SpclEntLoggingMode{type SupportedEnclosingCtx >: T <: T } )
-    = noOpInstance
-
-  }
-
-  // TODO
-  opaque type SpclExitLoggingMode
-  >: (util.Try[Unit] => Unit )
-  <: (util.Try[Unit] => Unit )
-  =  (util.Try[Unit] => Unit )
-
   ;
 }
+
+
 
 
 
@@ -193,6 +128,7 @@ trait SpclGrammaticalPxeryThisType
 {
   ;
 
+  implicit
   transparent inline
   def SpclGrammaticalPxery_this
   : this.type
@@ -251,12 +187,127 @@ trait SpclPxeryOpsSdfDefine
   //
 
   ;
+
+  type SpclBRetrialIteratorForItemT[+R]
+  >: lscalg.probing.BRetrialIterator.ForItemT[R] @annotation.unchecked.uncheckedVariance
+  <: lscalg.probing.BRetrialIterator.ForItemT[R]
+
+  ;
+}
+
+trait SpclGrammaticalPxeryAndExpecRxOps
+  //
+extends
+AnyRef
+with SpclPxeryOpsGivenFispoSupps
+{
+  this : (
+    AnyRef
+    & SpclPxeryOpsGivenFispoSupps
+  ) =>
+  ;
+
+  implicit
+  val givenFispoSupp
+  : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
+
+  implicit
+  val grmMetadataWrapMode
+  : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[givenFispoSupp.InputState, givenFispoSupp.InputState ]
+
+  implicit
+  val expcRx
+  : lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[givenFispoSupp.InputState, util.matching.Regex, givenFispoSupp.SpclAfterDigestTupleOption._Any ]
+
+  ;
+
+  ;
+
+  ;
 }
 
 // AnyRef
 // with SpclGrammaticalPxeryThisType
 // with SpclPxeryOpsGivenFispoSupps
 // with SpclPxeryOpsSdfDefine
+
+
+
+
+
+object SpclGrammaticalPxeryEntryAndExitLogging
+{
+  ;
+
+  ;
+
+  // TODO
+  trait SpclEntLoggingMode private [SpclGrammaticalPxeryEntryAndExitLogging] ()
+  {
+    ;
+
+    type SupportedEnclosingCtx
+    <: SpclPxeryOpsGivenFispoSupps
+
+    def onEntry
+      //
+      (using ctx: SupportedEnclosingCtx )
+      (msg: String, p: ctx.givenFispoSupp.InputState )
+    : SpclExitLoggingMode
+  }
+
+  object SpclEntLoggingMode
+  {
+    ;
+
+    def forCurriedFunc
+      //
+      [SupportedEnclosingCtxT <: SpclPxeryOpsGivenFispoSupps ]
+      (impl: (
+        //
+        (ctx: SupportedEnclosingCtxT ) =>
+        (msg: String, p: ctx.givenFispoSupp.InputState ) =>
+          SpclExitLoggingMode
+      ) )
+    = new SpclEntLoggingMode {
+      ;
+
+      type SupportedEnclosingCtx
+      >: SupportedEnclosingCtxT
+      <: SupportedEnclosingCtxT
+
+      def onEntry
+        //
+        (using ctx: SupportedEnclosingCtx )
+        (msg: String, p: ctx.givenFispoSupp.InputState )
+      = impl(ctx)(msg = msg , p = p )
+    }
+
+    def noOpInstance
+      //
+      [T <: SpclPxeryOpsGivenFispoSupps ]
+    = forCurriedFunc((ctx: T ) => { case e => {
+      ;
+      ({ case _ =>  } : (util.Try[Unit] => Unit )) : SpclExitLoggingMode
+    } } )
+
+    implicit
+    def defaultInstance
+      //
+      [T <: SpclPxeryOpsGivenFispoSupps ]
+    : (SpclEntLoggingMode{type SupportedEnclosingCtx >: T <: T } )
+    = noOpInstance
+
+  }
+
+  // TODO
+  opaque type SpclExitLoggingMode
+  >: (util.Try[Unit] => Unit )
+  <: (util.Try[Unit] => Unit )
+  =  (util.Try[Unit] => Unit )
+
+  ;
+}
 
 trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 {
@@ -271,12 +322,8 @@ trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 
   ;
 
-  // // implicit
-  // val entryAndExitLoggingMode1
-  // : SpclGrammaticalPxery.SpclEntLoggingMode
-
   val entryAndExitLoggingMode1
-  : SpclGrammaticalPxery.SpclEntLoggingMode { type SupportedEnclosingCtx >: SpclGrammaticalPxery_this.type <: SpclGrammaticalPxery }
+  : SpclGrammaticalPxeryEntryAndExitLogging.SpclEntLoggingMode { type SupportedEnclosingCtx >: SpclGrammaticalPxery_this.type <: SpclPxeryOpsGivenFispoSupps }
 
   extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
   {
@@ -284,62 +331,85 @@ trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
     : SpclSdfYieldingUnwrapped[Value]
     = {
       f
-      .match { case impl => {
+      .match { case f => {
+        ;
+
+        given ecScheduler
+        : concurrent.ExecutionContext.parasitic.type
+        = concurrent.ExecutionContext.parasitic
+
         import lscalg.digestivity.ParseFunction
 
         ParseFunction.fromAltBRetrialFunction((
           (pt: SpclGrammaticalPxery_this.givenFispoSupp.InputState ) => {
+            ;
+
             lazy val (started1 @ onExit) = {
-              entryAndExitLoggingMode1.onEntry(using SpclGrammaticalPxery_this )(msg = mainMsg , p = pt )
+              entryAndExitLoggingMode1.onEntry(msg = mainMsg , p = pt )
             }
 
-            // TODO
-            started1
+            /** 
+             * it's wrong to make calls to `onNext` more-than-once --
+             * it's wrong to fire `Failure` after `Success`, and vice-versa ;
+             * ;
+             * this is the managed route to do the job
+             * 
+             */
+            val asdonePr
+            : concurrent.Promise[Unit]
+            = concurrent.Promise[Unit]
 
-            (f)
-            .applyBrt(pt )
+            for {
+              tr <- {
+                ;
+                asdonePr.future
+                .transform(util.Success(_) )
+              }
+            }
+            do onExit(tr)
+
+            // // TODO
+            // started1
+
+            (
+              (f).applyBrt(pt )
+            )
             .lazyPrependedAllC({ started1 ; Nil })
+
             .zipWithIndex
             .match { case s => {
               ;
 
-              ({
-                s
-                .tapEach({
-                  //
-                  lazy val asDone = {
-                    ;
+              s
+              .tapEach({
+                //
+                lazy val asDone
+                : Unit
+                = {
+                  /**  */
+                  asdonePr.success(() )
+                }
 
-                    onExit.apply({
-                      util.Success(() )
-                    })
-                  }
-
-                  _ => asDone
-                })
-              }) lazyAppendedAllC ({
+                _ => asDone
+              })
+              .lazyAppendedAllC({
                 ;
 
-                if s.nonEmpty then {
+                if s.isEmpty then {
                   ;
 
-                  /* the "found at-least one production" logging had been done above */
-                }
-                else {
-                  ;
-
-                  onExit.apply({
-                    util.Failure((
-                      new Exception(s"failure (n=${s.length }) for ($mainMsg) ")
-                    ))
+                  /** note: it's wrong to fire `Failure` after `Success` */
+                  asdonePr
+                  .tryFailure({
+                    new Exception(s"failure (n=${s.length }) for ($mainMsg) ")
                   })
                 }
 
                 Nil
               })
             } }
-            .match { case r => r }
             .map((v, i) => v )
+            .match { case r => r }
           }
         ))
       } }
@@ -348,6 +418,7 @@ trait SpclGrammaticalPxeryPrfLoggingExtensionMethod1
 
   ;
 }
+
 
 
 
