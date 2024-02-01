@@ -322,7 +322,8 @@ object ForSingleTokenLiteralExpr
 
     // import ctx.given
 
-    given m.spclUnprefixedKeywdingMode.type
+    given kwdIngMode
+    : m.spclUnprefixedKeywdingMode.type
     = m.spclUnprefixedKeywdingMode
 
     (

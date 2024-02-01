@@ -60,6 +60,12 @@ with SpclPxeryOpsSdfDefine
   <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] //
 
   ;
+
+  type SpclMatchContent1
+  >: givenFispoSupp.SpclMatchContent
+  <: givenFispoSupp.SpclMatchContent
+
+  ;
 }
 
 object SpclPxery

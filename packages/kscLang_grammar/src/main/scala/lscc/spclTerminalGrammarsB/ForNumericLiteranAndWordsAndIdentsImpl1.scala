@@ -19,74 +19,10 @@ package lscc.spclTerminalGrammarsB
 
 
 
-// TODO
-object ForNumericLiteral1 {
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ctx : SpclPxery )
-    ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
-  = {
-    // TODO
-    (
-      ForBigDecimalLiteral1()
-      orElse
-      ForBigHexadecimalLiteral1()
-    )
-  }
-}
-
-object ForBigDecimalLiteral1
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ctx : SpclPxery )
-    ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
-  = ForTerminalLiteral1("""(?!0x)[0-9]+(\.[0-9]+)?([eE][+\-][0-9]+)?""".r )
-
-  ;
-}
-
-object ForBigHexadecimalLiteral1
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  import IRegExp.tagImplicits.{r}
-
-  // TODO
-  // protected
-  def apply
-    //
-    (using ctx : SpclPxery )
-    ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
-  = ({
-    ForTerminalLiteral1("""0{1,5}x{1,5}((?:Neg)?(?:[0-9A-Za-z]+)(?:\.[0-9A-Za-z]+)?)""".r )
-  })
-
-  ;
+export lscc.spclGrammar.forBnsLiterals.INumericLiteralPrf.{
+  ForNumericLiteral1 ,
+  ForBigDecimalLiteral1 ,
+  ForBigHexadecimalLiteral1 ,
 }
 
 /** 
@@ -110,7 +46,7 @@ object ForImmediateUnescapedWord
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
   = ForTerminalLiteral1("""(?![0-9])(?>[\w]|\\[pu]\{.*?\})+""".r )
 
   ;
@@ -161,7 +97,7 @@ object ForImmediateEscapedIdent {
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
   = (
     ForImmediateBacktickedIdent()
   )
@@ -188,7 +124,7 @@ object ForImmediateBacktickedIdent
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
   = ({
     ;
     import lscalg.parsing.subjectConcatOps1.given
@@ -244,7 +180,7 @@ object ForKwPre
     //
     (subject: IRegExp._Any )
     (using ctx : SpclPxery )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
   = ({
     import ctx.given
 
