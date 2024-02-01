@@ -54,11 +54,19 @@ object BasicGrammaticalPxeryImplicits
 
       ((r) => {
         import language.unsafeNulls
+
         if msg.contains("prP") then {
           locally(() )
         }
+
         r
-        .fold[Unit] (z => println(s"<==FAILED with ($z) on $oisS ") , (_: Unit) => println(s"<==SOME on $oisS ; $msg ") )
+        .fold[Unit] (z => {
+          if false then {
+            println(s"<==FAILED with ($z) on $oisS ")
+          }
+        } , (_: Unit) => {
+          println(s"<==SOME on $oisS ; $msg ")
+        } )
       } ) : (util.Try[Unit] => Unit )
     }
     implicit

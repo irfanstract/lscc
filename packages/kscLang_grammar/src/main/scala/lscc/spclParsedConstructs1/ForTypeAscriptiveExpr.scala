@@ -221,6 +221,9 @@ object ForTermOrTypeAscriptiveInfixAndRhs
           tagPattern = """\:|implements|satisfies""".r )
         //
 
+        def name
+        = productPrefix
+
         def tagPrf
         = {
           ;
@@ -230,19 +233,22 @@ object ForTermOrTypeAscriptiveInfixAndRhs
             Keyword (kwd )
           } } )
           .withFinalPtrPosVl()
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${productPrefix}.LeadKeyWord()")
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.LeadKeyWord()")
         }
 
         lazy val conformedExprPrf
         = {
           ForQueryExpr1.withMode(conformedExprLvl)
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${productPrefix}.Main(${kwIngCtx })")
+          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.Main(${kwIngCtx })")
         }
 
         lazy val fullExprPrf1 = (
           tagPrf
+
           +++%:
+
           conformedExprPrf
+
           ++%:
             lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
         )
