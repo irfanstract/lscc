@@ -46,7 +46,7 @@ object ForImmediateUnescapedWord
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = ForTerminalLiteral1("""(?![0-9])(?>[\w]|\\[pu]\{.*?\})+""".r )
 
   ;
@@ -97,7 +97,7 @@ object ForImmediateEscapedIdent {
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = (
     ForImmediateBacktickedIdent()
   )
@@ -124,7 +124,7 @@ object ForImmediateBacktickedIdent
     //
     (using ctx : SpclPxery )
     ( )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = ({
     ;
     import lscalg.parsing.subjectConcatOps1.given
@@ -180,7 +180,7 @@ object ForKwPre
     //
     (subject: IRegExp._Any )
     (using ctx : SpclPxery )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = ({
     import ctx.given
 

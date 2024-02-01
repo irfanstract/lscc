@@ -52,7 +52,7 @@ object ForImmediateSingleLineRawOcc
     (using ctx : SpclPxery )
     (subject: IRegExp._Any )
   // : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = {
     ;
     import ctx.given

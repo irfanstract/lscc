@@ -61,7 +61,7 @@ with SpclPxeryOpsSdfDefine
 
   ;
 
-  type SpclMatchContent1
+  type SpclExtractedRawStr1
   >: givenFispoSupp.SpclMatchContent
   <: givenFispoSupp.SpclMatchContent
 

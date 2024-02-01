@@ -40,7 +40,7 @@ object KeywordPrf
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     (subject: IRegExp._Any )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = forWordlikeContentByPattern(subject)
 
   /**
@@ -58,7 +58,7 @@ object KeywordPrf
     //
     (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
     (subject: IRegExp._Any )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclMatchContent1 ]
+  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
   = ({
     import ctx.given
 
