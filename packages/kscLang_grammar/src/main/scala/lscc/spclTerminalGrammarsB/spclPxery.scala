@@ -92,7 +92,8 @@ with SpclPxeryLowPrioImplicits
   // transparent inline
   given makeFromGrammaticalCaseManif
     //
-    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    [C <: lscc.spclParsedConstructs1.SpclGrammaticalPxery ]
+    (using ctx : C )
   //
   : SpclPxery {val givenFispoSupp: ctx.givenFispoSupp.type; val grmMetadataWrapMode: ctx.grmMetadataWrapMode.type; val expcRx: ctx.expcRx.type }
   = {
@@ -113,7 +114,8 @@ with SpclPxeryLowPrioImplicits
 
   given makeFromConstituents
     //
-    (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    [GfspInst <: lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any ]
+    (using g : GfspInst )
     (using a : SpclGrammaticalItemMetaDataWrapMode.withPtrTRange[g.InputState, g.InputState ] )
     (using eRx : (
       lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.InputState, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
@@ -143,7 +145,8 @@ AnyRef
   // transparent inline
   given makeFromConstituentsAlt
     //
-    (using g : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
+    [GfspInst <: lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any ]
+    (using g : GfspInst )
     (using eRx : (
       lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[g.InputState, util.matching.Regex, g.SpclAfterDigestTupleOption._Any ] 
     ))

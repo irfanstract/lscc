@@ -320,11 +320,13 @@ object ForSingleTokenLiteralExpr
   = { val flatCaseCtx = summon[lscc.spclTerminalGrammarsB.SpclPxery ] ; { import ctx.given ; given flatCaseCtx.type = flatCaseCtx ; {
     ;
 
+    // TODO
     // import ctx.given
 
-    given kwdIngMode
-    : m.spclUnprefixedKeywdingMode.type
-    = m.spclUnprefixedKeywdingMode
+    val trn
+    = summon[SpclOps]
+
+    // TODO
 
     (
       ForNumericLiteral1()
@@ -338,11 +340,19 @@ object ForSingleTokenLiteralExpr
 
       orElse
 
-      ForOccurringKeywordOrRefP()
-      .collect({ case e @ FixedIdentifier(_) => {
-        e
-      } })
-      // .map(Some(_) )
+      ({
+        ;
+
+        given kwdIngMode
+        : m.spclUnprefixedKeywdingMode.type
+        = m.spclUnprefixedKeywdingMode
+
+        ForOccurringKeywordOrRefP()
+        .collect({ case e @ FixedIdentifier(_) => {
+          e
+        } })
+        // .map(Some(_) )
+      })
       .withLogging1(mainMsg = "ForSingleTokenLiteralExpr.Ref")
     )
     // .map(_.value)
@@ -353,6 +363,75 @@ object ForSingleTokenLiteralExpr
     .withLogging1(mainMsg = "ForSingleTokenLiteralExpr")
     .nn
   }}}
+
+  type SpclOps
+  = SpclOpsStle
+
+  // TODO
+  trait SpclOpsStle
+  { thisSpclTranslativeOps =>
+    ;
+
+    type Translated
+
+    implicit
+    val numericTranslator1
+    : (
+      lscc.spclGrammar.forBnsLiterals.IHexadecimalTranslatorI {
+        type Extracted1
+        <: thisSpclTranslativeOps.Translated
+
+        ;
+      }
+    )
+
+    def translateOccuringKeywdOrIdent
+      //
+      (c: Keyword[String] | FixedIdentifier[String ])
+    : Translated
+
+    ;
+  }
+
+  object SpclOpsStle
+  {
+    ;
+
+    transparent inline
+    given defaultFromCtxs
+      //
+      (using grammaticalPxey: SpclGrammaticalPxery )
+      (using regularPxey: lscc.spclTerminalGrammarsB.SpclPxery { val givenFispoSupp : grammaticalPxey.givenFispoSupp.type } )
+      //
+      (using exprsMode: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[grammaticalPxey.type ] )
+      //
+    : SpclOpsStle
+    = {
+      ;
+      new SpclOpsStle
+      {
+        ;
+
+        opaque type Translated
+        = Any
+
+        val numericTranslator1
+        = {
+          lscc.spclGrammar.forBnsLiterals.IHexadecimalTranslatorI.idemInstance
+          .nn
+        }
+
+        def translateOccuringKeywdOrIdent
+          //
+          (c: Keyword[String] | FixedIdentifier[String ])
+        = c
+
+        ;
+      }
+      .nn
+      .nn
+    }
+  }
 
   ;
 }
