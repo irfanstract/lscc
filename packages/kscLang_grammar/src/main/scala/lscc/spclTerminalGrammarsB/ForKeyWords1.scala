@@ -241,6 +241,45 @@ object ForCondZeroClassTraitInterfaceTypeKwds
 
 
 
+;
+
+object SpclKeyWordsPrf
+{
+  ;
+
+  // import lscalg.bnfParsing.{given }
+  import lscalg.bnfParsing.IRegExp
+  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
+  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
+
+  // TODO
+  def forMonoAs
+    (impl: (ctx : lscc.spclTerminalGrammarsB.SpclPxery ) ?=> ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1] )
+  : (() => (ctx : lscc.spclTerminalGrammarsB.SpclPxery ) ?=> ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1] )
+  = {
+    () => (ctx : lscc.spclTerminalGrammarsB.SpclPxery ) ?=> impl
+  }.nn
+
+  // transparent inline
+  def forMonoByIRegExp
+    (p: IRegExp._Any )
+  : (() => (ctx : lscc.spclTerminalGrammarsB.SpclPxery ) ?=> ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1] )
+  = {
+    forMonoAs {
+      lscc.spclGrammar.KeywordPrf.forContentPattern(p )
+    }
+  }
+
+  //   (using ctx : lscc.spclGrammar.Ikpm )
+  //   ( )
+  // : ctx.Applied
+
+  ;
+}
+
+
+
+
 
 
 
