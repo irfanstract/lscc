@@ -11,6 +11,22 @@ package lscc.spclGrammar
 
 
 
+;
+
+@deprecated("an alias of `IReservedWords`.")
+type KeywordingCtx
+= IReservedWords
+
+@deprecated("an alias of `IReservedWords`.")
+transparent inline
+def KeywordingCtx
+: IReservedWords.type
+= IReservedWords
+
+
+
+
+
 /**
  * in many languages,
  * whether an unescaped "word" shall be considered "reserved word"
@@ -18,22 +34,22 @@ package lscc.spclGrammar
  * ECMA-262 allows what's normally "keywords" like `class`, `static`, to be used as `keys of { [k]: v } literals`
  * 
  */
-object KeywordingCtx
+object IReservedWords
 {
   ;
 
   type _Any
-  = KeywordingCtx
+  = IReservedWords
 
   def fromFtlk
     //
     (c : FTLK.SpclCont )
   = {
-    new KeywordingCtx {
+    new IReservedWords {
       val sc : c.type = c
 
       // TODO
-      override def toString(): String = s"KeywordingCtx(c) "
+      override def toString(): String = s"IReservedWords(c) "
     }
   }
 
@@ -46,7 +62,7 @@ object KeywordingCtx
   )]
 
   type WithGivenFispoSupp[+t <: lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any ]
-  = KeywordingCtx {
+  = IReservedWords {
     val sc
     : FTLK.SpclContWithEcType[t]
   }
@@ -63,18 +79,18 @@ object KeywordingCtx
   /* test */
 
   /** 
-   * run with altered `given` `KeywordingCtx`.
+   * run with altered `given` `IReservedWords`.
    * 
    */
   def withSp
-    [R] (newM: KeywordingCtx) (run1: newM.type ?=> R )
+    [R] (newM: IReservedWords) (run1: newM.type ?=> R )
   : R
   = run1(using newM)
 
   ;
 }
 
-trait KeywordingCtx private[KeywordingCtx] ()
+trait IReservedWords private[IReservedWords] ()
 {
   implicit
   val sc : FTLK.SpclCont
