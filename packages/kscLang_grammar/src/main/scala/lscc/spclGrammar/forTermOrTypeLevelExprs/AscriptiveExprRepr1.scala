@@ -48,37 +48,96 @@ lazy val SatisfiaScrutiveAscription
 
 
 
-// TODO
-object TermOrTypeAscribedExprImplAst {
+/** 
+ * 
+ * support for AST for TypeAscribedExpr(s) .
+ * excludes the typechecking-specific aspects
+ * 
+ */
+trait IAscriptiveExprGrammmaticalReprSupport
+{
   ;
 
-  type _Any
-  = TermOrTypeAscribedExprImplAst[?]
+  val ctx
+  : lscc.spclGrammar.IGrammmaticalReprSupport
 
-  def apply
+  export ctx.metaDataWrapMode as grmMetadataWrapMode
+
+  // TODO
+  enum PrefixScrutLhsExpr {
+    ;
+
+    case ForIgnorableWildcard()
+
+    case ForValDef(value: ValDefOnlyAst._Any )
+
+  }
+
+  case class TermOrTypeAscribedExprImplAst
     //
-    (using grmMetadataWrapMode : SpclGrammaticalItemMetaDataWrapMode )
+    // (using grmMetadataWrapMode : SpclGrammaticalItemMetaDataWrapMode )
     (bindingSideExpr: grmMetadataWrapMode.AppliedTo[PrefixScrutLhsExpr], ascriptiveSideExpr: grmMetadataWrapMode.AppliedTo[AscriptiveExpr ] )
-  = new TermOrTypeAscribedExprImplAst((
-    (grmMetadataWrapMode, bindingSideExpr, ascriptiveSideExpr )
-    : ((grmMetadataWrapMode.type, bindingSideExpr.type, ascriptiveSideExpr.type ) )
-  ) )
-
-  type _DataAny
-  = SpclApModeDependentTuple2[[c[_] ] =>> c[PrefixScrutLhsExpr] , [c[_] ] =>> c[AscriptiveExpr] ]
-
-  type ForApmType
-    [+T <: SpclGrammaticalItemMetaDataWrapMode ]
-  = TermOrTypeAscribedExprImplAst[(
-    _DataAny
-    & Tuple3[T, ?, ?]
-  )]
 
   ;
 }
-case class TermOrTypeAscribedExprImplAst
-  [+T <: TermOrTypeAscribedExprImplAst._DataAny ] private[TermOrTypeAscribedExprImplAst] (d: T )
-//
+
+object IAscriptiveExprGrammmaticalReprSupport
+{
+  ;
+
+  given givenFrom1
+    //
+    [C <: lscc.spclGrammar.IGrammmaticalReprSupport ]
+    (using ctxImpl: C  )
+  : IAscriptiveExprGrammmaticalReprSupport with {
+    ;
+
+    val ctx
+    : ctxImpl.type
+    = ctxImpl
+  }
+
+  ;
+}
+
+
+
+
+
+
+
+// TODO
+// @deprecated
+// object TermOrTypeAscribedExprImplAst {
+//   ;
+
+//   type _Any
+//   = TermOrTypeAscribedExprImplAst[?]
+
+//   def apply
+//     //
+//     (using grmMetadataWrapMode : SpclGrammaticalItemMetaDataWrapMode )
+//     (bindingSideExpr: grmMetadataWrapMode.AppliedTo[PrefixScrutLhsExpr], ascriptiveSideExpr: grmMetadataWrapMode.AppliedTo[AscriptiveExpr ] )
+//   = new TermOrTypeAscribedExprImplAst((
+//     (grmMetadataWrapMode, bindingSideExpr, ascriptiveSideExpr )
+//     : ((grmMetadataWrapMode.type, bindingSideExpr.type, ascriptiveSideExpr.type ) )
+//   ) )
+
+//   type _DataAny
+//   = SpclApModeDependentTuple2[[c[_] ] =>> c[PrefixScrutLhsExpr] , [c[_] ] =>> c[AscriptiveExpr] ]
+
+//   type ForApmType
+//     [+T <: SpclGrammaticalItemMetaDataWrapMode ]
+//   = TermOrTypeAscribedExprImplAst[(
+//     _DataAny
+//     & Tuple3[T, ?, ?]
+//   )]
+
+//   ;
+// }
+// case class TermOrTypeAscribedExprImplAst
+//   [+T <: TermOrTypeAscribedExprImplAst._DataAny ] private[TermOrTypeAscribedExprImplAst] (d: T )
+// //
 
 
 
@@ -107,14 +166,19 @@ case class ValDefOnlyAst
 
 
 // TODO
-enum PrefixScrutLhsExpr {
-  ;
+// @deprecated
+// enum PrefixScrutLhsExpr {
+//   ;
 
-  case ForIgnorableWildcard()
+//   case ForIgnorableWildcard()
 
-  case ForValDef(value: ValDefOnlyAst._Any )
+//   case ForValDef(value: ValDefOnlyAst._Any )
 
-}
+// }
+
+
+
+
 
 
 

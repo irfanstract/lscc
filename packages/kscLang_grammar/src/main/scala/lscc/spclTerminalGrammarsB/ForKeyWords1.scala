@@ -14,22 +14,12 @@ package lscc.spclTerminalGrammarsB
 
 // TODO
 @deprecated
-object ForCzps
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+final
+lazy val ForCzps
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoAs(ctx1 ?=> {
     ;
-    import IRegExp.tagImplicits.r
 
     // TODO
     ((
@@ -37,8 +27,9 @@ object ForCzps
       orElse
       ForCondZeroNouns()
     ))
-  }.nn
+  })
 }
+
 
 
 
@@ -48,51 +39,30 @@ transparent inline
 def ForCondZeroParticulars
 = ForCondZeroPrepositionates
 
-object ForCondZeroPrepositionates
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+// TODO
+final
+lazy val ForCondZeroPrepositionates
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoByIRegExp({
     ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      lscc.spclGrammar.KeywordPrf.forWordlikeContentByPattern("""fi|do|if|for|while|until|case|not|(?:do|does|done|did)|(?:is|are|was|were)""".r )
-    ))
-  }
+    import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+    """fi|do|if|for|while|until|case|not|(?:do|does|done|did)|(?:is|are|was|were)""".r
+  })
 }
 
 
 
 
+
+
 // TODO
-object ForCondZeroNouns
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+final
+lazy val ForCondZeroNouns
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoAs(ctx1 ?=> {
     ;
-    import IRegExp.tagImplicits.r
 
     // TODO
     ((
@@ -102,79 +72,37 @@ object ForCondZeroNouns
       orElse
       ForCondZeroDataTypeKwds()
     ))
-  }.nn
-
+  })
 }
 
-object ForCondZeroModifiers
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+final
+lazy val ForCondZeroModifiers
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoByIRegExp({
     ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""case""".r )
-    ))
-  }
-
+    import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+    """case""".r
+  })
 }
 
-object ForCondZeroPronouns
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+final
+lazy val ForCondZeroPronouns
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoByIRegExp({
     ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""none|some|this|that""".r )
-    ))
-  }
-
+    import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+    """none|some|this|that""".r
+  })
 }
 
-object ForCondZeroDataTypeKwds
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
+final
+lazy val ForCondZeroDataTypeKwds
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoAs(ctx1 ?=> {
     ;
-    import IRegExp.tagImplicits.r
 
     // TODO
     ((
@@ -182,11 +110,37 @@ object ForCondZeroDataTypeKwds
       orElse
       ForCondZeroClassTraitInterfaceTypeKwds()
     ))
-  }.nn
-
+  })
 }
 
-object ForCondZeroIjftTypeKwds
+final
+lazy val ForCondZeroIjftTypeKwds
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoByIRegExp({
+    ;
+    import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+    """(?>(_*(?:int|fl|float|raty|ra|quant|qua|qty)|_+[FIJBZijkldfarcbzx]))(\d+)\b""".r
+  })
+}
+
+final
+lazy val ForCondZeroClassTraitInterfaceTypeKwds
+: SpclKeyWordsPrfConstructor.ForMono1
+= {
+  SpclKeyWordsPrfConstructor.forMonoByIRegExp({
+    ;
+    import lscalg.bnfParsing.IRegExp, IRegExp.tagImplicits.r
+    """(?:const|cons|con|co|val|let|var|va|tr|tra|trait|cl|cl[a]|cla+s+|ob|obj|obje|obje[ck]t*)\b""".r
+  })
+}
+
+
+
+
+;
+
+object SpclKeyWordsPrfConstructor
 {
   ;
 
@@ -195,47 +149,51 @@ object ForCondZeroIjftTypeKwds
   import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
   import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
 
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
-    ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""(?>(_*(?:int|fl|float|raty|ra|quant|qua|qty)|_+[FIJBZijkldfarcbzx]))(\d+)\b""".r )
-    ))
-  }.nn
-
-}
-
-object ForCondZeroClassTraitInterfaceTypeKwds
-{
-  ;
-
-  // import lscalg.bnfParsing.{given }
-  import lscalg.bnfParsing.IRegExp
-  import lscalg.bnfParsing.BnfCompatibleFileReadPtr1
-  import lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp
-
-  // protected
-  def apply
-    //
-    (using ctx : lscc.spclTerminalGrammarsB.SpclPxery )
-    ( )
-  = {
-    ;
-    import IRegExp.tagImplicits.r
-
-    // TODO
-    ((
-      lscc.spclGrammar.KeywordPrf.forContentPattern("""(?:const|cons|con|co|val|let|var|va|tr|tra|trait|cl|cl[a]|cla+s+|ob|obj|obje|obje[ck]t*)\b""".stripMargin.r )
-    ))
+  trait ForMono1
+  {
+    def apply
+      //
+      (using ctx : lscc.spclGrammar.Ikpm )
+      ( )
+    : ctx.Applied
   }
 
+  // TODO
+  def forMonoAs
+    (impl: (
+      // (ctx : lscc.spclTerminalGrammarsB.SpclPxery ) ?=>
+      //   ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1]
+
+      (ctx : lscc.spclGrammar.Ikpm ) ?=>
+        ctx.Applied
+    ) )
+  : ForMono1
+  = {
+    new ForMono1
+    {
+      def apply
+        (using ctx : lscc.spclGrammar.Ikpm )
+        ( )
+      : ctx.Applied
+      = impl.nn
+    }
+  }.nn
+
+  // transparent inline
+  def forMonoByIRegExp
+    (p: IRegExp._Any )
+  : ForMono1
+  = {
+    forMonoAs(ctx ?=> {
+      ctx.fromRegExp(p)
+    })
+  }
+
+  //   (using ctx : lscc.spclGrammar.Ikpm )
+  //   ( )
+  // : ctx.Applied
+
+  ;
 }
 
 
