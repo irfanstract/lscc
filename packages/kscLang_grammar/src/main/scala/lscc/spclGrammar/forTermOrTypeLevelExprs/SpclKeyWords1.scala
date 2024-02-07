@@ -50,22 +50,19 @@ object XTermLevelUnprefixedKeyword
   = {
     ;
     import ctx.given
-    
+
     ({
       ;
 
       import IRegExp.tagImplicits.r
 
       // TODO
-      FTLK((
+      lscc.spclGrammar.IReservedWords.fromIkpf(ctx0 ?=> (
         ForXtuCzps()
         orElse
         ForKwPre("""ref|refs""".r )
       ))
     })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
   }.nn
 }
 
@@ -102,15 +99,12 @@ object XTypeLevelUnprefixedKeyword
       import IRegExp.tagImplicits.r
 
       // TODO
-      FTLK((
+      lscc.spclGrammar.IReservedWords.fromIkpf(ctx0 ?=> (
         ForXtuCzps()
         orElse
         ForKwPre("""([_]+|)(object(?:ype|)|single(?:ton|type|t|)|match(?:es|))""".r )
       ))
     })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
   }.nn
 }
 
@@ -148,15 +142,12 @@ object XTypeLevelNsDotQualifiedKeyword
       import IRegExp.tagImplicits.r
 
       // TODO
-      FTLK((
+      lscc.spclGrammar.IReservedWords.fromIkpf(ctx0 ?=> (
         ForXtuCzps()
         orElse
-        ForKwPre("""ref(?:)|object(?:ype|)|single(?:ton|type|t|)""".r )
+        ForKwPre("""ref(?:)|object(?:ype|)|single(?:ton|type|t|)""".r ) 
       ))
     })
-    .match { case r => {
-      KeywordingCtx.fromFtlk(r)
-    } }
   }.nn
 }
 

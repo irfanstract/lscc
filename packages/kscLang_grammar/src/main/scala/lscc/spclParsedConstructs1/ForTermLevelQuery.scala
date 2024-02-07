@@ -27,7 +27,9 @@ object ForTermQueryExpr
 
   ;
 
-  import lscc.spclParsedConstructs1.KeywordingCtx
+  import lscc.spclGrammar.KeywordingCtx
+
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   transparent inline
   def apply
@@ -63,7 +65,9 @@ object ForTypeRef
 
   ;
 
-  import lscc.spclParsedConstructs1.KeywordingCtx
+  import lscc.spclGrammar.KeywordingCtx
+
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   transparent inline
   def apply
@@ -105,8 +109,7 @@ object ForQueryExpr1
 
   import lscalg.parsing.subjectConcatOps1.given
 
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   transparent inline
   def withMode
@@ -123,7 +126,8 @@ object ForQueryExpr1
     apply()
   }
 
-  transparent inline
+  // TODO
+  // transparent inline
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
@@ -135,12 +139,14 @@ object ForQueryExpr1
   = {
     import m.spclUnprefixedKeywdingMode
 
-    (
-      ForPrefixedExpr()
-      orElse
-      ForSingleTokenLiteralExpr()
-    )
-  }
+    // (
+    //   ForPrefixedExpr()
+    //   orElse
+    //   ForSingleTokenLiteralExpr()
+    // )
+
+    ???
+  }.nn
 
   ;
 }

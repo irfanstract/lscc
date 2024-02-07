@@ -52,105 +52,120 @@ object ForBindingFirstTermOrTypeAscribedExprP
 
   import lscalg.parsing.subjectConcatOps1.given
 
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+//   /** to impose `prsWhitespaceableHeadTailConcatOp` */
+//   import fwscImplicits.prsWhitespaceableHeadTailConcatOp
 
-  // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val basePxery : ctx.type } )
+//   // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val basePxery : ctx.type } )
 
-  transparent inline /* a must-have modifier for forwarders */
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    //
-    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-    ( )
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = forMode(m )
+  // transparent inline /* a must-have modifier for forwarders */
+  // def apply
+  //   //
+  //   (using ctx: SpclGrammaticalPxery )
+  //   //
+  //   (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+  //   ( )
+  // : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
+  // = {
+  //   import m.given
 
-  transparent inline /* a necessary modifier for forwarders */
-  def forMode
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = {
-    import m.given
-    given m.spclUnprefixedKeywdingMode.type
-    = m.spclUnprefixedKeywdingMode
+  //   given m.spclUnprefixedKeywdingMode.type
+  //   = m.spclUnprefixedKeywdingMode
 
-    withImplicitKwdIngCtx( )
-  }
+  //   forMode(m )
+  // }
 
-  protected
-  def withImplicitKwdIngCtx
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = {
-    ;
+//   transparent inline /* a necessary modifier for forwarders */
+//   def forMode
+//     //
+//     (using ctx: SpclGrammaticalPxery )
+//     (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
+//   : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
+//   = {
+//     import m.given
+//     given m.spclUnprefixedKeywdingMode.type
+//     = m.spclUnprefixedKeywdingMode
 
-    import ctx.given
-    import ctx.givenFispoSupp
-    import ctx.givenFispoSupp.InputState as PAny
+//     withImplicitKwdIngCtx( )
+//   }
 
-    ({
-      ;
+  // protected
+  // def withImplicitKwdIngCtx
+  //   //
+  //   (using ctx: SpclGrammaticalPxery )
+  //   (using reprCtx: (
+  //     // TODO
+  //     lscc.spclGrammar.forTermAscriptiveScrut.IAscriptiveExprGrammmaticalReprSupport {
+  //       //
+  //     }
+  //   ) )
+  //   (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+  //   ()
+  // : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
+  // = {
+  //   ;
+
+  //   import ctx.given
+  //   import ctx.givenFispoSupp
+  //   import ctx.givenFispoSupp.InputState as PAny
+
+  //   ({
+  //     ;
 
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        ({
-          ;
+  //       ({
+  //         ;
 
-          val headRule
-          =
-            ForUnparenthesedSimpleHeadBindingExpr()
-            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.HeadBinding")
+  //         val headRule
+  //         =
+  //           ForUnparenthesedSimpleHeadBindingExpr()
+  //           .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.HeadBinding")
 
-          val tailRule
-          =
-            ForTermOrTypeAscriptiveInfixAndRhs()
-            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.TailAscription")
+  //         val tailRule
+  //         =
+  //           ForTermOrTypeAscriptiveInfixAndRhs()
+  //           .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.TailAscription")
 
-          (
-            headRule
+  //         (
+  //           headRule
 
-            +++%:
+  //           +++%:
 
-            tailRule
+  //           tailRule
 
-            ++%:
+  //           ++%:
 
-            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
-          )
-          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L135")
-          .map(e => {
-            e
-          } )
-          .map({ case (bindingExpr, s) => {
-            TermOrTypeAscribedExprImplAst(bindingSideExpr = bindingExpr, ascriptiveSideExpr = s )
-          } } )
-          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L142")
-          .nn
-        })
-      })
-    })
-    .withFinalPtrPosVl()
-    .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP")
-  }.nn
+  //           lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
+  //         )
+  //         .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L135")
+  //         .map(e => {
+  //           e
+  //         } )
+  //         .map({ case (bindingExpr, s) => {
+  //           TermOrTypeAscribedExprImplAst(bindingSideExpr = bindingExpr, ascriptiveSideExpr = s )
+  //         } } )
+  //         .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L142")
+  //         .nn
+  //       })
+  //     })
+  //   })
+  //   .withFinalPtrPosVl()
+  //   .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP")
+  // }.nn
 
   ;
 }
 
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{TermOrTypeAscribedExprImplAst }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{TermOrTypeAscribedExprImplAst }
 
 
 
 
 
+
+export ForTermOrTypeAscriptiveInfixAndRhs.apply as forTermOrTypeAscriptiveInfixAndRhs
 
 /**
  * 
@@ -179,24 +194,29 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 
   import lscalg.parsing.subjectConcatOps1.given
 
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
-
   import IRegExp.tagImplicits.r
 
-  def apply
+  def apply 
     //
     //
     (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    (using kwIngCtx : lscc.spclGrammar.IReservedWords.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    (using reprCtx: (
+      // TODO
+      lscc.spclGrammar.forTermAscriptiveScrut.IAscriptiveExprGrammmaticalReprSupport {
+        //
+      }
+    ) )
     ()
-  : ctx.SpclSdfYielding[AscriptiveExprPr[ctx.grmMetadataWrapMode.type ] ]
+  : ctx.SpclSdfYielding[reprCtx.TermOrTypeAscribedExprImplAst ]
   = {
     ;
 
     import ctx.given
     import ctx.givenFispoSupp.InputState as PAny
     import ctx.givenFispoSupp
+
+    import reprCtx.{TermOrTypeAscribedExprImplAst, PrefixScrutLhsExpr}
 
     ({
       ;
@@ -224,7 +244,7 @@ object ForTermOrTypeAscriptiveInfixAndRhs
         def name
         = productPrefix
 
-        def tagPrf
+        def taglinePrf
         = {
           ;
 
@@ -236,18 +256,18 @@ object ForTermOrTypeAscriptiveInfixAndRhs
           .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.LeadKeyWord()")
         }
 
-        lazy val conformedExprPrf
+        lazy val latterSideExprPrf
         = {
           ForQueryExpr1.withMode(conformedExprLvl)
           .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.Main(${kwIngCtx })")
         }
 
         lazy val fullExprPrf1 = (
-          tagPrf
+          taglinePrf
 
           +++%:
 
-          conformedExprPrf
+          latterSideExprPrf
 
           ++%:
             lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
@@ -297,12 +317,12 @@ object ForTermOrTypeAscriptiveInfixAndRhs
 }
 
 // TODO
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{AscriptiveExpr,AscriptiveExprPr }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{AscriptiveExpr,AscriptiveExprPr }
 export lscc.spclGrammar.forTermOrTypeLevelExprs.{ ToTermPatternScrutiveAscription, ToTypeScrutiveAscription, SatisfiaScrutiveAscription}
 
 
 
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{PrefixScrutLhsExpr }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{PrefixScrutLhsExpr }
 
 
 
