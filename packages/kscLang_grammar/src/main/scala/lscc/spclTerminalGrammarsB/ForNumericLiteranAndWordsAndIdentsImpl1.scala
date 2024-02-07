@@ -47,7 +47,7 @@ object ForImmediateUnescapedWord
     (using ctx : SpclPxery )
     ( )
   : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
-  = ForTerminalLiteral1("""(?![0-9])(?>[\w]|\\[pu]\{.*?\})+""".r )
+  = ForInlineTerminalLiteral1("""(?![0-9])(?>[\w]|\\[pu]\{.*?\})+""".r )
 
   ;
 }
@@ -75,7 +75,7 @@ object ForUnderscoreWildcardPattern
     ( )
   : ctx.SpclSdfYieldingUnwrapped[String ]
   = (
-    ForTerminalLiteral1(SUnderscore )
+    ForInlineTerminalLiteral1(SUnderscore )
     .mapMainValue({ case v => "__" } )
   )
 
@@ -130,11 +130,11 @@ object ForImmediateBacktickedIdent
     import lscalg.parsing.subjectConcatOps1.given
 
     (
-      ForTerminalLiteral1("""\`""".r )
+      ForImmediateSingleLineRawOcc("""\`""".r )
       +%:
-      ForTerminalLiteral1(""".+?(?=\`)""".r )
+      ForImmediateSingleLineRawOcc(""".+?(?=\`)""".r )
       +%:
-      ForTerminalLiteral1("""\`""".r )
+      ForImmediateSingleLineRawOcc("""\`""".r )
       +%:
       lscalg.parsing.ParseFunction.emptyTupleValuedInstance[ctx.givenFispoSupp.InputState ]
     )
@@ -177,14 +177,13 @@ object ForKwPre
    */
   transparent inline
   def apply
-    //
+    (using ctx : lscc.spclGrammar.Ikpm )
     (subject: IRegExp._Any )
-    (using ctx : SpclPxery )
-  : ctx.SpclSdfYieldingUnwrapped[ctx.SpclExtractedRawStr1 ]
+  : ctx.Applied
   = ({
     import ctx.given
 
-    lscc.spclGrammar.KeywordPrf.forContentPattern(subject)
+    ctx.fromRegExp(subject )
   }).nn
 
 }
@@ -202,6 +201,11 @@ transparent inline
 def ForTerminalLiteral1
 = ForInlineTerminalLiteral1
 
+/**
+ * 
+ * flat token supposed to represent a literal-like construct
+ * 
+ */
 object ForInlineTerminalLiteral1
 {
   ;

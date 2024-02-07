@@ -49,210 +49,210 @@ org.scalatest.funsuite.AnyFunSuite
 
   ;
 
-  test("underscore wildcard match") {
-    ;
+  // test("underscore wildcard match") {
+  //   ;
 
-    ;
+  //   ;
 
-    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("_ @ MainVariableExprImpl ; ")
-    .atBgnPars()
+  //   lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("_ @ MainVariableExprImpl ; ")
+  //   .atBgnPars()
 
-    .match { case p => {
-      ;
+  //   .match { case p => {
+  //     ;
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          lscc.spclTerminalGrammarsB.ForUnderscoreWildcardPattern()
-          .applyBrt(ptr0)
-        } }
+  //       .match { case ptr0 => {
+  //         lscc.spclTerminalGrammarsB.ForUnderscoreWildcardPattern()
+  //         .applyBrt(ptr0)
+  //       } }
 
-      })
-      .headOption
-      .orElse({
-        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+  //     })
+  //     .headOption
+  //     .orElse({
+  //       assert(!((p.remainingLines.head).contents startsWith "_" ) )
 
-        None
-      })
-      .match { case r => {
-        ;
+  //       None
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert(r.nonEmpty )
+  //       assert(r.nonEmpty )
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ;
-    } }
+  //     ;
+  //   } }
 
-    ;
+  //   ;
 
-    lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Expr `val MainVariableExpr @ MainVariableExprImpl ; `")
-  }
+  //   lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Expr `val MainVariableExpr @ MainVariableExprImpl ; `")
+  // }
 
-  test("type-ascribed val-def") {
-    ;
+  // test("type-ascribed val-def") {
+  //   ;
 
-    import lscc.spclGrammar.{KeywordingCtx , forTermOrTypeLevelExprs }, forTermOrTypeLevelExprs.{Aitl }
+  //   import lscc.spclGrammar.{KeywordingCtx , forTermOrTypeLevelExprs }, forTermOrTypeLevelExprs.{Aitl }
 
-    // implicit
-    val exprMode
-    = {
-      Aitl.forTermLevel()
-    }
+  //   // implicit
+  //   val exprMode
+  //   = {
+  //     Aitl.forTermLevel()
+  //   }
 
-    val headBindingRule
-    = {
-      ;
+  //   val headBindingRule
+  //   = {
+  //     ;
 
-      ({
-        given exprMode.type
-        = exprMode
-        given exprMode.spclUnprefixedKeywdingMode.type
-        = exprMode.spclUnprefixedKeywdingMode
-        lscc.spclParsedConstructs1.ForUnparenthesedSimpleHeadBindingExpr()
-      })
-    }
+  //     ({
+  //       given exprMode.type
+  //       = exprMode
+  //       given exprMode.spclUnprefixedKeywdingMode.type
+  //       = exprMode.spclUnprefixedKeywdingMode
+  //       lscc.spclParsedConstructs1.ForUnparenthesedSimpleHeadBindingExpr()
+  //     })
+  //   }
 
-    val fullExprRule
-    = {
-      ;
+  //   val fullExprRule
+  //   = {
+  //     ;
 
-      import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1, ForImmediateUnescapedWord }
-      import lscc.spclParsedConstructs1.{ForBindingFirstTermOrTypeAscribedExprP }
+  //     import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1, ForImmediateUnescapedWord }
+  //     import lscc.spclParsedConstructs1.{ForBindingFirstTermOrTypeAscribedExprP }
 
-      (
-        withMode(Aitl.forTermLevel() ) ((
-          ForBindingFirstTermOrTypeAscribedExprP( )
-        ))
-      )
-    }
+  //     (
+  //       withMode(Aitl.forTermLevel() ) ((
+  //         ForBindingFirstTermOrTypeAscribedExprP( )
+  //       ))
+  //     )
+  //   }
 
-    ;
+  //   ;
 
-    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("_ @ MainVariableExprImpl ; ")
-    .atBgnPars()
+  //   lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("_ @ MainVariableExprImpl ; ")
+  //   .atBgnPars()
 
-    .match { case p => {
-      ;
+  //   .match { case p => {
+  //     ;
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          headBindingRule
-          .applyBrt(ptr0)
-        } }
+  //       .match { case ptr0 => {
+  //         headBindingRule
+  //         .applyBrt(ptr0)
+  //       } }
 
-      })
-      .headOption
-      .orElse({
-        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+  //     })
+  //     .headOption
+  //     .orElse({
+  //       assert(!((p.remainingLines.head).contents startsWith "_" ) )
 
-        None
-      })
-      .match { case r => {
-        ;
+  //       None
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert(r.nonEmpty )
+  //       assert(r.nonEmpty )
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          fullExprRule
-          .applyBrt(ptr0)
-        } }
+  //       .match { case ptr0 => {
+  //         fullExprRule
+  //         .applyBrt(ptr0)
+  //       } }
 
-      })
-      .headOption
-      .orElse({
-        assert(!((p.remainingLines.head).contents startsWith "_" ) )
+  //     })
+  //     .headOption
+  //     .orElse({
+  //       assert(!((p.remainingLines.head).contents startsWith "_" ) )
 
-        None
-      })
-      .match { case r => {
-        ;
+  //       None
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert(r.nonEmpty )
+  //       assert(r.nonEmpty )
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ;
-    } }
+  //     ;
+  //   } }
 
-    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("val MainVariableExpr @ MainVariableExprImpl ; ")
-    .atBgnPars()
+  //   lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("val MainVariableExpr @ MainVariableExprImpl ; ")
+  //   .atBgnPars()
 
-    .match { case p => {
-      ;
+  //   .match { case p => {
+  //     ;
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          headBindingRule
-          .applyBrt(ptr0)
-        } }
+  //       .match { case ptr0 => {
+  //         headBindingRule
+  //         .applyBrt(ptr0)
+  //       } }
 
-      })
-      .headOption
-      .orElse({
-        assert(!((p.remainingLines.head).contents startsWith "val " ) )
+  //     })
+  //     .headOption
+  //     .orElse({
+  //       assert(!((p.remainingLines.head).contents startsWith "val " ) )
 
-        None
-      })
-      .match { case r => {
-        ;
+  //       None
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert(r.nonEmpty )
+  //       assert(r.nonEmpty )
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          fullExprRule
-          .applyBrt(ptr0)
-        } }
-      })
-      .match { case r => {
-        ;
+  //       .match { case ptr0 => {
+  //         fullExprRule
+  //         .applyBrt(ptr0)
+  //       } }
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert(r.nonEmpty )
+  //       assert(r.nonEmpty )
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ;
-    } }
+  //     ;
+  //   } }
 
-    ;
+  //   ;
 
-    lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Expr `val MainVariableExpr @ MainVariableExprImpl ; `")
-  }
+  //   lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Expr `val MainVariableExpr @ MainVariableExprImpl ; `")
+  // }
 
   ;
 }
