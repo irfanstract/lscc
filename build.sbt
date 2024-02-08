@@ -132,20 +132,20 @@ lazy val kscProject
   .dependsOn(lscAnsioProject )
 }
 
-lazy val main1
-= {
-  ;
+// lazy val main1
+// = {
+//   ;
 
-  (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "main1" ) )
-  .asLeafProjectWithNecessarySettings()
+//   (crossProject(suggestedTargetPlatforms : _* ).withSuggestedSettings() in (packagesParentDir / "main1" ) )
+//   .asLeafProjectWithNecessarySettings()
 
-  /* as a main-app */
-  .withDbp(mainClassNames = Some("runSMain") )
-  .dependsOn(lscAlgLibProject )
-  .dependsOn(lscAnsioProject )
-  .dependsOn(kscProject )
-  .withJavaUtilLocaleCQuiroz()
-}
+//   /* as a main-app */
+//   .withDbp(mainClassNames = Some("runSMain") )
+//   .dependsOn(lscAlgLibProject )
+//   .dependsOn(lscAnsioProject )
+//   .dependsOn(kscProject )
+//   .withJavaUtilLocaleCQuiroz()
+// }
 
 
 

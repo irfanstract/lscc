@@ -186,6 +186,17 @@ trait SpclPxeryOpsSdfDefine
     }
   //
 
+  object spclSdpExtraOpsImplicits
+  {
+    ;
+
+    export lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
+    export lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+    export lscalg.parsing.subjectConcatOps1.given
+
+  }
+
   ;
 
   type SpclBRetrialIteratorForItemT[+R]
