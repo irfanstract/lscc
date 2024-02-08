@@ -154,8 +154,8 @@ object Build {
       val suggestedTargetPlatforms: Seq[sbtcrossproject.Platform ]
       = (
         Seq(JVMPlatform )
-        /* spuriously cannot be safely disabled as that'd result in spurious "key not found" exceptions while importing */
-        :+ JSPlatform
+        // /* spuriously cannot be safely disabled as that'd result in spurious "key not found" exceptions while importing */
+        // :+ JSPlatform
       )
 
       implicit class XCrossProjectSuggestedSourceArtefactSettingsOps(receiver: CrossProject ) {
@@ -198,19 +198,19 @@ object Build {
          : CrossProject
          = {
             receiver
-            .withJavaUtilLocaleCQuiroz()
-            .toSwitchLinkerToEsm()
+            // .withJavaUtilLocaleCQuiroz()
+            // .toSwitchLinkerToEsm()
             /* 
               * 
               * https://www.scala-js.org/doc/semantics.html .
               * otherwise, one'll get `Error` when it needs to be `RuntimeException` instead.
               * 
               */
-            .withMaintainedClassCastExceptioning()
+            // .withMaintainedClassCastExceptioning()
             // .asBrowserBasedApp()
-            .withWebCtxStdLib()
+            // .withWebCtxStdLib()
             // TODO
-            .withSuggestedResFilesOps()
+            // .withSuggestedResFilesOps()
          }
 
          def withMainClass
