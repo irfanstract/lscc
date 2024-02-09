@@ -174,6 +174,13 @@ trait SpclPxeryOpsSdfDefine
   <: lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState , ([e] =>> e )[Value ] ] //
 
   extension [Value] (f: SpclSdfYieldingUnwrapped[Value] )
+  {
+    //
+
+    /**
+     * which wraps the original return-value thru `apMode`
+     * 
+     */
     def withFinalPtrPosVl
       ()
       (using util.NotGiven[Value <:< grmMetadataWrapMode.AppliedTo[Any] ] )
@@ -184,10 +191,34 @@ trait SpclPxeryOpsSdfDefine
         .withSrcInfo(srcPosInfo = pos )
       ) )
     }
+  }
   //
+
+  /**
+   * necessary in order to use those methods in `subjectConcatOps1`.
+   * 
+   */
+  def prsfNil
+  : SpclSdfYieldingUnwrapped[EmptyTuple.type ]
+  = lscalg.digestivity.ParseFunction.emptyTupleValuedInstance[givenFispoSupp.InputState ]
+
+  object spclSdpExtraOpsImplicits
+  {
+    ;
+
+    export lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
+    export lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+
+    export lscalg.parsing.subjectConcatOps1.given
+
+  }
 
   ;
 
+  /**
+   * [[lscalg.probing.BRetrialIterator ]]
+   * 
+   */
   type SpclBRetrialIteratorForItemT[+R]
   >: lscalg.probing.BRetrialIterator.ForItemT[R] @annotation.unchecked.uncheckedVariance
   <: lscalg.probing.BRetrialIterator.ForItemT[R]
