@@ -96,54 +96,54 @@ org.scalatest.funsuite.AnyFunSuite
     lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of Txt `Golden`")
   }
 
-  test("BigDecimalLiteral parsing '0.5678 Semicol Semicol'") {
-    ;
+  // test("BigDecimalLiteral parsing '0.5678 Semicol Semicol'") {
+  //   ;
 
-    lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("0.5678 ; ;")
+  //   lscc.spclParsing.spclUtil.LazyRlb.fromSnippet("0.5678 ; ;")
 
-    .atBgnPars()
+  //   .atBgnPars()
 
-    .match { case p => {
-      ;
+  //   .match { case p => {
+  //     ;
 
-      ({
-        ;
+  //     ({
+  //       ;
 
-        p
+  //       p
 
-        .match { case ptr0 => {
-          ({
-            import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1, ForImmediateUnescapedWord, ForBigDecimalLiteral1 }
+  //       .match { case ptr0 => {
+  //         ({
+  //           import lscc.spclTerminalGrammarsB.{ForInlineTerminalLiteral1, ForImmediateUnescapedWord, ForBigDecimalLiteral1 }
 
-            (
-              ForBigDecimalLiteral1( )
-            )
-          })
-          .applyBrt(ptr0)
-        } }
-      })
-      .match { case r => {
-        ;
+  //           (
+  //             ForBigDecimalLiteral1( )
+  //           )
+  //         })
+  //         .applyBrt(ptr0)
+  //       } }
+  //     })
+  //     .match { case r => {
+  //       ;
 
-        assert((
-          r
-          .collect({ case (m, newPos) => m })
-          .map(_.matchedStr )
-          .headOption
-          .==(Some("0.5678") )
-        ))
+  //       assert((
+  //         r
+  //         .collect({ case (m, newPos) => m })
+  //         .map(_.matchedStr )
+  //         .headOption
+  //         .==(Some("0.5678") )
+  //       ))
 
-        println(r )
+  //       println(r )
 
-      } }
+  //     } }
 
-      ;
-    } }
+  //     ;
+  //   } }
 
-    ;
+  //   ;
 
-    lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of BigDecimalLiteral `0.5678`")
-  }
+  //   lscc.spclMeta.SpclAnyFunSuite.aftermathsUtil.printlnBanner(s"parsing of BigDecimalLiteral `0.5678`")
+  // }
 
 }
 

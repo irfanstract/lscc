@@ -35,12 +35,14 @@ object ForSingleLineWhitespace
   def apply
     //
     (using ctx : SpclPxery )
-    ( )
+    (nRange: Range.Inclusive = Range.inclusive(1, 1048576 ) )
   : ctx.SpclSdfYieldingUnwrapped[ctx.givenFispoSupp.SpclMatchContent ]
   = {
     ;
 
-    ForImmediateSingleLineMatchOf("""\s+""".r )
+    ForImmediateSingleLineMatchOf({
+      s"\\s{${nRange.start },${nRange.end }}".r
+    } )
   }
 
   ;
@@ -63,11 +65,21 @@ object fwscImplicits {
   }
 
   // public
-  given prsWhitespaceableHeadTailConcatOp
+  given prsWhitespacedPHeadTailConcatOp
     //
-    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    (using ctx : Gpe )
   : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
   = {
+    prsWhitespaceableHeadTailConcatOpEx
+  }
+
+  // public
+  given prsOptionallyWhitespacedPHeadTailConcatOp
+    //
+    (using ctx : Gpe )
+  : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
+  = {
+    given Wspm = Wspm(nRange = Range.inclusive(0, 1048576 ) )
     prsWhitespaceableHeadTailConcatOpEx
   }
 
@@ -75,8 +87,9 @@ object fwscImplicits {
   protected
   def prsWhitespaceableHeadTailConcatOpEx
     //
-    (using ctx : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    (using ctx : Gpe )
     (using regulSPa : lscc.spclTerminalGrammarsB.SpclPxery { val givenFispoSupp: ctx.givenFispoSupp.type } = lscc.spclTerminalGrammarsB.SpclPxery.makeFromGrammaticalCaseManif )
+    (using wSpMode : Wspm = Wspm(nRange = Range.inclusive(1, 1048576 ) ) )
   : (AnyRef & lscalg.parsing.PHTCOAlt[ctx.givenFispoSupp.InputState, ctx.givenFispoSupp.InputState] )
   = {
     import ctx.given
@@ -84,10 +97,16 @@ object fwscImplicits {
     prsWhitespaceableHeadTailConcatOp1
   }
 
+  type Gpe
+  // >: lscc.spclParsedConstructs1.SpclGrammaticalPxeryAndExpecRxOps
+  // <: lscc.spclParsedConstructs1.SpclGrammaticalPxeryAndExpecRxOps
+  >: lscc.spclParsedConstructs1.SpclGrammaticalPxery & lscc.spclParsedConstructs1.SpclGrammaticalPxeryPrfLoggingExtensionMethod1
+  <: lscc.spclParsedConstructs1.SpclGrammaticalPxery & lscc.spclParsedConstructs1.SpclGrammaticalPxeryPrfLoggingExtensionMethod1
+
   private
   given prsWhitespaceableHeadTailConcatOp1
     //
-    (using ctx1 : lscc.spclParsedConstructs1.SpclGrammaticalPxery )
+    (using ctx1 : Gpe )
     (using ec : (
       // lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any
       ctx1.givenFispoSupp.type
@@ -95,6 +114,7 @@ object fwscImplicits {
     (using lscalg.bnfParsing.spclCommonLookaheadCaps.ForImmediatePatterOccurence._AnyForReceiverAndSpecAndReturnBaseType[ec.InputState, util.matching.Regex, ec.SpclAfterDigestTupleOption._Any ] )
     (using regulSPa : lscc.spclTerminalGrammarsB.SpclPxery { val givenFispoSupp: ec.type } )
     (using ValueOf[ec.SpclAfterDigestTupleOption.type ])
+    (using wSpMode : Wspm )
   : (AnyRef & lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] )
   = new AnyRef with lscalg.parsing.PHTCOAlt[ec.InputState, ec.InputState] {
     ;
@@ -129,7 +149,7 @@ object fwscImplicits {
         val delimitingOptWhitespaceRule
         = {
           ;
-          ForSingleLineWhitespace( )
+          ForSingleLineWhitespace(nRange = summon[Wspm ].nRange )
           .withLogging1(mainMsg = s"prsWhitespaceableHeadTailConcat.DelimitingWhitespace")
         }
 
@@ -152,6 +172,13 @@ object fwscImplicits {
 
     ;
   }
+
+  /**
+   * White-Spacing Mode
+   * 
+   */
+  case class Wspm(nRange: Range.Inclusive )
+
 }
 
 

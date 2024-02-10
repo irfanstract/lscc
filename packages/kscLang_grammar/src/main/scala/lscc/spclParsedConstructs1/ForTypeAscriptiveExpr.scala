@@ -41,268 +41,44 @@ package lscc.spclParsedConstructs1
  * ```
  * 
  */
-object ForBindingFirstTermOrTypeAscribedExprP
-{
-  ;
+export lscc.spclGrammar.forTermAscriptiveScrut.UnparenedBindingFirstTermOrTypeAscribedExprPrf as ForUnparenedBindingFirstTermOrTypeAscribedExprP
 
-  ;
+export ForUnparenedBindingFirstTermOrTypeAscribedExprP.apply as forUnparenedBindingFirstTermOrTypeAscribedExprP
 
-  import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
-  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
-
-  import lscalg.parsing.subjectConcatOps1.given
-
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
-
-  // def (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl { val basePxery : ctx.type } )
-
-  transparent inline /* a must-have modifier for forwarders */
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    //
-    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-    ( )
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = forMode(m )
-
-  transparent inline /* a necessary modifier for forwarders */
-  def forMode
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = {
-    import m.given
-    given m.spclUnprefixedKeywdingMode.type
-    = m.spclUnprefixedKeywdingMode
-
-    withImplicitKwdIngCtx( )
-  }
-
-  protected
-  def withImplicitKwdIngCtx
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[TermOrTypeAscribedExprImplAst.ForApmType[ctx.grmMetadataWrapMode.type ] ]
-  = {
-    ;
-
-    import ctx.given
-    import ctx.givenFispoSupp
-    import ctx.givenFispoSupp.InputState as PAny
-
-    ({
-      ;
-
-
-      ({
-        ;
-
-        ({
-          ;
-
-          val headRule
-          =
-            ForUnparenthesedSimpleHeadBindingExpr()
-            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.HeadBinding")
-
-          val tailRule
-          =
-            ForTermOrTypeAscriptiveInfixAndRhs()
-            .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP.TailAscription")
-
-          (
-            headRule
-
-            +++%:
-
-            tailRule
-
-            ++%:
-
-            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
-          )
-          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L135")
-          .map(e => {
-            e
-          } )
-          .map({ case (bindingExpr, s) => {
-            TermOrTypeAscribedExprImplAst(bindingSideExpr = bindingExpr, ascriptiveSideExpr = s )
-          } } )
-          .withLogging1(mainMsg = s"ForBindingFirstTermOrTypeAscribedExprP.L142")
-          .nn
-        })
-      })
-    })
-    .withFinalPtrPosVl()
-    .withLogging1(mainMsg = "ForBindingFirstTermOrTypeAscribedExprP")
-  }.nn
-
-  ;
-}
-
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{TermOrTypeAscribedExprImplAst }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{TermOrTypeAscribedExprImplAst }
 
 
 
 
 
 
-/**
- * 
- * type-ascriptive suffix operator --
- * one of these forms
- * 
- * ```
- * satisfies T
- * 
- * : T
- * 
- * @ &lt;query&gt;
- * 
- * is &lt;query&gt;
- * ```
- * 
- */
-object ForTermOrTypeAscriptiveInfixAndRhs
-{ 
-  ;
+// /**
+//  * 
+//  * type-ascriptive suffix operator --
+//  * one of these forms
+//  * 
+//  * ```
+//  * satisfies T
+//  * 
+//  * : T
+//  * 
+//  * @ &lt;query&gt;
+//  * 
+//  * is &lt;query&gt;
+//  * ```
+//  *   
+//  */
+// export lscc.spclGrammar.forTermAscriptiveScrut.UnparenedFbfSpecificToTermOrTypeAscriptiveInfixAndRhsPrf as ForTermOrTypeAscriptiveInfixAndRhs
 
-  import lscalg.bnfParsing.IRegExp
+// export ForTermOrTypeAscriptiveInfixAndRhs.apply as forTermOrTypeAscriptiveInfixAndRhs
 
-  import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
-  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
-
-  import lscalg.parsing.subjectConcatOps1.given
-
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
-
-  import IRegExp.tagImplicits.r
-
-  def apply
-    //
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  : ctx.SpclSdfYielding[AscriptiveExprPr[ctx.grmMetadataWrapMode.type ] ]
-  = {
-    ;
-
-    import ctx.given
-    import ctx.givenFispoSupp.InputState as PAny
-    import ctx.givenFispoSupp
-
-    ({
-      ;
-
-      // TODO
-      enum SpclAscriptiveMode1
-        (
-          val conformedExprLvl : lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type] , val tagPattern : IRegExp._Any )
-      // extends java.lang.Enum[SpclAscriptiveMode1]
-      {
-        ;
-
-        given conformedExprLvl.type = conformedExprLvl
-
-        case ToTerm extends SpclAscriptiveMode1 (
-          conformedExprLvl = lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTermLevel() ,
-          tagPattern = """\@|:={1,2}|={1,2}:|={2,3}|=|is|was""".r )
-        //
-
-        case ToType extends SpclAscriptiveMode1 (
-          conformedExprLvl = lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTypeLevel() ,
-          tagPattern = """\:|implements|satisfies""".r )
-        //
-
-        def name
-        = productPrefix
-
-        def tagPrf
-        = {
-          ;
-
-          ForOccurringGeneralisedKeyword.forPattern(tagPattern )
-          .map({ case  kwd => {
-            Keyword (kwd )
-          } } )
-          .withFinalPtrPosVl()
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.LeadKeyWord()")
-        }
-
-        lazy val conformedExprPrf
-        = {
-          ForQueryExpr1.withMode(conformedExprLvl)
-          .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.${name}.Main(${kwIngCtx })")
-        }
-
-        lazy val fullExprPrf1 = (
-          tagPrf
-
-          +++%:
-
-          conformedExprPrf
-
-          ++%:
-            lscalg.parsing.ParseFunction.emptyTupleValuedInstance[PAny]
-        )
-      }
-
-      (
-        //
-
-        SpclAscriptiveMode1.ToTerm.fullExprPrf1
-        .map({ case (iTypeKw, vl) => {
-          // (iTypeKw, vl )
-          ToTermPatternScrutiveAscription(vl )
-        } })
-        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToTermEquiv(${kwIngCtx })")
-
-        orElse
-
-        SpclAscriptiveMode1.ToType.fullExprPrf1
-        .map({
-          //
-          case (iTypeKw0 , vl) =>
-            ;
-            (for { iTypeKw <- iTypeKw0 }
-            yield ((iTypeKw, vl) match {
-              //
-
-              case (iTypeKw @ Keyword("satisfies"), vl) => {
-                // (iTypeKw, vl )
-                SatisfiaScrutiveAscription(vl )
-              }
-              case (iTypeKw @ Keyword(":") , vl) => {
-                // (iTypeKw, vl )
-                ToTypeScrutiveAscription(vl )
-              }
-            }))
-            .value
-        })
-        .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs.ToType(${kwIngCtx })")
-      )
-      .withFinalPtrPosVl()
-      .withLogging1(mainMsg = s"ForTermOrTypeAscriptiveInfixAndRhs(${kwIngCtx })")
-    })
-  }.nn
-
-  ;
-}
-
-// TODO
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{AscriptiveExpr,AscriptiveExprPr }
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{ ToTermPatternScrutiveAscription, ToTypeScrutiveAscription, SatisfiaScrutiveAscription}
+// // TODO
+// // export lscc.spclGrammar.forTermOrTypeLevelExprs.{AscriptiveExpr,AscriptiveExprPr }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{ ToTermPatternScrutiveAscription, ToTypeScrutiveAscription, SatisfiaScrutiveAscription}
 
 
 
-export lscc.spclGrammar.forTermOrTypeLevelExprs.{PrefixScrutLhsExpr }
+// export lscc.spclGrammar.forTermOrTypeLevelExprs.{PrefixScrutLhsExpr }
 
 
 

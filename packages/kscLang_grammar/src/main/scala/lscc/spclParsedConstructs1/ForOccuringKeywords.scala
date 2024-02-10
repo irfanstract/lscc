@@ -32,7 +32,7 @@ object ForOccurringKeyword
   def apply
     //
     (using givenFispoSupp : lscalg.bnfParsing.spclCommonLookaheadCaps1.GivenFispoSupp._Any )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[givenFispoSupp.type ] )
+    (using kwIngCtx : lscc.spclGrammar.IReservedWords.WithGivenFispoSupp[givenFispoSupp.type ] )
     ()
   : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[givenFispoSupp.InputState, givenFispoSupp.SpclMatchContent ]
   = {
@@ -60,7 +60,7 @@ object ForOccurringKeywordPr
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    (using kwIngCtx : lscc.spclGrammar.IReservedWords.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
   //
   : ctx.SpclSdfYieldingUnwrapped[ Keyword[String] ]
@@ -79,7 +79,14 @@ object ForOccurringKeywordPr
 }
 
 
-object ForOccurringGeneralisedKeyword
+@deprecated("alias of `ForOccurringNonbreakingGkw`.")
+transparent inline
+def ForOccurringGeneralisedKeyword
+: ForOccurringNonbreakingGkw.type
+= ForOccurringNonbreakingGkw
+// 
+
+object ForOccurringNonbreakingGkw
 {
   ;
 
@@ -95,7 +102,6 @@ object ForOccurringGeneralisedKeyword
     (using ctx: SpclGrammaticalPxery )
     (subject: ([e] =>> e ) [String] )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ ([e] =>> e )[String] ]
   = forPattern((subject match { case s => util.matching.Regex.quote(s) }).r )
 
@@ -105,7 +111,6 @@ object ForOccurringGeneralisedKeyword
     (using ctx: SpclGrammaticalPxery )
     (subject: IRegExp._Any )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ ([e] =>> e )[String] ]
   = {
     ({
@@ -140,10 +145,9 @@ object ForOccurringDelimiterPr
     (using ctx: SpclGrammaticalPxery )
     (  )
   //
-  // : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] ]
   : ctx.SpclSdfYieldingUnwrapped[ Keyword[String] ]
   = {
-    ForOccurringGeneralisedKeyword.forPattern("""(?:\(|\)|\,|\;)""".r)
+    ForOccurringNonbreakingGkw.forPattern("""(?:\(|\)|\,|\;)""".r)
     .mapMainValue(va => {
       glscc.spclTerminalGrammars.Keyword.apply(va )
     } )
@@ -161,47 +165,10 @@ object ForOccurringDelimiterPr
 @deprecated("an alias of 'ForOccurringKeywordOrIdentifier1'.")
 transparent inline
 def ForOccurringKeywordOrRefP
+: ForOccurringKeywordOrIdentifier1.type
 = ForOccurringKeywordOrIdentifier1
 
-/**
- * 
- * first, try parsing as kwd, then as ident
- * 
- */
-object ForOccurringKeywordOrIdentifier1
-{
-  ;
-
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    (using kwIngCtx : lscc.spclParsedConstructs1.KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
-    ()
-  //
-  : lscalg.digestivity.ParseFunction.ForReceiverAndRValue[ctx.givenFispoSupp.InputState, Keyword[String] | Identifier[String] ]
-  = {
-    import ctx.given
-
-    import ctx.givenFispoSupp.InputState as PAny
-
-    (
-      ForOccurringKeyword()
-      .mapMainValue(v => Keyword(v.matchedStr) )
-      .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1.Kwd")
-
-      orElse
-
-      (ForImmediateUnescapedWord() orElse ForImmediateEscapedIdent() )
-      .mapMainValue(<:<.refl[ctx.givenFispoSupp.SpclMatchContent ] )
-      .mapMainValue(v => FixedIdentifier(v.matchedStr) )
-      .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1.Ref")
-
-    )
-    .withLogging1(mainMsg = "ForOccurringKeywordOrIdentifier1")
-  }
-
-  ;
-}
+export lscc.spclGrammar.forBasicCompoundExprs1.OccurringKeywordOrIdentifierPrf1 as ForOccurringKeywordOrIdentifier1
 
 
 

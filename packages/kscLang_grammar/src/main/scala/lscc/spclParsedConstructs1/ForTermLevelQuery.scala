@@ -27,14 +27,16 @@ object ForTermQueryExpr
 
   ;
 
-  import lscc.spclParsedConstructs1.KeywordingCtx
+  import lscc.spclGrammar.{KeywordingCtx, IReservedWords}
+
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   transparent inline
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
     //
-    (using kwIngCtx : KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    (using kwIngCtx : IReservedWords.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
   : ctx.SpclSdfYielding[Any ]
   = {
@@ -42,7 +44,7 @@ object ForTermQueryExpr
     import ctx.given
 
     ForQueryExpr1.withMode
-      (lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTermLevel() )
+      (lscc.spclGrammar.forTermOrTypeLevelExprs.forTermLevelC() )
   }.nn
 
   ;
@@ -63,14 +65,16 @@ object ForTypeRef
 
   ;
 
-  import lscc.spclParsedConstructs1.KeywordingCtx
+  import lscc.spclGrammar.{KeywordingCtx, IReservedWords}
+
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
   transparent inline
   def apply
     //
     (using ctx: SpclGrammaticalPxery )
     //
-    (using kwIngCtx : KeywordingCtx.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
+    (using kwIngCtx : IReservedWords.WithGivenFispoSupp[ctx.givenFispoSupp.type ] )
     ()
   : ctx.SpclSdfYielding[Any ]
   = {
@@ -78,7 +82,7 @@ object ForTypeRef
     import ctx.given
 
     ForQueryExpr1.withMode
-      (lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.forTypeLevel() )
+      (lscc.spclGrammar.forTermOrTypeLevelExprs.forTypeLevelC() )
   }.nn
 
   ;
@@ -94,55 +98,48 @@ object ForTypeRef
  * *either-level references*
  * 
  */
-object ForQueryExpr1
-{
+// TODO
+final
+lazy val ForQueryExpr1
+= {
   ;
 
-  ;
+  import lscc.spclParsedConstructs1.SpclGrammaticalPxery
 
-  import lscalg.parsing.ParseFunction.returnedMainValueMapOpImplicits.given
-  import lscalg.parsing.Subject.returnedMainValueMapOpExtras.returnedMainValueWithFinalPosMapOps1
+  type CR
 
-  import lscalg.parsing.subjectConcatOps1.given
+  SpclGrammaticalPrfConstructor.forExprsAtImpliedLvl(
+    ctx => (m => {
+      ;
 
-  /** to impose `prsWhitespaceableHeadTailConcatOp` */
-  import fwscImplicits.prsWhitespaceableHeadTailConcatOp
+      /* IMPLIED GIVENS */
+      import m.spclUnprefixedKeywdingMode
 
-  transparent inline
-  def withMode
-    //
-    (using ctx: SpclGrammaticalPxery )
-    //
-    (m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-  : ctx.SpclSdfYielding[Any ]
-  = {
-    given aitl
-    : m.type
-    = m
+      /* IMPLIED SYNTAX CONVENTIONS */
+      import ctx.spclSdpExtraOpsImplicits.given
 
-    apply()
-  }
+      ;
 
-  transparent inline
-  def apply
-    //
-    (using ctx: SpclGrammaticalPxery )
-    //
-    (using m: lscc.spclGrammar.forTermOrTypeLevelExprs.Aitl.ForGrammaticalCtxT[ctx.type ] )
-    //
-    ( )
-  : ctx.SpclSdfYielding[Any ]
-  = {
-    import m.spclUnprefixedKeywdingMode
+      ({
+        ;
 
-    (
-      ForPrefixedExpr()
-      orElse
-      ForSingleTokenLiteralExpr()
-    )
-  }
+        // TODO
+        ({
+          ;
 
-  ;
+          // (
+          //   ForPrefixedExpr()
+          //   orElse
+          //   ForSingleTokenLiteralExpr()
+          // )
+
+          ???
+          .match { case r => r : ctx.SpclSdfYielding[CR ] }
+        } )
+        .nn
+      })
+    }) )
+  .nn
 }
 
 

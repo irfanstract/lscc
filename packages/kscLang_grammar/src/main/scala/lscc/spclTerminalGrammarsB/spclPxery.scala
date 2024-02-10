@@ -108,6 +108,32 @@ protected
 trait SpclPxeryReducedPriorityImplicits
 extends
 AnyRef
+with SpclPxeryReduced2PriorityImplicits
+{ this : SpclPxery.type =>
+  ;
+
+  // transparent inline
+  given makeFromGeneralisedPxeryOps
+    //
+    [C <: (
+      AnyRef
+      & lscc.spclParsedConstructs1.SpclGFispoSuppsAndExpecRxOps
+    ) ]
+    (using ctx : C )
+  //
+  : SpclPxery {val givenFispoSupp: ctx.givenFispoSupp.type; val grmMetadataWrapMode: ctx.grmMetadataWrapMode.type; val expcRx: ctx.expcRx.type }
+  = {
+    ;
+    import ctx.given
+    makeFromConstituents
+  }.nn
+
+}
+
+protected 
+trait SpclPxeryReduced2PriorityImplicits
+extends
+AnyRef
 with SpclPxeryLowPrioImplicits
 { this : SpclPxery.type =>
   ;

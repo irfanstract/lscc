@@ -14,6 +14,12 @@ package lscc.spclGrammar.forTermOrTypeLevelExprs
 
 
 
+export Aitl.{
+  forTermLevel as forTermLevelC ,
+  forTypeLevel as forTypeLevelC ,
+}
+
+
 object Aitl {
   ;
 
